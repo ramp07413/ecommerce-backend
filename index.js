@@ -1,10 +1,24 @@
 import express from 'express'
 import { productRouter } from './routes/productRoute.js'
 import { connectDB } from './database/db.js'
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger-output.json' assert { type: "json" };
+import cors from 'cors'
 
 const app = express()
+
+connectDB()
+
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
+
+app.use(cors({
+  origin: '*',
+}));
+
+
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req,res)=>{
     res.send("api call")
@@ -19,7 +33,6 @@ app.use((err, req, res, next)=>{
     })
 })
 
-connectDB()
 
 app.listen(3001, ()=>{
     console.log("it's running...")

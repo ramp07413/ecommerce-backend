@@ -3,8 +3,8 @@ import { addProduct, getProduct } from "../controller/productController.js";
 
 const router = Router()
 
-router.get("/", getProduct)
-router.post("/", addProduct)
+router.get("/hello", getProduct)
+router.post("/hi", addProduct)
 
 
 export {router as productRouter}
