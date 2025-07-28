@@ -24,7 +24,6 @@ export const userRegister = async(req, res, next)=>{
         password : hashPassword
     })
 
-  
 
     sendToken(data, 201 , "user registered successfully", req, res)
 

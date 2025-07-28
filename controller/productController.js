@@ -15,7 +15,7 @@ export const addProduct = async (req, res, next) => {
       shippingTag,
     });
 
-    res.status(200).send({
+    res.status(201).send({
       success: true,
       message: "product added successfully ! ",
       data: data,
@@ -36,3 +36,50 @@ export const getProduct = async (req, res, next) => {
     return next(new Error("internal server error !"));
   }
 };
+
+export const updateProduct = async (req, res, next)=>{
+  try{
+      const {id} = req.params;
+      const newdata = req.body
+      const data = await productDetails.findByIdAndUpdate(id,newdata, {
+        new : true
+      } )
+
+      if(!data){
+        return next(new Error("product not found !"))
+      }
+
+      res.status(200).send({
+        success : true,
+        message : "product updated successfully !",
+        data
+      })
+
+  }
+  catch(err){
+    return next(new Error("internal server error"))
+  }
+}
+
+export const deleteProduct = async (req, res, next)=>{
+  try{
+      const {id} = req.params;
+    
+      const data = await productDetails.findByIdAndDelete(id)
+
+      if(!data){
+        return next(new Error("product not found !"))
+      }
+
+
+      res.status(200).send({
+        success : true,
+        message : "product deleted successfully !",
+ 
+      })
+
+  }
+  catch(err){
+    return next(new Error("internal server error"))
+  }
+}
