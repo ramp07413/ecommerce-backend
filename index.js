@@ -6,6 +6,9 @@ import swaggerDocument from './swagger-output.json' assert { type: "json" };
 import cors from 'cors'
 import { userRouter } from './routes/userRoute.js';
 import cookieParser from 'cookie-parser';
+import { cartRouter } from './routes/cartRoute.js';
+import { catogoryRouter } from './routes/categoryRoute.js';
+import { wishistRouter } from './routes/wishlistRoute.js';
 
 const app = express()
 
@@ -29,7 +32,9 @@ app.get("/", (req,res)=>{
 
 app.use("/api/v1/product", productRouter)
 app.use("/api/v1/auth", userRouter)
-
+app.use("/api/v1/cart", cartRouter)
+app.use("/api/v1/category", catogoryRouter)
+app.use("/api/v1/wishlist", wishistRouter)
 app.use((err, req, res, next)=>{
     res.status(500).send({
         success : false,

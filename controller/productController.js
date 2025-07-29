@@ -1,6 +1,7 @@
 import { productDetails } from "../model/productModel.js";
 
 export const addProduct = async (req, res, next) => {
+  const userId = req.user._id
   const { name, shopName, price, category, itemTag, shippingTag } = req.body;
   try {
     if ((!name || !shopName || !price || !category || !itemTag || !shippingTag)) {
@@ -13,6 +14,7 @@ export const addProduct = async (req, res, next) => {
       category,
       itemTag,
       shippingTag,
+      userId
     });
 
     res.status(201).send({

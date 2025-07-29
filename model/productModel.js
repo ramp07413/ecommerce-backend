@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+
 
 export const productSchema = new mongoose.Schema({
     name : {
@@ -14,8 +15,8 @@ export const productSchema = new mongoose.Schema({
         required : true
     },
     category : {
-        type : String,
-        required : true
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "category"
     },
     itemTag : {
         type : String,
@@ -24,8 +25,11 @@ export const productSchema = new mongoose.Schema({
     shippingTag : {
         type : String,
         required : false
+    },
+    userId : {
+        type : Schema.Types.ObjectId,
+        ref : "user"
     }
-
-})
+}, {timestamps : true})
 
 export const productDetails = mongoose.model("productDetails", productSchema)
