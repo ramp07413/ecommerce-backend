@@ -130,4 +130,17 @@ export const updateOrder = async(req, res, next)=>{
     })
 }
 
- 
+export const recentOrder = async (req, res, next)=>{
+    const userId = req.user._id
+
+    const data = await order.find({user: userId}).sort({createdAt : -1}).populate('orderItems.product', 'name price shopName')
+
+    if(!data || data.length === 0){
+        return next(new Error("no recent order found !"))
+    }
+
+    res.status(200).json({
+        success : true,
+        data
+    })
+}

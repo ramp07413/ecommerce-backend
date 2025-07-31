@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUser, updateProfile, userLogin, userLogout, userProfile, userRegister } from "../controller/authController.js";
+import { getStates, getUser, updateProfile, userLogin, userLogout, userProfile, userRegister } from "../controller/authController.js";
 import { isAuthenticated } from "../middleware/authMiddleware.js";
 
 const router = Router()
@@ -10,6 +10,7 @@ router.get("/me", isAuthenticated ,getUser)
 router.get("/logout", userLogout)
 router.get("/profile", isAuthenticated, userProfile)
 router.put("/update", isAuthenticated, updateProfile)
+router.get("/user-states", isAuthenticated, getStates)
 
 
 export {router as userRouter}

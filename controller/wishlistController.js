@@ -93,6 +93,33 @@ export const getWishlist = async(req, res, next)=>{
     }
     catch(err){
         return next(new Error("Error in data fetching..."))
-    }
-   
 }
+
+}
+
+export const recentFav = async (req, res, next)=>{
+    const userId = req.user._id
+
+    const data = await wishlist.findOne({userId}).populate({
+        path : 'items.productId', 
+        // select : 'name shopeName price itemTag shippingTag',
+        populate : {
+        path : 'userId',
+        select : 'userName email role'
+    }
+} )
+
+    if(!data){
+        return next(new Error("no recent fav found !"))
+    }
+
+    data.items.sort((a, b)=>{
+        return new Date(b.productId.createdAt) - new Date(a.productId.createdAt)
+    })
+
+    res.status(200).json({
+        success : true,
+        data
+    })
+}
+

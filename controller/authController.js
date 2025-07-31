@@ -1,6 +1,8 @@
 import { sendToken } from "../utils/sendToken.js";
 import { user } from "../model/userModel.js";
 import bcrypt from 'bcrypt'
+import { order } from "../model/orderModel.js";
+import { wishlist } from "../model/wishlistModel.js";
 
 
 export const userRegister = async(req, res, next)=>{
@@ -153,4 +155,24 @@ export const updateProfile = async (req, res, next)=>{
     catch(err){
         return next(new Error("Error getting profile data"))
     }
+}
+
+
+export const getStates = async(req, res, next)=>{
+    const userId = req.user._id
+
+    const totalOrder = await order.countDocuments({user : userId})
+
+    const totalList = await wishlist.findOne({userId})
+
+    const totalfav = totalList ? totalList.items.length : 0
+
+    res.status(200).json({
+        success  : true,
+        states : {
+            totalOrder : totalOrder,
+        totalfav : totalfav
+        }
+        
+    })
 }

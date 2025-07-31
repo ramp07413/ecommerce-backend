@@ -1,3 +1,4 @@
+import { Category } from "../model/categories.js";
 import { productDetails } from "../model/productModel.js";
 
 export const addProduct = async (req, res, next) => {
@@ -100,3 +101,50 @@ export const deleteProduct = async (req, res, next)=>{
   }
 }
 
+export const filterProduct = async (req, res, next)=>{
+
+  const {name , shopName, category, price, min, max , itemTag, shippingTag, sort} = req.query;
+
+  if( !name  && !shopName && !category && !price && !min && !max  && !itemTag && !shippingTag && !sort){
+    return next(new Error("user query to get data 1"))
+  }
+
+  let filter = {}
+
+  
+
+  if(name?.trim()) filter.name = {$regex : name, $options : "i"}
+  if(shopName?.trim()) filter.shopName = {$regex : shopName, $options : "i"}
+  if(min?.trim() && max?.trim()) filter.price  = {$gte : min , $lte : max}
+  if(category?.trim()){
+    let catDoc = await Category.findOne({
+      $or : [{type : category}, {name: category}]
+    })
+  
+  if(catDoc){
+    filter.category = catDoc._id
+  }
+}
+
+  let query =  productDetails.find(filter).populate("category")
+ 
+  if(sort?.trim() === "latest"){
+    query = query.sort({createdAt : -1})
+  }
+  else if(sort?.trim() === "priceLowToHigh"){
+    query = query.sort({price : 1})
+  }
+  else if(sort?.trim() === "priceHighToLow"){
+    query = query.sort({price : -1})
+  }
+
+const products = await query
+
+res.send({
+  success : true,
+  results : products.length,
+  products
+})
+
+
+}
