@@ -20,6 +20,16 @@ const userSchema = new mongoose.Schema({
         type : String,
         enum : ["buyer", "seller", "admin"],
         default : 'buyer'
+    },
+    phoneNumber : {
+        type : String,
+    },
+    address : {
+        street : String,
+        city : String,
+        state : String,
+        country : String,
+        zipcode : String
     }
     
 }, {timestamps : true}

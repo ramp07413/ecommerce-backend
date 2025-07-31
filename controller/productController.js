@@ -39,6 +39,20 @@ export const getProduct = async (req, res, next) => {
   }
 };
 
+
+export const getProductByCategory = async (req, res, next) => {
+  try {
+    const {categoryId} = req.params;
+    const data = await productDetails.find({category : categoryId}).populate("category")
+    res.status(200).send({
+      success: true,
+      data: data
+    });
+  } catch (err) {
+    return next(new Error("internal server error !"));
+  }
+};
+
 export const updateProduct = async (req, res, next)=>{
   try{
       const {id} = req.params;
@@ -85,3 +99,4 @@ export const deleteProduct = async (req, res, next)=>{
     return next(new Error("internal server error"))
   }
 }
+

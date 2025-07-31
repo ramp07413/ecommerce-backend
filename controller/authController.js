@@ -95,3 +95,62 @@ export const userLogout = (req, res, next)=>{
 }
 
 
+export const userProfile = async (req, res, next)=>{
+    try{
+        const userId = req.user._id
+        console.log(userId)
+        let userdata = await user.findById(userId).select("userName email phoneNumber address")
+
+        if(!userdata){
+            return next(new Error("user not found"))
+        }
+
+        res.status(200).send({
+            success : true,
+            userdata
+        })
+
+
+    }
+    catch(err){
+        return next(new Error("Error getting profile data"))
+    }
+}
+
+
+
+export const updateProfile = async (req, res, next)=>{
+    try{
+        const userId = req.user._id
+        const {userName , email, address, phoneNumber} = req.body
+
+        if(!userName && !email && !address && !phoneNumber) {
+            return next(new Error("please fill the fields"))
+        }
+
+        const data = {}
+
+        if(userName) data.userName = userName
+        if(email) data.email = email
+        if(address) data.address = address
+        if(phoneNumber) data.phoneNumber = phoneNumber
+
+        let userdata = await user.findByIdAndUpdate(userId, {
+           $set :  data
+        }, {new : true}).select("+phoneNumber")
+
+        if(!userdata){
+            return next(new Error("user not found"))
+        }
+
+        res.status(200).send({
+            success : true,
+            userdata
+        })
+
+
+    }
+    catch(err){
+        return next(new Error("Error getting profile data"))
+    }
+}

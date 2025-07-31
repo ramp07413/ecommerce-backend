@@ -6,7 +6,11 @@ export const addToWishlist = async(req, res, next)=>{
         const {productId} = req.body
     const userId = req.user._id
 
-    const data = await wishlist.findOne({userId})
+    if(!productId){
+        return next(new Error("please enter valid product id"))
+    }
+
+    let data = await wishlist.findOne({userId})
 
     if(!data){
         data = new wishlist({
@@ -17,7 +21,7 @@ export const addToWishlist = async(req, res, next)=>{
         })
     }
     else{
-        const existWishlist = wishlist.items.some(item=> item.productId.equals(productId))
+        const existWishlist = data.items.some(item=> item.productId.equals(productId))
 
         if(existWishlist){
             return next(new Error("item is already in wish list"))
@@ -44,7 +48,15 @@ export const removeToWishlist = async(req, res, next)=>{
         const userId = req.user._id
         const {productId} = req.body
 
+        if(!productId){
+            return next(new Error("product id invalid"))
+        }
+
         const data = await wishlist.findOne({userId})
+
+        if(!data){
+            return next(new Error("wishlist not found"))
+        }
 
         data.items = data.items.filter(item => !item.productId.equals(productId))
 
