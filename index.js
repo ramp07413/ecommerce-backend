@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 import { cartRouter } from './routes/cartRoute.js';
 import { catogoryRouter } from './routes/categoryRoute.js';
 import { wishistRouter } from './routes/wishlistRoute.js';
+import { orderRouter } from './routes/orderRoute.js';
 
 const app = express()
 
@@ -35,6 +36,7 @@ app.use("/api/v1/auth", userRouter)
 app.use("/api/v1/cart", cartRouter)
 app.use("/api/v1/category", catogoryRouter)
 app.use("/api/v1/wishlist", wishistRouter)
+app.use("/api/v1/order", orderRouter)
 app.use((err, req, res, next)=>{
     res.status(500).send({
         success : false,
