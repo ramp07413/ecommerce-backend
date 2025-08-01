@@ -71,6 +71,7 @@ export const googleurl = async(req, res, next)=>{
             access_type : 'offline',
             scope : ['profile', 'email']
         })
+        
         console.log(url)
         res.redirect(url)
 }
@@ -216,3 +217,20 @@ export const getStates = async(req, res, next)=>{
     })
 }
 
+export const updatePassword = async (req, res , next)=>{
+    const userId = req.user._id
+    const {oldPassword, newPassword, confirmNewPassword} = req.body;
+    if(!oldPassword || !newPassword || !confirmNewPassword){
+        return next(new Error("please enter fill all the fields !"))
+    }
+
+    const data = await user.findById({_id : userId}).select("+password")
+
+    res.send({
+        success : true,
+        data
+    })
+
+
+
+}

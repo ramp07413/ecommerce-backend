@@ -14,7 +14,7 @@ const router = Router()
 router.post("/register", userRegister)
 router.post("/login", userLogin)
 router.get("/google",googleurl)
-
+// router.patch("/updatePassword", isAuthenticated, updatePassword)
 router.get("/google/callback", googleLogin)
 router.get("/me", isAuthenticated ,getUser)
 router.get("/logout", userLogout)

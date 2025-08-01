@@ -13,10 +13,10 @@ export const googleresponse = async(code)=>{
 
         const access = await client.verifyIdToken({
             idToken : tokens.id_token,
-            audience : process.env.CLIENT_ID
+        
         })
-        // console.log("token", tokens)
 
+   
         const payload = access.getPayload()
 
       
