@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     },
     password : {
         type : String,
-        required : true,
+        required : false,
         select : false
     },
     role : {
@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
         enum : ["buyer", "seller", "admin"],
         default : 'buyer'
     },
+    
     phoneNumber : {
         type : String,
     },

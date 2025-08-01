@@ -10,6 +10,7 @@ import { cartRouter } from './routes/cartRoute.js';
 import { catogoryRouter } from './routes/categoryRoute.js';
 import { wishistRouter } from './routes/wishlistRoute.js';
 import { orderRouter } from './routes/orderRoute.js';
+import ejs from 'ejs'
 
 const app = express()
 
@@ -18,6 +19,8 @@ connectDB()
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 app.use(cookieParser())
+
+app.set('view engine', 'ejs')
 
 app.use(cors({
   origin: '*',
@@ -28,7 +31,7 @@ app.use(cors({
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req,res)=>{
-    res.send("api call")
+    res.render("index")
 })
 
 app.use("/api/v1/product", productRouter)

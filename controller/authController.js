@@ -3,6 +3,7 @@ import { user } from "../model/userModel.js";
 import bcrypt from 'bcrypt'
 import { order } from "../model/orderModel.js";
 import { wishlist } from "../model/wishlistModel.js";
+import { client, googleresponse } from "../utils/googletoken.js";
 
 
 export const userRegister = async(req, res, next)=>{
@@ -34,6 +35,44 @@ catch(err){
     return next(new Error("internal server error"))
 }
 
+}
+
+
+
+
+export const googleLogin = async(req, res, next)=>{
+    try{
+         const code = req.query.code
+        const data = await googleresponse(code)
+        const {name , email} = data
+        console.log("name", name)
+        console.log("email", email)
+   
+
+    let mydata = await user.findOne({email})
+
+    if(!mydata){
+        mydata = await user.create({
+         userName : name,
+         email
+            })
+    }
+
+    sendToken(mydata, 200 , "user login successfully", req, res)
+}
+ catch(err){
+        return next(new Error("login failed !"))
+    }
+
+}
+
+export const googleurl = async(req, res, next)=>{
+    const url = client.generateAuthUrl({
+            access_type : 'offline',
+            scope : ['profile', 'email']
+        })
+        console.log(url)
+        res.redirect(url)
 }
 
 
@@ -176,3 +215,4 @@ export const getStates = async(req, res, next)=>{
         
     })
 }
+
