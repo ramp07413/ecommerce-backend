@@ -14,12 +14,7 @@ export const googleresponse = async(code)=>{
         const access = await client.verifyIdToken({
             idToken : tokens.id_token,
         
-        })
-
-   
+        })   
         const payload = access.getPayload()
-
-      
-
         return payload
 }

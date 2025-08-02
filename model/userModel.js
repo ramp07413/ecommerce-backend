@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
 
 const userSchema = new mongoose.Schema({
     userName : {
@@ -31,13 +32,24 @@ const userSchema = new mongoose.Schema({
         state : String,
         country : String,
         zipcode : String
-    }
+    },
+
+    resetPasswordToken : String,
+    resetPasswordTokenExpire : Date
     
 }, {timestamps : true}
 )
 
 userSchema.methods.generateToken = function(){
     return jwt.sign({id : this.id, email : this.email}, "secret")
+}
+
+
+userSchema.methods.generateResetPasswordToken = function(){
+    const resetToken = crypto.randomBytes(20).toString('hex')
+    this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex')
+    this.resetPasswordTokenExpire = Date.now() + 1000 * 60 * 15
+    return resetToken
 }
 
 export const user = mongoose.model("user", userSchema)

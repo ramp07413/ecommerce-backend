@@ -4,6 +4,9 @@ import bcrypt from 'bcrypt'
 import { order } from "../model/orderModel.js";
 import { wishlist } from "../model/wishlistModel.js";
 import { client, googleresponse } from "../utils/googletoken.js";
+import { send } from "process";
+import { sendEmail } from "../utils/emailSend.js";
+import crypto from 'crypto'
 
 
 export const userRegister = async(req, res, next)=>{
@@ -217,8 +220,100 @@ export const getStates = async(req, res, next)=>{
     })
 }
 
+
+
+export const forgetPassword = async (req, res , next)=>{
+try{
+
+    const { email } = req.body
+
+    const data = await user.findOne({email})
+
+    if(!data){
+        return next(new Error("please enter vaild email"))
+    }
+
+    const resetPasswordToken = data.generateResetPasswordToken()
+
+     await data.save({validateBeforeSave : false
+    })
+
+    const resetpasswordUrl = `http://localhost:3000/api/v1/auth/reset/${resetPasswordToken}`
+
+    await sendEmail({email : email, subject : "reset password", message : `<h1>${resetpasswordUrl}<h1/>`})
+
+    res.status(200).json({
+        success : true,
+        message : `email sent to ${email} successfully`
+    })
+
+}
+catch(err){
+    if(data){
+        data.resetPasswordToken = undefined,
+        data.resetPasswordTokenExpire = undefined,
+        await data.save({validateBeforeSave : false})
+    }
+        return next(new Error("failed to send email", err))
+
+}
+}
+
+
+export const resetPassword = async (req, res , next)=>{
+try{
+    const { token } = req.params;
+    const { newPassword, confirmNewPassword } = req.body;
+
+    if(!newPassword || !confirmNewPassword){
+        return next(new Error("please enter all the fields !"))
+    }
+
+    if(newPassword !== confirmNewPassword){
+        return next(new Error("password doesn't match !"))
+    }
+
+    if(newPassword.length <8){
+        return next(new Error("password must be 8 character"))
+    }
+
+    const resetPasswordToken = await crypto.createHash('sha256').update(token).digest('hex')
+    const data = await user.findOne({resetPasswordToken : resetPasswordToken, 
+        resetPasswordTokenExpire : {$gte : Date.now()}}).select("+password")
+
+    if(!data){
+        return next(new Error("invaild token or token had expired !"))
+    }
+
+    const password = await bcrypt.hash(newPassword, 10)
+
+    data.password = password;
+    data.resetPasswordToken = undefined;
+    data.resetPasswordTokenExpire = undefined;
+
+    await data.save({validateBeforeSave : false})
+
+    res.status(200).json({
+        success : true,
+        message : `password changed successfully !`
+    })
+
+}
+catch(err){
+    if(data){
+        data.resetPasswordToken = undefined,
+        data.resetPasswordTokenExpire = undefined,
+        await data.save({validateBeforeSave : false})
+    }
+        return next(new Error("failed to reset password", err))
+
+}
+}
+
 export const updatePassword = async (req, res , next)=>{
-    const userId = req.user._id
+    try{
+
+        const userId = req.user._id
     const {oldPassword, newPassword, confirmNewPassword} = req.body;
     if(!oldPassword || !newPassword || !confirmNewPassword){
         return next(new Error("please enter fill all the fields !"))
@@ -226,11 +321,34 @@ export const updatePassword = async (req, res , next)=>{
 
     const data = await user.findById({_id : userId}).select("+password")
 
+    const oldHasPassword = await bcrypt.compare(oldPassword, data.password)
+
+    if(!oldHasPassword){
+        return next(new Error("old pass is invalid"))
+    }
+
+    if(newPassword !== confirmNewPassword){
+        return next(new Error("password not matched !"))
+    }
+
+    if(newPassword.length < 8){
+        return next(new Error("password must be 8 character"))
+    }
+
+    const hashPassword = await bcrypt.hash(newPassword, 10)
+
+    data.password = hashPassword
+
+    await data.save()
+
     res.send({
         success : true,
         data
     })
 
-
-
+    }
+    catch(err){
+        return next(new Error("failed to change password !"))
+    }
+    
 }
