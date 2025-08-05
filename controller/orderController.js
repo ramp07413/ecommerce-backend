@@ -1,3 +1,4 @@
+import { Cart } from "../model/cartModel.js";
 import { order } from "../model/orderModel.js";
 import { productDetails } from "../model/productModel.js";
 
@@ -6,14 +7,21 @@ export const createOrder = async(req, res, next)=>{
 
     let totalAmount = 0
     const userId = req.user._id;
-    const {orderItems, shippingAddress} = req.body 
-    if(!orderItems || !orderItems.length || !shippingAddress ){
+    const usercart = await Cart.findOne({userId})
+    const {shippingAddress} = req.body 
+
+    if(!usercart || usercart.items.length == 0){
+        return next(new Error("cart is empty !"))
+    }
+
+
+    if(!shippingAddress ){
         return next(new Error("please fill all the fields"))
     }
 
     const finalOrderitem = []
 
-    for(let item of orderItems){
+    for(let item of usercart.items){
     // console.log(item.productId)
     let product = await productDetails.findById(item.productId)
     if(!product){
@@ -37,6 +45,8 @@ export const createOrder = async(req, res, next)=>{
         paymentStatus : "pending",
         shippingStatus : "processing"
     })
+
+    await Cart.findOneAndDelete({userId})
 
     res.status(201).json({
         success : true,
