@@ -6,9 +6,9 @@ const router = Router()
 
 router.get("/get", getProduct)
 router.get("/get/:categoryId", getProductByCategory)
-router.post("/add", isAuthenticated, isAuthorized("Admin"), addProduct)
-router.put("/update/:id", isAuthenticated, isAuthorized("Admin"), updateProduct)
-router.delete("/delete/:id", isAuthenticated, isAuthorized("Admin"), deleteProduct )
+router.post("/add", isAuthenticated, isAuthorized("admin"), addProduct)
+router.put("/update/:id", isAuthenticated, isAuthorized("admin"), updateProduct)
+router.delete("/delete/:id", isAuthenticated, isAuthorized("admin"), deleteProduct )
 router.get("/filter", isAuthenticated, filterProduct)
 
 export {router as productRouter}

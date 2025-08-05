@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     },
     role : {
         type : String,
-        enum : ["buyer", "seller", "admin"],
+        enum : ["user","buyer", "seller", "admin"],
         default : 'buyer'
     },
     
@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
         state : String,
         country : String,
         zipcode : String
+    },
+    isbanned : {
+        type : Boolean,
+        default : false
     },
 
     resetPasswordToken : String,

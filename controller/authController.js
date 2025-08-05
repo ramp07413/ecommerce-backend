@@ -61,6 +61,10 @@ export const googleLogin = async(req, res, next)=>{
             })
     }
 
+    if(mydata.isbanned){
+        return(next(new Error("user is banned please contact to support . ")))
+    }
+
     sendToken(mydata, 200 , "user login successfully", req, res)
 }
  catch(err){
@@ -94,6 +98,9 @@ export const userLogin = async(req, res, next)=>{
     if(!data){
         return next(new Error("user doesn't exits !"))
     }
+    if(data.isbanned){
+        return(next(new Error("user is banned please contact to support . ")))
+    }
    
     
     const isPasswordMatched = await bcrypt.compare(password, data.password)
@@ -116,6 +123,7 @@ catch(err){
 export const getUser = async(req, res, next)=>{
     try{
     const user = req.user
+    
     res.status(200).send({
         success : true,
         user
@@ -233,6 +241,10 @@ try{
         return next(new Error("please enter vaild email"))
     }
 
+    if(data.isbanned){
+        return(next(new Error("user is banned please contact to support . ")))
+    }
+
     const resetPasswordToken = data.generateResetPasswordToken()
 
      await data.save({validateBeforeSave : false
@@ -283,6 +295,10 @@ try{
 
     if(!data){
         return next(new Error("invaild token or token had expired !"))
+    }
+
+    if(data.isbanned){
+        return(next(new Error("user is banned please contact to support . ")))
     }
 
     const password = await bcrypt.hash(newPassword, 10)

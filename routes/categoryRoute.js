@@ -4,9 +4,9 @@ import { isAuthenticated, isAuthorized } from "../middleware/authMiddleware.js";
 
 const router = Router()
 
-router.get("/", isAuthenticated, isAuthorized("Admin"),getAllCategory)
-router.post("/add", isAuthenticated, isAuthorized("Admin"),  addCategory)
-router.delete("/:id", isAuthenticated, isAuthorized("Admin"), removeCategory)
+router.get("/", isAuthenticated, isAuthorized("admin"),getAllCategory)
+router.post("/add", isAuthenticated, isAuthorized("admin"),  addCategory)
+router.delete("/:id", isAuthenticated, isAuthorized("admin"), removeCategory)
 
 
 

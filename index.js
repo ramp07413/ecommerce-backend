@@ -11,6 +11,7 @@ import { catogoryRouter } from './routes/categoryRoute.js';
 import { wishistRouter } from './routes/wishlistRoute.js';
 import { orderRouter } from './routes/orderRoute.js';
 import ejs from 'ejs'
+import { adminRouter } from './routes/adminRoute.js';
 
 const app = express()
 
@@ -40,6 +41,7 @@ app.use("/api/v1/cart", cartRouter)
 app.use("/api/v1/category", catogoryRouter)
 app.use("/api/v1/wishlist", wishistRouter)
 app.use("/api/v1/order", orderRouter)
+app.use("/api/v1/admin", adminRouter)
 app.use((err, req, res, next)=>{
     res.status(500).send({
         success : false,
