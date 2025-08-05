@@ -1,12 +1,13 @@
 import { Category } from "../model/categories.js";
 import { productDetails } from "../model/productModel.js";
+import { ErrorHandler } from "../utils/Errorhandler.js";
 
 export const addProduct = async (req, res, next) => {
   const userId = req.user._id
   const { name, shopName, price, category, itemTag, shippingTag } = req.body;
   try {
     if ((!name || !shopName || !price || !category || !itemTag || !shippingTag)) {
-        return next(new Error("please fill all the fields !"))
+        return next(new ErrorHandler("please fill all the fields !", 400))
     }
     const data = await productDetails.create({
       name,
@@ -24,19 +25,22 @@ export const addProduct = async (req, res, next) => {
       data: data,
     });
   } catch (err) {
-    return next(new Error("internal server error !"));
+    return next(new ErrorHandler("internal server error !", 500));
   }
 };
 
 export const getProduct = async (req, res, next) => {
   try {
     const data = await productDetails.find();
+    if(!data){
+      return next(new ErrorHandler("product not found !", 404))
+    }
     res.status(200).send({
       success: true,
       data: data,
     });
   } catch (err) {
-    return next(new Error("internal server error !"));
+    return next(new ErrorHandler("internal server error !", 500));
   }
 };
 
@@ -45,12 +49,15 @@ export const getProductByCategory = async (req, res, next) => {
   try {
     const {categoryId} = req.params;
     const data = await productDetails.find({category : categoryId}).populate("category")
+    if(data.length === 0){
+      return next(new ErrorHandler("no product available", 404))
+    }
     res.status(200).send({
       success: true,
       data: data
     });
   } catch (err) {
-    return next(new Error("internal server error !"));
+    return next(new ErrorHandler("internal server error !", 500));
   }
 };
 
@@ -63,7 +70,7 @@ export const updateProduct = async (req, res, next)=>{
       } )
 
       if(!data){
-        return next(new Error("product not found !"))
+        return next(new ErrorHandler("product not found !", 404))
       }
 
       res.status(200).send({
@@ -74,7 +81,7 @@ export const updateProduct = async (req, res, next)=>{
 
   }
   catch(err){
-    return next(new Error("internal server error"))
+    return next(new ErrorHandler("internal server error", 500))
   }
 }
 
@@ -85,7 +92,7 @@ export const deleteProduct = async (req, res, next)=>{
       const data = await productDetails.findByIdAndDelete(id)
 
       if(!data){
-        return next(new Error("product not found !"))
+        return next(new ErrorHandler("product not found !", 404))
       }
 
 
@@ -97,16 +104,17 @@ export const deleteProduct = async (req, res, next)=>{
 
   }
   catch(err){
-    return next(new Error("internal server error"))
+    return next(new ErrorHandler("internal server error", 500))
   }
 }
 
 export const filterProduct = async (req, res, next)=>{
+  try{
 
   const {name , shopName, category, price, min, max , itemTag, shippingTag, sort} = req.query;
 
   if( !name  && !shopName && !category && !price && !min && !max  && !itemTag && !shippingTag && !sort){
-    return next(new Error("user query to get data 1"))
+    return next(new ErrorHandler("user query to get data !", 400))
   }
 
   let filter = {}
@@ -145,6 +153,9 @@ res.send({
   results : products.length,
   products
 })
-
+  }
+catch(err){
+    return next(new ErrorHandler("internal server error", 500))
+  }
 
 }

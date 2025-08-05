@@ -1,4 +1,5 @@
 import { wishlist } from "../model/wishlistModel.js"
+import { ErrorHandler } from "../utils/Errorhandler.js"
 
 export const addToWishlist = async(req, res, next)=>{
     try{
@@ -7,7 +8,7 @@ export const addToWishlist = async(req, res, next)=>{
     const userId = req.user._id
 
     if(!productId){
-        return next(new Error("please enter valid product id"))
+        return next(new ErrorHandler("please enter valid product id", 400))
     }
 
     let data = await wishlist.findOne({userId})
@@ -24,7 +25,7 @@ export const addToWishlist = async(req, res, next)=>{
         const existWishlist = data.items.some(item=> item.productId.equals(productId))
 
         if(existWishlist){
-            return next(new Error("item is already in wish list"))
+            return next(new ErrorHandler("item is already in wish list",409))
         }
         data.items.push({productId})
     }
@@ -39,7 +40,7 @@ export const addToWishlist = async(req, res, next)=>{
 
     }
     catch(err){
-        return next(new Error("Error adding to wish list"))
+        return next(new ErrorHandler("Error adding to wish list", 500))
     } 
 }
 
@@ -49,13 +50,13 @@ export const removeToWishlist = async(req, res, next)=>{
         const {productId} = req.body
 
         if(!productId){
-            return next(new Error("product id invalid"))
+            return next(new ErrorHandler("product id invalid", 400))
         }
 
         const data = await wishlist.findOne({userId})
 
         if(!data){
-            return next(new Error("wishlist not found"))
+            return next(new ErrorHandler("wishlist not found", 404))
         }
 
         data.items = data.items.filter(item => !item.productId.equals(productId))
@@ -69,7 +70,7 @@ export const removeToWishlist = async(req, res, next)=>{
         })
     }
     catch(err){
-        return next(new Error("Error in removing item"))
+        return next(new ErrorHandler("Error in removing item", 500))
     }
 }
 
@@ -92,12 +93,13 @@ export const getWishlist = async(req, res, next)=>{
     })
     }
     catch(err){
-        return next(new Error("Error in data fetching..."))
+        return next(new ErrorHandler("Error in data fetching...", 500))
 }
 
 }
 
 export const recentFav = async (req, res, next)=>{
+    try{
     const userId = req.user._id
 
     const data = await wishlist.findOne({userId}).populate({
@@ -110,7 +112,7 @@ export const recentFav = async (req, res, next)=>{
 } )
 
     if(!data){
-        return next(new Error("no recent fav found !"))
+        return next(new ErrorHandler("no recent fav found !", 404))
     }
 
     data.items.sort((a, b)=>{
@@ -121,5 +123,9 @@ export const recentFav = async (req, res, next)=>{
         success : true,
         data
     })
+     }
+    catch(err){
+        return next(new ErrorHandler("Error in data fetching...", 500))
+}
 }
 

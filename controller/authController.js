@@ -7,6 +7,8 @@ import { client, googleresponse } from "../utils/googletoken.js";
 import { send } from "process";
 import { sendEmail } from "../utils/emailSend.js";
 import crypto from 'crypto'
+import { ErrorHandler } from "../utils/Errorhandler.js";
+
 
 
 export const userRegister = async(req, res, next)=>{
@@ -15,13 +17,13 @@ export const userRegister = async(req, res, next)=>{
     const {userName, email , password} = req.body;
 
     if(!userName || !email || !password){
-        return next(new Error("please fill all the fields ! "))
+        return next(new ErrorHandler("please fill all the fields ! ", 400))
     }
 
     let data = await user.findOne({email})
 
     if(data){
-        return next(new Error("user alredy exits !"))
+        return next(new ErrorHandler("user alredy exits !", 406))
     }
     const hashPassword = await bcrypt.hash(password, 10)
     data = await user.create({
@@ -35,7 +37,7 @@ export const userRegister = async(req, res, next)=>{
 
 }
 catch(err){
-    return next(new Error("internal server error"))
+    return next(new ErrorHandler("internal server error", 500))
 }
 
 }
@@ -62,25 +64,31 @@ export const googleLogin = async(req, res, next)=>{
     }
 
     if(mydata.isbanned){
-        return(next(new Error("user is banned please contact to support . ")))
+        return(next(new ErrorHandler("user is banned please contact to support . ", 401)))
     }
 
     sendToken(mydata, 200 , "user login successfully", req, res)
 }
  catch(err){
-        return next(new Error("login failed !"))
+        return next(new ErrorHandler("login failed !", 403))
     }
 
 }
 
 export const googleurl = async(req, res, next)=>{
-    const url = client.generateAuthUrl({
-            access_type : 'offline',
-            scope : ['profile', 'email']
-        })
-        
-        console.log(url)
-        res.redirect(url)
+    try{
+
+        const url = client.generateAuthUrl({
+                access_type : 'offline',
+                scope : ['profile', 'email']
+            })
+            
+            console.log(url)
+            res.redirect(url)
+    }
+    catch(err){
+        return next(new ErrorHandler("internal server error", 500))
+    }
 }
 
 
@@ -90,16 +98,16 @@ export const userLogin = async(req, res, next)=>{
     const {email , password} = req.body;
 
     if(!email || !password){
-        return next(new Error("please fill all the fields ! "))
+        return next(new ErrorHandler("please fill all the fields ! ", 400))
     }
 
     let data = await user.findOne({email}).select("+password")
 
     if(!data){
-        return next(new Error("user doesn't exits !"))
+        return next(new ErrorHandler("user doesn't exits !", 404))
     }
     if(data.isbanned){
-        return(next(new Error("user is banned please contact to support . ")))
+        return(next(new ErrorHandler("user is banned please contact to support . ", 401)))
     }
    
     
@@ -107,14 +115,14 @@ export const userLogin = async(req, res, next)=>{
    
 
     if(!isPasswordMatched){
-        return next(new Error("invaild email or password"))
+        return next(new ErrorHandler("invaild email or password", 400))
     }
 
     sendToken(data, 200, "login successfully", req, res)
 
 }
 catch(err){
-    return next(new Error("internal server error"))
+    return next(new ErrorHandler("internal server error", 500))
 }
 
 }
@@ -130,7 +138,7 @@ export const getUser = async(req, res, next)=>{
     })
 }
 catch(err){
-    return next(new Error("internal server error"))
+    return next(new ErrorHandler("internal server error", 500))
 }
 }
 
@@ -143,7 +151,7 @@ export const userLogout = (req, res, next)=>{
         })
     }
     catch(err){
-        return next(new Error("something went wrong !"))
+        return next(new ErrorHandler("something went wrong !", 500) )
     }
 }
 
@@ -155,7 +163,7 @@ export const userProfile = async (req, res, next)=>{
         let userdata = await user.findById(userId).select("userName email phoneNumber address")
 
         if(!userdata){
-            return next(new Error("user not found"))
+            return next(new ErrorHandler("user not found", 404))
         }
 
         res.status(200).send({
@@ -166,7 +174,7 @@ export const userProfile = async (req, res, next)=>{
 
     }
     catch(err){
-        return next(new Error("Error getting profile data"))
+        return next(new ErrorHandler("Error getting profile data", 500))
     }
 }
 
@@ -178,7 +186,7 @@ export const updateProfile = async (req, res, next)=>{
         const {userName , email, address, phoneNumber} = req.body
 
         if(!userName && !email && !address && !phoneNumber) {
-            return next(new Error("please fill the fields"))
+            return next(new ErrorHandler("please fill the fields", 400))
         }
 
         const data = {}
@@ -193,7 +201,7 @@ export const updateProfile = async (req, res, next)=>{
         }, {new : true}).select("+phoneNumber")
 
         if(!userdata){
-            return next(new Error("user not found"))
+            return next(new ErrorHandler("user not found", 404))
         }
 
         res.status(200).send({
@@ -204,13 +212,14 @@ export const updateProfile = async (req, res, next)=>{
 
     }
     catch(err){
-        return next(new Error("Error getting profile data"))
+        return next(new ErrorHandler("Error getting profile data", 500))
     }
 }
 
 
 export const getStates = async(req, res, next)=>{
-    const userId = req.user._id
+    try{
+        const userId = req.user._id
 
     const totalOrder = await order.countDocuments({user : userId})
 
@@ -226,6 +235,11 @@ export const getStates = async(req, res, next)=>{
         }
         
     })
+    }
+    catch(err){
+        return next(new ErrorHandler("internal server error", 500))
+    }
+    
 }
 
 
@@ -238,11 +252,11 @@ try{
     const data = await user.findOne({email})
 
     if(!data){
-        return next(new Error("please enter vaild email"))
+        return next(new ErrorHandler("please enter vaild email", 400))
     }
 
     if(data.isbanned){
-        return(next(new Error("user is banned please contact to support . ")))
+        return(next(new ErrorHandler("user is banned please contact to support . ", 401)))
     }
 
     const resetPasswordToken = data.generateResetPasswordToken()
@@ -266,7 +280,7 @@ catch(err){
         data.resetPasswordTokenExpire = undefined,
         await data.save({validateBeforeSave : false})
     }
-        return next(new Error("failed to send email", err))
+        return next(new ErrorHandler("failed to send email", 500))
 
 }
 }
@@ -278,15 +292,15 @@ try{
     const { newPassword, confirmNewPassword } = req.body;
 
     if(!newPassword || !confirmNewPassword){
-        return next(new Error("please enter all the fields !"))
+        return next(new ErrorHandler("please enter all the fields !", 400))
     }
 
     if(newPassword !== confirmNewPassword){
-        return next(new Error("password doesn't match !"))
+        return next(new ErrorHandler("password doesn't match !", 400))
     }
 
     if(newPassword.length <8){
-        return next(new Error("password must be 8 character"))
+        return next(new ErrorHandler("password must be 8 character", 400))
     }
 
     const resetPasswordToken = await crypto.createHash('sha256').update(token).digest('hex')
@@ -294,11 +308,11 @@ try{
         resetPasswordTokenExpire : {$gte : Date.now()}}).select("+password")
 
     if(!data){
-        return next(new Error("invaild token or token had expired !"))
+        return next(new ErrorHandler("invaild token or token had expired !", 400))
     }
 
     if(data.isbanned){
-        return(next(new Error("user is banned please contact to support . ")))
+        return(next(new ErrorHandler("user is banned please contact to support . ", 403)))
     }
 
     const password = await bcrypt.hash(newPassword, 10)
@@ -321,7 +335,7 @@ catch(err){
         data.resetPasswordTokenExpire = undefined,
         await data.save({validateBeforeSave : false})
     }
-        return next(new Error("failed to reset password", err))
+        return next(new ErrorHandler("failed to reset password", 500))
 
 }
 }
@@ -332,7 +346,7 @@ export const updatePassword = async (req, res , next)=>{
         const userId = req.user._id
     const {oldPassword, newPassword, confirmNewPassword} = req.body;
     if(!oldPassword || !newPassword || !confirmNewPassword){
-        return next(new Error("please enter fill all the fields !"))
+        return next(new ErrorHandler("please enter fill all the fields !", 400))
     }
 
     const data = await user.findById({_id : userId}).select("+password")
@@ -340,15 +354,15 @@ export const updatePassword = async (req, res , next)=>{
     const oldHasPassword = await bcrypt.compare(oldPassword, data.password)
 
     if(!oldHasPassword){
-        return next(new Error("old pass is invalid"))
+        return next(new ErrorHandler("old pass is invalid", 400))
     }
 
     if(newPassword !== confirmNewPassword){
-        return next(new Error("password not matched !"))
+        return next(new ErrorHandler("password not matched !", 400))
     }
 
     if(newPassword.length < 8){
-        return next(new Error("password must be 8 character"))
+        return next(new ErrorHandler("password must be 8 character", 400))
     }
 
     const hashPassword = await bcrypt.hash(newPassword, 10)
@@ -364,7 +378,7 @@ export const updatePassword = async (req, res , next)=>{
 
     }
     catch(err){
-        return next(new Error("failed to change password !"))
+        return next(new ErrorHandler("failed to change password !", 500))
     }
     
 }

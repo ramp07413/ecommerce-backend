@@ -1,4 +1,5 @@
 import { Cart } from "../model/cartModel.js"
+import { ErrorHandler } from "../utils/Errorhandler.js";
 
 export const addToCart = async(req, res, next)=>{
     try{
@@ -37,7 +38,7 @@ export const addToCart = async(req, res, next)=>{
         
     }
     catch(err){
-        return next(new Error("internal server error !"))
+        return next(new ErrorHandler("internal server error !", 500))
     }
 }
 
@@ -48,7 +49,7 @@ export const getToCart = async(req, res, next)=>{
         let cart = await Cart.findOne({userId}).populate("items.productId")
 
         if(!cart){
-            return next(new Error("cart not found !"))
+            return next(new ErrorHandler("cart not found !", 404))
         }
 
         res.status(200).send({
@@ -58,7 +59,7 @@ export const getToCart = async(req, res, next)=>{
 
     }
     catch(err){
-        return next(new Error("internal server error !"))
+        return next(new ErrorHandler("internal server error !", 500))
     }
 }
 
@@ -71,7 +72,7 @@ export const removeToCart = async(req, res, next)=>{
         let cart = await Cart.findOne({userId}).populate("items.productId")
 
         if(!cart){
-            return next(new Error("cart not found !"))
+            return next(new ErrorHandler("cart not found !", 404))
         }
 
         cart.items = cart.items.filter(item => !item.productId.equals(productId))
@@ -85,7 +86,7 @@ export const removeToCart = async(req, res, next)=>{
 
     }
     catch(err){
-        return next(new Error("internal server error !"))
+        return next(new ErrorHandler("internal server error !", 500))
     }
 }
 
@@ -96,20 +97,20 @@ export const updateCartItemQuantity = async(req, res, next)=>{
         const {productId, quantity} = req.body
 
         if(!productId || !quantity){
-            return next(new Error("please provide vaild quantity"))
+            return next(new ErrorHandler("please provide vaild quantity", 400))
         }
 
         let cart = await Cart.findOne({userId})
 
         if(!cart){
-            return next(new Error("cart not found !"))
+            return next(new ErrorHandler("cart not found !", 404))
         }
 
         let item = cart.items.find(item => item.productId.equals(productId))
 
 
         if(!item){
-            return next(new Error("product not found in card !"))
+            return next(new ErrorHandler("product not found in card !", 404))
         }
 
         if(quantity<=0){
@@ -128,7 +129,7 @@ export const updateCartItemQuantity = async(req, res, next)=>{
 
     }
     catch(err){
-        return next(new Error("internal server error !"))
+        return next(new ErrorHandler("internal server error !", 500))
     }
 }
 

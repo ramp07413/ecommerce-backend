@@ -1,11 +1,12 @@
 import { Category } from "../model/categories.js"
+import { ErrorHandler } from "../utils/Errorhandler.js"
 
 export const addCategory = async (req, res , next)=>{
     try{
         const {name , type} = req.body
 
         if(!name || !type ){
-            return next(new Error("Name and type are required !"))
+            return next(new ErrorHandler("Name and type are required !", 400))
         }
 
         const category = new Category({name , type})
@@ -18,7 +19,7 @@ export const addCategory = async (req, res , next)=>{
         })
     }
     catch(err){
-         return next(new Error("internal server error !"))
+         return next(new ErrorHandler("internal server error !", 500))
     }
 }
 
@@ -40,7 +41,7 @@ export const getAllCategory = async (req, res , next)=>{
         })
     }
     catch(err){
-         return next(new Error("internal server error !"))
+         return next(new ErrorHandler("internal server error !", 500))
     }
 }
 
@@ -48,10 +49,10 @@ export const removeCategory = async(req, res, next)=>{
     try{
         const {id} = req.params
 
-        const data = await Category.findOneAndDelete(id)
+        const data = await Category.findByIdAndDelete(id)
 
         if(!data){
-            return next(new Error("category not found"))
+            return next(new ErrorHandler("category not found", 404))
         }
 
         res.send({
@@ -59,6 +60,6 @@ export const removeCategory = async(req, res, next)=>{
         })
     }
     catch(err){
-        return next(new Error("Error in removing category"))
+        return next(new ErrorHandler("Error in removing category", 500))
     }
 }

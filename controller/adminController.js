@@ -1,4 +1,5 @@
 import { user } from "../model/userModel.js"
+import { ErrorHandler } from "../utils/Errorhandler.js"
 
 export const getAllUsers = async(req, res, next)=>{
     try{
@@ -8,7 +9,7 @@ export const getAllUsers = async(req, res, next)=>{
         data
     })
     }catch(err){
-        return next(new Error("something went wrong !"))
+        return next(new ErrorHandler("something went wrong !", 400))
     }
     
 }
@@ -20,13 +21,13 @@ export const banuser  = async(req, res, next)=>{
         let data = await user.findById(userId)
 
         if(!data){
-            return next(new Error("please enter valid user id"))
+            return next(new ErrorHandler("please enter valid user id", 400))
         }
 
         data.isbanned = !data.isbanned
         console.log(data.isbanned)
 
-        await data.save()
+        await data.save({validateBeforeSave : false})
         res.status(200).json({
             success : true,
             message : `user ${data.isbanned ? 'banned' : "unbanned"} successfully !`,
@@ -36,7 +37,7 @@ export const banuser  = async(req, res, next)=>{
         
     }catch(err){
         console.error(err)
-        return next(new Error("something went wrong !"))
+        return next(new ErrorHandler("internal sever error !", 500))
     }
 }
 
@@ -47,7 +48,7 @@ export const deleteUser = async(req, res, next)=>{
         let data = await user.findByIdAndDelete(userId)
 
         if(!data){
-            return next(new Error("please enter valid user id"))
+            return next(new ErrorHandler("please enter valid user id", 400))
         }
 
        
@@ -60,7 +61,7 @@ export const deleteUser = async(req, res, next)=>{
         
     }catch(err){
         console.error(err)
-        return next(new Error("something went wrong !"))
+        return next(new ErrorHandler("something went wrong !", 500))
     }
 }
 
@@ -73,11 +74,11 @@ export const roleChange = async(req, res, next)=>{
         let data = await user.findById(userId)
 
         if(!data){
-            return next(new Error("please enter valid user id"))
+            return next(new ErrorHandler("please enter valid user id", 400))
         }
 
         if(data.isbanned){
-            return next(new Error("user is banned !"))
+            return next(new ErrorHandler("user is banned !", 403))
         }
 
         data.role = role
@@ -93,7 +94,7 @@ export const roleChange = async(req, res, next)=>{
         
     }catch(err){
         console.error(err)
-        return next(new Error("something went wrong !"))
+        return next(new ErrorHandler("internal server error !", 500))
     }
 }
 
