@@ -104,7 +104,7 @@ export const clearNotifications = async(req, res, next)=>{
         .deleteMany({user : userId})
  
 
-        if(data.length === 0){
+        if(data.deletedCount === 0){
             return next(new ErrorHandler("all notification are already cleared ", 404))
         }
 

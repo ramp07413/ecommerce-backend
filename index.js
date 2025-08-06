@@ -2,7 +2,7 @@ import express from 'express'
 import { productRouter } from './routes/productRoute.js'
 import { connectDB } from './database/db.js'
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger-output.json' assert { type: "json" };
+// import swaggerDocument from './swagger-output.json' assert { type: "json" };
 import cors from 'cors'
 import { userRouter } from './routes/userRoute.js';
 import cookieParser from 'cookie-parser';
@@ -33,7 +33,7 @@ app.use(cors({
 
 
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req,res)=>{
     res.render("index")
