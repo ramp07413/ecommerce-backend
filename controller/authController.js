@@ -13,9 +13,9 @@ import { ErrorHandler } from "../utils/Errorhandler.js";
 export const userRegister = async(req, res, next)=>{
     try{
 
-    const {userName, email , password} = req.body;
+    const {userName, email , password, phoneNumber} = req.body;
 
-    if(!userName || !email || !password){
+    if(!userName || !email || !password || !phoneNumber){
         return next(new ErrorHandler("please fill all the fields ! ", 400))
     }
 
@@ -28,7 +28,8 @@ export const userRegister = async(req, res, next)=>{
     data = await user.create({
         userName,
         email,
-        password : hashPassword
+        password : hashPassword,
+        phoneNumber
     })
 
 
