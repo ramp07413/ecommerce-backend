@@ -13,7 +13,7 @@ export const createOrder = async(req, res, next)=>{
     const {shippingAddress} = req.body 
 
     if(!usercart || usercart.items.length == 0){
-        return next(new ErrorHandler("cart is empty !", 404))
+        return next(new ErrorHandler("cart is empty !", 200))
     }
 
 
@@ -28,7 +28,7 @@ export const createOrder = async(req, res, next)=>{
     let product = await productDetails.findById(item.productId)
     if(!product){
         console.log(item.productId)
-        return next(new ErrorHandler("product not found", 404))
+        return next(new ErrorHandler("product not found", 200))
     }
 
     totalAmount += product.price*item.quantity;
@@ -53,7 +53,7 @@ export const createOrder = async(req, res, next)=>{
     await notification.create({
         user : userId,
         title : "order created",
-        messsage : "order confirmed !",
+        message : "order confirmed !",
         type : "order"
     })
 
