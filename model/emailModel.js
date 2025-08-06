@@ -8,8 +8,15 @@ const emailSchema = new mongoose.Schema({
     },
     email : {
         type : String,
-        required : true
+        // required : true
+        trim : true,
+        lowercase : true
     },
+    emailList : [{
+        type : String,
+        trim : true,
+        lowercase : true
+    },],
     subject : {
         type : String,
         required : true
@@ -17,17 +24,10 @@ const emailSchema = new mongoose.Schema({
     message : {
         type : String,
         required : true
-    },
-    status : {
-        type : String,
-        enum : ["sent", "failed"],
-        default : "sent"
-    },
-    error : {
-        type : String,
-        default : null,
     }
+    
+
 }, {timestamps : true})
 
 
-export const email = mongoose.model("email", emailSchema)
+export const emailDetails = mongoose.model("emailDetails", emailSchema)

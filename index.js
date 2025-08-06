@@ -15,6 +15,7 @@ import { adminRouter } from './routes/adminRoute.js';
 import { errorMiddleware } from './middleware/errorMiddleware.js';
 import { notificationRouter } from './routes/notificationRoute.js';
 import { whatsappRouter } from './routes/whatsappRoute.js';
+import { emailRouter } from './routes/emailRoute.js';
 
 
 
@@ -49,6 +50,7 @@ app.use("/api/v1/order", orderRouter)
 app.use("/api/v1/admin", adminRouter)
 app.use("/api/v1/notification", notificationRouter)
 app.use("/api/v1/whatsapp", whatsappRouter)
+app.use("/api/v1/email", emailRouter)
 app.use(errorMiddleware)
 
 

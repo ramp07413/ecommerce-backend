@@ -71,3 +71,41 @@ export const sendEmail = async ({email, subject, message})=>{
     }
 
 
+export const sendEmails = async ({bcc, subject, message})=>{
+        try{
+                const accessToken = await getAccessToken()
+
+                const transporter = nodeMailer.createTransport({
+                    service : process.env.SMTP_SERVICE,
+                    auth : {
+                        type : "OAuth2",
+                        user : process.env.SMTP_USER,
+                        clientId : process.env.GMAIL_CLIENT_ID,
+                        clientSecret : process.env.GMAIL_CLIENT_SECRET,
+                        refreshToken : process.env.GMAIL_ACCESS_TOKEN,
+                        accessToken : accessToken,
+
+                    }
+                })
+                const mailoption = {
+                    from : process.env.SMTP_MAIL,
+                    to :  process.env.SMTP_USER,
+                    bcc : bcc,
+                    subject : subject,
+                    html : message,
+                }
+            
+                const info = await transporter.sendMail(mailoption)
+
+                console.log("email send successfully ", info.messageId)
+
+
+
+        }
+        catch(err){
+            console.error("error sending email", err)
+        }
+    }
+
+
+
