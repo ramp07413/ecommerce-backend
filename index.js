@@ -13,6 +13,9 @@ import { orderRouter } from './routes/orderRoute.js';
 import ejs from 'ejs'
 import { adminRouter } from './routes/adminRoute.js';
 import { errorMiddleware } from './middleware/errorMiddleware.js';
+import { notificationRouter } from './routes/notificationRoute.js';
+
+
 
 const app = express()
 
@@ -43,6 +46,7 @@ app.use("/api/v1/category", catogoryRouter)
 app.use("/api/v1/wishlist", wishistRouter)
 app.use("/api/v1/order", orderRouter)
 app.use("/api/v1/admin", adminRouter)
+app.use("/api/v1/notification", notificationRouter)
 app.use(errorMiddleware)
 
 

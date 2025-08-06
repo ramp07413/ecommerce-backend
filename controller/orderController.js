@@ -1,4 +1,5 @@
 import { Cart } from "../model/cartModel.js";
+import { notification } from "../model/notificationModel.js";
 import { order } from "../model/orderModel.js";
 import { productDetails } from "../model/productModel.js";
 import { ErrorHandler } from "../utils/Errorhandler.js";
@@ -48,6 +49,13 @@ export const createOrder = async(req, res, next)=>{
     })
 
     await Cart.findOneAndDelete({userId})
+
+    await notification.create({
+        user : userId,
+        title : "order created",
+        messsage : "order confirmed !",
+        type : "order"
+    })
 
     res.status(201).json({
         success : true,
