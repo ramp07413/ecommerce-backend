@@ -9,6 +9,7 @@ export const getAllUsers = async(req, res, next)=>{
         data
     })
     }catch(err){
+        console.err(err)
         return next(new ErrorHandler("something went wrong !", 400))
     }
     

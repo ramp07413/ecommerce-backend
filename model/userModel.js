@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     },
     role : {
         type : String,
-        enum : ["user","buyer", "seller", "admin"],
+        enum : ["user","buyer", "seller","employee", "admin"],
         default : 'buyer'
     },
     
@@ -38,6 +38,80 @@ const userSchema = new mongoose.Schema({
         type : Boolean,
         default : false
     },
+    isdisable : {
+        type : Boolean,
+        default : false
+    },
+
+    dateOfBirth : {
+        type : Date
+    },
+
+    gender : {
+        type : String,
+        enum : ['male', 'female', 'other']
+    },
+
+    maritalStatus : {
+        type : String,
+        enum : ["Single", "Married"]
+    },
+
+    employeeId : {
+        type : String,
+        unique : true
+    },
+
+    nationality : {
+        type : String
+    },
+    emergencyContactName : {
+        type : String
+    },
+    emergencyContactNumber : {
+        type : String
+    },
+    department : {
+        type : mongoose.Schema.Types.ObjectId
+    },
+    designation : {
+        type : String
+    },
+    dateOfJoined : {
+        type : Date
+    },
+    contractType : {
+        type : String
+    },
+    salary : {
+        type : Number
+    }, 
+    bankAccount : {
+        type : new mongoose.Schema({
+                    accountHolderName : {
+            type : String
+        },
+        accountNumber : {
+            type : String
+        },
+        ifcCode : {
+            type : String
+        },
+        bankName : {
+            type : String
+        },
+        branchName : {
+            type : String
+        },
+        }),
+
+        select : false
+    }, 
+    taxId : {
+        type : String
+    },
+    // photo
+    // resume
 
     resetPasswordToken : String,
     resetPasswordTokenExpire : Date

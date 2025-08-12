@@ -109,6 +109,9 @@ export const userLogin = async(req, res, next)=>{
     if(data.isbanned){
         return(next(new ErrorHandler("user is banned please contact to support . ", 401)))
     }
+    if(data.isdisable){
+        return(next(new ErrorHandler("your id is disabled contact to support . ", 401)))
+    }
    
     
     const isPasswordMatched = await bcrypt.compare(password, data.password)

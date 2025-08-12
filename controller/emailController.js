@@ -48,7 +48,6 @@ catch(err){
 export const sendEmailTouser = async(req, res, next)=>{
     try{
 
-    
     const userId = req.user._id
     const {subject , message} = req.body
 
@@ -62,12 +61,11 @@ export const sendEmailTouser = async(req, res, next)=>{
         return next(new ErrorHandler("no email founds !", 400))
     }
 
-
-
+    const email = data.email
 
     await emailDetails.create({
         sentBy : userId,
-        email : data.email,
+        email,
         subject,
         message
     })
@@ -76,7 +74,7 @@ export const sendEmailTouser = async(req, res, next)=>{
 
     res.status(200).send({
         success : true,
-        emaillist
+        message : "email send successfully !"
     })
 }
 catch(err){
