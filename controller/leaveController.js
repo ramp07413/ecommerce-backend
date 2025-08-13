@@ -1,5 +1,6 @@
 import { department } from "../model/departmentModel.js"
 import { leave } from "../model/leaveModel.js"
+import { salary } from "../model/salaryModel.js"
 import { user } from "../model/userModel.js"
 import { ErrorHandler } from "../utils/Errorhandler.js"
 
@@ -133,6 +134,7 @@ export const approveLeaves = async(req, res, next)=>{
 }
 
 export const dashboardOverview = async(req, res, next)=>{
+    const { status } = req.query
     try {
         const total_employee = await user.find({role : "employee"})
 
@@ -146,10 +148,42 @@ export const dashboardOverview = async(req, res, next)=>{
             return next(new ErrorHandler("no employee found ", 400))
         }
 
+        const total_salary = await salary.aggregate([{
+            $group : {
+                _id : null,
+                totalsalary : {
+                  $sum : "$amount"  
+                }
+            }
+    }])
+
+ let pending = 0, approved = 0, rejected = 0, total_leaves = 0;
+    const total_leave = await leave.aggregate([
+        {
+            $group : {
+                _id : "$status",
+                count : { $sum : 1}
+            }
+        }
+    ])
+    total_leave.forEach((item)=>{
+        if(item._id === "pending") pending = item.count
+        if(item._id === "approved") approved = item.count
+        if(item._id === "rejected") rejected = item.count
+        total_leaves += item.count
+    })
+
         res.status(200).json({
             success : true,
-            total_department : total_employee.length
+            total_employee : total_employee.length,
+            total_department : total_department.length,
+            total_salary : total_salary.length > 0 ? total_salary[0].totalsalary : 0,
+            total_leave : total_leaves,
+            pending_leave : pending,
+            approved_leave : approved,
+            rejected_leave : rejected,
         })
+
     } catch (err) {
         return next(new ErrorHandler("error fetching dashboard data", 500))
     }
