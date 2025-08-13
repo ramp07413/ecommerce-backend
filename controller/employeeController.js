@@ -234,7 +234,7 @@ export const addEmployee = async(req, res, next)=>{
         return next(new ErrorHandler("please fill all the field", 400))
     }
 
-    let data = await user.findOne({email, employeeId})
+    let data = await user.findOne({employeeId})
 
     if(data){
         return next(new ErrorHandler("employee already exists", 200))
@@ -242,7 +242,7 @@ export const addEmployee = async(req, res, next)=>{
 
     const hashPassword = await bcrypt.hash(password, 10)
 
-    data = await new user({
+    data = await user.create({
     userName , 
     email ,
     password : hashPassword ,

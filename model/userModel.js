@@ -58,8 +58,7 @@ const userSchema = new mongoose.Schema({
     },
 
     employeeId : {
-        type : String,
-        unique : true
+        type : String
     },
 
     nationality : {

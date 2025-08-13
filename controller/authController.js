@@ -37,6 +37,7 @@ export const userRegister = async(req, res, next)=>{
 
 }
 catch(err){
+    console.error(err)
     return next(new ErrorHandler("internal server error", 500))
 }
 
