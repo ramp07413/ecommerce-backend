@@ -2,7 +2,7 @@ import { Router } from "express";
 import { isAuthenticated, isAuthorized } from "../middleware/authMiddleware.js";
 import { addEmployee, disableEmployee, getEmployee, getOneEmployee, updateEmployee } from "../controller/employeeController.js";
 import { addSalary, mySalaryHistory, salaryHistory } from "../controller/salaryController.js";
-import { applyingLeave, approveLeaves, checkLeave, checkLeaves } from "../controller/leaveController.js";
+import { applyingLeave, approveLeaves, checkLeave, checkLeaves, dashboardOverview } from "../controller/leaveController.js";
 
 const router = Router()
 
@@ -11,9 +11,9 @@ router.post("/add", isAuthenticated, isAuthorized("admin"), addEmployee)
 
 router.get("/get", isAuthenticated, isAuthorized("admin"), getEmployee)
 
-router.get("/getone/:id", isAuthenticated,  isAuthorized("admin"), getOneEmployee )
+router.get("/getone/:id", isAuthenticated,  isAuthorized("admin"), getOneEmployee)
 
-router.put("/update/:id", isAuthenticated, isAuthorized("admin"), updateEmployee)
+router.patch("/update/:id", isAuthenticated, isAuthorized("admin"), updateEmployee)
 
 router.patch("/disable/:id", isAuthenticated, isAuthorized("admin"), disableEmployee)
 
@@ -31,6 +31,8 @@ router.get("/checkleaves", isAuthenticated, isAuthorized("admin"), checkLeaves)
 
 router.patch("/approveleaves", isAuthenticated, isAuthorized("admin"), approveLeaves)
 
+router.get("/dashboard/overview", isAuthenticated, isAuthorized("admin"), dashboardOverview)
+
 
 
 
@@ -46,3 +48,5 @@ router.patch("/approveleaves", isAuthenticated, isAuthorized("admin"), approveLe
 
 
 export {router as employeeRouter}
+
+ 

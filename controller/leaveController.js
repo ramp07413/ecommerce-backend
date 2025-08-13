@@ -1,4 +1,6 @@
+import { department } from "../model/departmentModel.js"
 import { leave } from "../model/leaveModel.js"
+import { user } from "../model/userModel.js"
 import { ErrorHandler } from "../utils/Errorhandler.js"
 
 export const applyingLeave = async(req, res, next)=>{
@@ -130,3 +132,25 @@ export const approveLeaves = async(req, res, next)=>{
     }
 }
 
+export const dashboardOverview = async(req, res, next)=>{
+    try {
+        const total_employee = await user.find({role : "employee"})
+
+        if(!total_employee || total_employee.length === 0){
+            return next(new ErrorHandler("no employee found ", 400))
+        }
+
+        const total_department = await department.find({})
+
+        if(!total_department || total_department.length === 0){
+            return next(new ErrorHandler("no employee found ", 400))
+        }
+
+        res.status(200).json({
+            success : true,
+            total_department : total_employee.length
+        })
+    } catch (err) {
+        return next(new ErrorHandler("error fetching dashboard data", 500))
+    }
+}

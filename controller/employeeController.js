@@ -69,7 +69,8 @@ export const updateEmployee = async(req, res, next)=>{
         data.email = email 
     }
 if(password){
-    data.password = password 
+    const hashPassword = await bcrypt.hash(password, 10)
+    data.password = hashPassword
     }
 if(role){ 
     data.role = role 
@@ -134,7 +135,7 @@ if(taxId){
 
     }catch (err) {
         console.error(err)
-        return next(new ErrorHandler("failed to add employee", 500))
+        return next(new ErrorHandler("failed to update employee", 500))
     }
 }
 
