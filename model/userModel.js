@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema({
     
     phoneNumber : {
         type : String,
-        required : true
     },
     address : {
         street : String,
@@ -87,7 +86,7 @@ const userSchema = new mongoose.Schema({
     }, 
     bankAccount : {
         type : new mongoose.Schema({
-                    accountHolderName : {
+         accountHolderName : {
             type : String
         },
         accountNumber : {

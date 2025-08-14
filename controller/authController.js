@@ -71,6 +71,7 @@ export const googleLogin = async(req, res, next)=>{
     sendToken(mydata, 200 , "user login successfully", req, res)
 }
  catch(err){
+        console.error(err)
         return next(new ErrorHandler("login failed !", 403))
     }
 

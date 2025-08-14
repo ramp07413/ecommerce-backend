@@ -18,6 +18,7 @@ import { whatsappRouter } from './routes/whatsappRoute.js';
 import { emailRouter } from './routes/emailRoute.js';
 import { employeeRouter } from './routes/employeeRoute.js';
 import { departmentRouter } from './routes/departmentRoute.js';
+import { couponRouter } from './routes/couponRoute.js';
 
 
 
@@ -55,6 +56,7 @@ app.use("/api/v1/whatsapp", whatsappRouter)
 app.use("/api/v1/email", emailRouter)
 app.use("/api/v1/employee", employeeRouter)
 app.use("/api/v1/department", departmentRouter)
+app.use("/api/v1/coupon", couponRouter)
 app.use(errorMiddleware)
 
 

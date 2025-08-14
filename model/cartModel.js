@@ -18,7 +18,13 @@ const cartSchema = new mongoose.Schema({
                 default : 1
             }
         }
-    ]
+    ],
+    couponDiscount : {
+        type : Number,
+        default : 0
+    }
+   
+   
 })
 
 export const Cart = mongoose.model("Cart", cartSchema)

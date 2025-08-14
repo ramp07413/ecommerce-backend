@@ -1,13 +1,17 @@
 import { Cart } from "../model/cartModel.js"
+import { productDetails } from "../model/productModel.js";
 import { ErrorHandler } from "../utils/Errorhandler.js";
 
 export const addToCart = async(req, res, next)=>{
     try{
         const userId = req.user._id
-        const {productId, quantity} = req.body
+        const {productId, quantity, couponCode} = req.body
+
+        if(!productId || !quantity){
+            return next(new ErrorHandler("please fill all the fields !"))
+        }        
 
         let cart = await Cart.findOne({userId});
-
         if(!cart){
             cart = new Cart({
                 userId, items :[{
@@ -15,6 +19,9 @@ export const addToCart = async(req, res, next)=>{
                 }]
             })
         }
+
+      
+
 
         const existingItem = cart.items.find(item => item.productId.equals(productId))
 
@@ -38,6 +45,7 @@ export const addToCart = async(req, res, next)=>{
         
     }
     catch(err){
+        console.error(err)
         return next(new ErrorHandler("internal server error !", 500))
     }
 }
@@ -47,6 +55,19 @@ export const getToCart = async(req, res, next)=>{
         const userId = req.user._id
 
         let cart = await Cart.findOne({userId}).populate("items.productId")
+        let totalprice = 0
+        let total_discount = 0
+        let totalamount = 0
+        
+        cart.items.forEach((item)=>{
+            total_discount += parseInt((item.productId.price*item.productId.discount*item.quantity)/100)
+            totalamount += parseInt(item.productId.price*item.quantity)
+        })
+
+        totalprice = totalamount - total_discount 
+        totalprice -= parseInt(totalprice*cart.couponDiscount/100)
+       
+
 
         if(!cart){
             return next(new ErrorHandler("cart not found !", 404))
@@ -54,11 +75,16 @@ export const getToCart = async(req, res, next)=>{
 
         res.status(200).send({
             success : true,
-            cart
+            cart,
+            orignalprice : totalamount,
+            totalAmount : totalprice, 
+            discount : total_discount,
+            couponDiscount : parseInt(totalamount*cart.couponDiscount/100)
         })
 
     }
     catch(err){
+        console.error(err)
         return next(new ErrorHandler("internal server error !", 500))
     }
 }

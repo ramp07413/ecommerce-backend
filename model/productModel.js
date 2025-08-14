@@ -29,6 +29,10 @@ export const productSchema = new mongoose.Schema({
     userId : {
         type : Schema.Types.ObjectId,
         ref : "user"
+    },
+    discount : {
+        type : Number,
+        default : 5
     }
 }, {timestamps : true})
 

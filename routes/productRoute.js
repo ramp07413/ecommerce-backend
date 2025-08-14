@@ -8,6 +8,7 @@ router.get("/get", getProduct)
 router.get("/get/:categoryId", getProductByCategory)
 router.post("/add", isAuthenticated, isAuthorized("admin"), addProduct)
 router.put("/update/:id", isAuthenticated, isAuthorized("admin"), updateProduct)
+router.patch("/updateOne/:id", isAuthenticated, isAuthorized("admin"), updateProduct)
 router.delete("/delete/:id", isAuthenticated, isAuthorized("admin"), deleteProduct )
 router.get("/filter", isAuthenticated, filterProduct)
 
