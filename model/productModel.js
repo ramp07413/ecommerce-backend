@@ -32,7 +32,7 @@ export const productSchema = new mongoose.Schema({
     },
     discount : {
         type : Number,
-        default : 5
+        default : 0
     }
 }, {timestamps : true})
 

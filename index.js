@@ -19,6 +19,7 @@ import { emailRouter } from './routes/emailRoute.js';
 import { employeeRouter } from './routes/employeeRoute.js';
 import { departmentRouter } from './routes/departmentRoute.js';
 import { couponRouter } from './routes/couponRoute.js';
+import { invoiceRouter } from './routes/invoiceRoute.js';
 
 
 
@@ -57,6 +58,7 @@ app.use("/api/v1/email", emailRouter)
 app.use("/api/v1/employee", employeeRouter)
 app.use("/api/v1/department", departmentRouter)
 app.use("/api/v1/coupon", couponRouter)
+app.use("/api/v1/invoice", invoiceRouter)
 app.use(errorMiddleware)
 
 

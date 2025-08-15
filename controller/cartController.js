@@ -55,6 +55,10 @@ export const getToCart = async(req, res, next)=>{
         const userId = req.user._id
 
         let cart = await Cart.findOne({userId}).populate("items.productId")
+        if(!cart){
+            return next(new ErrorHandler("cart is empty !", 200))
+        }
+
         let totalprice = 0
         let total_discount = 0
         let totalamount = 0
@@ -69,10 +73,7 @@ export const getToCart = async(req, res, next)=>{
        
 
 
-        if(!cart){
-            return next(new ErrorHandler("cart not found !", 404))
-        }
-
+        
         res.status(200).send({
             success : true,
             cart,
@@ -151,6 +152,27 @@ export const updateCartItemQuantity = async(req, res, next)=>{
         res.status(200).send({
             success : true,
             cart
+        })
+
+    }
+    catch(err){
+        return next(new ErrorHandler("internal server error !", 500))
+    }
+}
+
+
+export const clearCart = async(req, res, next)=>{
+    try{
+        const userId = req.user._id
+
+        let cart = await Cart.findOneAndDelete({userId})
+
+        if(!cart){
+            return next(new ErrorHandler("cart already cleared !", 200))
+        }
+        res.status(200).send({
+            success : true,
+            message : "cart is cleared !"
         })
 
     }

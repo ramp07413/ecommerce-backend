@@ -28,9 +28,21 @@ shippingAddress : {
     country : {type : String, required : true},
 }
 ,
-totalAmount : {
+OrignalAmount : {
     type : Number,
     required : true
+},
+productPrice : {
+    type : Number,
+    required : true
+},
+finalAmount : {
+    type : Number,
+    required : true
+},
+couponDiscount :  {
+    type : Number,
+    default : 0
 },
 paymentStatus : {
     type : String,

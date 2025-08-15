@@ -8,10 +8,13 @@ const invoiceSchema = new mongoose.Schema({
     },
     orderId : {
         type : mongoose.Schema.Types.ObjectId,
-        required : true
+        ref : 'order',
+        required : true,
+        unique : true,
     },
     userId : {
         type : mongoose.Schema.Types.ObjectId,
+        ref : 'user',
         required : true
     },
 
@@ -39,8 +42,11 @@ const invoiceSchema = new mongoose.Schema({
     couponDiscount : Number,
     grandTotal : Number,
     orderDate : Date,
-    invoiceNumber : {
+    invoiceDate : {
         type : Date,
         default : Date.now
     }
 }, {timestamps : true})
+
+
+export const invoice = mongoose.model("invoice", invoiceSchema)

@@ -27,7 +27,7 @@ export const createCoupon = async (req, res, next)=>{
             return next(new ErrorHandler("coupon already exits !", 200))
         }
 
-
+        //advance feature
             // userLimit : {
             //         type : Number,
             //         default : null
@@ -158,25 +158,16 @@ export const deleteCoupon = async (req, res, next)=>{
 
 export const removeCoupon = async (req, res, next)=>{
     try {
-        const { couponCode } = req.body
         const  userId = req.user._id
 
-        if(!couponCode){
-            return next(new ErrorHandler("give parameters", 400))
-        }
-
-       
-
-        let data = await coupon.findOne({couponCode : couponCode}) 
+       let data = await Cart.findOne({userId})
 
         if(!data){
-            return next(new ErrorHandler("coupon not found !", 404))
+            return next(new ErrorHandler("cart is empty !", 200))
         }
 
-        data = await Cart.findOne({userId})
-
-        if(!data){
-            return next(new ErrorHandler("cart not found !", 404))
+        if(data.couponDiscount === 0){
+            return next(new ErrorHandler("first apply coupon to remove !", 200))
         }
 
         data.couponDiscount = 0
@@ -195,6 +186,7 @@ export const applyCoupon = async (req, res, next)=>{
     try {
         const userId = req.user._id
         const { couponCode } = req.body || { }
+        console.log(couponCode)
         if(!couponCode){
             return next(new ErrorHandler("parameter is required !", 400))
         }
@@ -206,6 +198,9 @@ export const applyCoupon = async (req, res, next)=>{
         }
 
         data = await Cart.findOne({userId})
+        if(!data){
+            return next(new ErrorHandler("cart is empty add item to apply coupon", 400))
+        }
         data.couponDiscount = discount
         await data.save()
         res.status(200).json({

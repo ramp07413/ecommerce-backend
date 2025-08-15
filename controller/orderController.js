@@ -8,6 +8,7 @@ export const createOrder = async(req, res, next)=>{
     try{
 
     let totalAmount = 0
+    let discountedPrice = 0
     const userId = req.user._id;
     const usercart = await Cart.findOne({userId})
     const {shippingAddress} = req.body 
@@ -15,6 +16,12 @@ export const createOrder = async(req, res, next)=>{
     if(!usercart || usercart.items.length == 0){
         return next(new ErrorHandler("cart is empty !", 200))
     }
+
+    console.log(usercart)
+
+    const couponDiscount = usercart.couponDiscount
+
+    console.log(couponDiscount)
 
 
     if(!shippingAddress ){
@@ -31,11 +38,19 @@ export const createOrder = async(req, res, next)=>{
         return next(new ErrorHandler("product not found", 200))
     }
 
-    totalAmount += product.price*item.quantity;
-        finalOrderitem.push({
-            product : item.productId,
-            quantity : item.quantity
-        })
+    // console.log(product)
+    
+    totalAmount += product.price*item.quantity
+    finalOrderitem.push({
+        product : item.productId,
+        quantity : item.quantity
+    })
+    discountedPrice = parseInt(totalAmount -  (totalAmount*product.discount)/100);
+    }
+
+    let finalAmount = discountedPrice;
+    if(couponDiscount != 0){
+        finalAmount =  discountedPrice - discountedPrice*couponDiscount/100
     }
     
     const data = await order.create({
@@ -43,7 +58,10 @@ export const createOrder = async(req, res, next)=>{
         user : userId,
         orderItems :finalOrderitem,
         shippingAddress : shippingAddress,
-        totalAmount,
+        OrignalAmount : parseInt(totalAmount),
+        productPrice : discountedPrice,
+        finalAmount : parseInt(finalAmount),
+        couponDiscount : couponDiscount,
         paymentStatus : "pending",
         shippingStatus : "processing"
     })
@@ -73,7 +91,7 @@ export const createOrder = async(req, res, next)=>{
 export const getMyorder = async(req, res, next)=>{
     try{
         const userId = req.user._id;
-        const data = await order.find({user : userId}).populate('orderItems.product', 'name price').select('orderItems shippingAddress shippingStatus paymentStatus')
+        const data = await order.find({user : userId}).populate('orderItems.product', 'name price discount').select('orderItems OrignalAmount productPrice finalAmount shippingAddress shippingStatus paymentStatus')
 
         if(!data){
             return next(new ErrorHandler("oder not found !", 404))
