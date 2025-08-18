@@ -1,5 +1,6 @@
 import { Cart } from "../model/cartModel.js"
 import { productDetails } from "../model/productModel.js";
+import { user } from "../model/userModel.js";
 import { ErrorHandler } from "../utils/Errorhandler.js";
 
 export const addToCart = async(req, res, next)=>{
@@ -62,13 +63,20 @@ export const getToCart = async(req, res, next)=>{
         let totalprice = 0
         let total_discount = 0
         let totalamount = 0
+        let walletamount = 0
         
         cart.items.forEach((item)=>{
             total_discount += parseInt((item.productId.price*item.productId.discount*item.quantity)/100)
             totalamount += parseInt(item.productId.price*item.quantity)
         })
 
-        totalprice = totalamount - total_discount 
+        const userData = await user.findOne({_id : userId})
+
+        if(userData.isWalletApplied){
+            walletamount = userData.walletBalance
+        }
+
+        totalprice = totalamount - total_discount - walletamount
         totalprice -= parseInt(totalprice*cart.couponDiscount/100)
        
 
@@ -80,6 +88,7 @@ export const getToCart = async(req, res, next)=>{
             orignalprice : totalamount,
             totalAmount : totalprice, 
             discount : total_discount,
+            usedwalletamount : walletamount,
             couponDiscount : parseInt(totalamount*cart.couponDiscount/100)
         })
 

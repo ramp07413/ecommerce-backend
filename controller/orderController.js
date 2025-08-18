@@ -2,6 +2,7 @@ import { Cart } from "../model/cartModel.js";
 import { notification } from "../model/notificationModel.js";
 import { order } from "../model/orderModel.js";
 import { productDetails } from "../model/productModel.js";
+import { user } from "../model/userModel.js";
 import { ErrorHandler } from "../utils/Errorhandler.js";
 
 export const createOrder = async(req, res, next)=>{
@@ -9,6 +10,7 @@ export const createOrder = async(req, res, next)=>{
 
     let totalAmount = 0
     let discountedPrice = 0
+    let walletamount = 0
     const userId = req.user._id;
     const usercart = await Cart.findOne({userId})
     const {shippingAddress} = req.body 
@@ -30,6 +32,12 @@ export const createOrder = async(req, res, next)=>{
 
     const finalOrderitem = []
 
+    const userData = await user.findOne({_id : userId})
+
+    if(userData.isWalletApplied){
+        walletamount = userData.walletBalance
+    }
+
     for(let item of usercart.items){
     // console.log(item.productId)
     let product = await productDetails.findById(item.productId)
@@ -48,7 +56,8 @@ export const createOrder = async(req, res, next)=>{
     discountedPrice = parseInt(totalAmount -  (totalAmount*product.discount)/100);
     }
 
-    let finalAmount = discountedPrice;
+    let finalAmount = discountedPrice - walletamount;
+    
     if(couponDiscount != 0){
         finalAmount =  discountedPrice - discountedPrice*couponDiscount/100
     }
@@ -62,6 +71,7 @@ export const createOrder = async(req, res, next)=>{
         productPrice : discountedPrice,
         finalAmount : parseInt(finalAmount),
         couponDiscount : couponDiscount,
+        usedWalletAmount : walletamount,
         paymentStatus : "pending",
         shippingStatus : "processing"
     })
@@ -75,6 +85,12 @@ export const createOrder = async(req, res, next)=>{
         type : "order"
     })
 
+    if(walletamount != 0){
+        userData.walletBalance = 0
+        userData.isWalletApplied = false
+        await userData.save()
+    }
+
     res.status(201).json({
         success : true,
         message : "order confirmed !",
@@ -85,7 +101,6 @@ export const createOrder = async(req, res, next)=>{
         console.error(err)
         return next(new ErrorHandler("failed to place order !", 500))
       }
-    
 }
 
 export const getMyorder = async(req, res, next)=>{

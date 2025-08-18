@@ -54,6 +54,9 @@ shippingStatus : {
     enum : ["processing", "shipped", "delivered", "cancelled"],
     default : "processing"
 },
+usedWalletAmount : {
+    type : Number
+}
 
 }, {timestamps : true})
 

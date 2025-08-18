@@ -70,8 +70,7 @@ export const applyWalletMoney = async(req, res, next)=>{
         if(!userData){
             return next(new ErrorHandler("user not found !", 404))
         }
-
-        
+    
         userData.isWalletApplied = true
 
         await userData.save()
@@ -85,4 +84,31 @@ export const applyWalletMoney = async(req, res, next)=>{
         return next(new ErrorHandler("error using balance please try again later", 500))
     }
 }
+
+
+
+export const unapplyWalletMoney = async(req, res, next)=>{
+    try {
+        const userId = req.user._id
+        
+        const userData = await user.findOne({_id : userId})
+        
+        if(!userData){
+            return next(new ErrorHandler("user not found !", 404))
+        }
+    
+        userData.isWalletApplied = false
+
+        await userData.save()
+        
+        res.status(200).json({
+            success : true,  
+            message : "wallet unapplied successfully !"
+        })
+    } catch (err) {
+        console.error(err)
+        return next(new ErrorHandler("error using balance please try again later", 500))
+    }
+}
+
 
