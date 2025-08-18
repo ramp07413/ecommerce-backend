@@ -11,8 +11,8 @@ export const sendToken = (data, code, message, req, res)=>{
     res.status(code).cookie("token", token,{
         // expires : new Date(Date.now() + process.env.COOKIE_EXPIRE*24*60*60*1000),
         httpOnly : true,
-        secure: isLocalhost,  
-        sameSite: "None", 
+        secure: !isLocalhost,  
+        sameSite: isLocalhost ? "Lax" : "None", 
     }).json({
         success : true,
         user,
