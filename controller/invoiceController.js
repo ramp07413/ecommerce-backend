@@ -13,6 +13,10 @@ const generateInvoiceNumber = async()=>{
     return `INV-${yyyymmdd}-${random}`
 }
 
+const datemodify = (orderDate)=>{
+    return  orderDate.toISOString().slice(0,10).replaceAll("-", "/")
+}
+
 export const createInvoice = async (req, res, next)=>{
     try {
         const userId = req.user._id
@@ -119,22 +123,43 @@ export const downloadInvoice = async(req, res, next)=>{
        
         .moveDown(0.5)
         
-        doc.font('Times-Roman').fontSize(15)
+        doc.font('Times-Bold').fontSize(15)
         .fillColor('black')
-        .text(`Sold By - ${data.userId.userName}`, {
-            align : "left"
+        .text(`Sold By - `, {
+            align : "left" , continued : true
+        })
+        .font("Times-Roman")
+        .text(`${data.userId.userName}`, {
+            align : "left", continued : false
         })
         .fontSize(15)
-         .text(`Ship-from Address - ${data.shippingAddress.street}, ${data.shippingAddress.city},${data.shippingAddress.state},${data.shippingAddress.country}, ${data.shippingAddress.postalCode},  `, {
-            align : "left", width : 200
+        .font('Times-Bold')
+         .text(`Ship-from Address - `, {
+            align : "left", width : 200, continued : true
+        })
+        .font('Times-Roman')
+        .text(`${data.shippingAddress.street}, ${data.shippingAddress.city},${data.shippingAddress.state},${data.shippingAddress.country}, ${data.shippingAddress.postalCode},  `, {
+            align : "left", width : 200, continued : false
         })
          .fontSize(15)
-         .text(`GSTIN - ${data.GSTIN}  `, {
-            align : "left",
+        .font('Times-Bold')
+         .text(`GSTIN - `, {
+            align : "left", continued : true
         })
-         .fontSize(15)
-         .text(`Invoice Number - ${data.invoiceNumber}  `, {
-            align : "right",
+        .font('Times-Roman')
+        .text(`${data.invoiceNumber}  `, {
+            align : "left", continued : false
+        })
+        let x = doc.page.width - 200
+        let y = doc.y
+         doc.fontSize(15)
+        .font('Times-Bold')
+         .text(`Invoice Number - `, {
+            align : "left",  continued : true
+        })
+        .font('Times-Roman')
+     .text(`${data.invoiceNumber}  `, {
+            align : "left", continued : false
         })
         .moveDown()
 
@@ -148,16 +173,18 @@ export const downloadInvoice = async(req, res, next)=>{
         rowStyles :{border : false},
         columnStyles : [200, '*', '*', '*'],
         data : [
-            ["Order ID", "Bill To", "Ship To", ""],
-            [`${data.orderId}`, `${data.userId.userName}`, `${data.userId.userName}`, ``],
-            [`${(data.orderDate)}`, `${data.shippingAddress.street},${data.shippingAddress.city}`, `${data.shippingAddress.street},${data.shippingAddress.city}`, ``],
-            [`${data.invoiceDate}`, `${data.shippingAddress.state},${data.shippingAddress.country}`, `${data.shippingAddress.state},${data.shippingAddress.country}`, {rowspan : 4, text : "this is unoriginated text please ignore if you are not interested", fillColor : 'red' },],
-            [`${data.PAN}`, `${data.shippingAddress.postalCode}`, `${data.shippingAddress.postalCode}`, ``],
+            ["Order ID", "Bill To", "Ship To"],
+            [`${data.orderId}`, `${data.userId.userName}`, `${data.userId.userName}`],
+            [`${(datemodify(data.orderDate))}`, `${data.shippingAddress.street},${data.shippingAddress.city}`, `${data.shippingAddress.street},${data.shippingAddress.city}`],
+            [`${datemodify(data.invoiceDate)}`, `${data.shippingAddress.state},${data.shippingAddress.country}`, `${data.shippingAddress.state},${data.shippingAddress.country}`],
+            [`${data.orderId}`, `${data.shippingAddress.postalCode}`, `${data.shippingAddress.postalCode}`],
             
         ]
       })
       .moveDown()
       .text(`Total item : ${data.items[0].quantity}`)
+
+  
       
     doc.moveTo(0, doc.y)
     .lineTo(1000, doc.y)

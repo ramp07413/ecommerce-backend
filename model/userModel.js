@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
+import { type } from "os";
 
 const userSchema = new mongoose.Schema({
     userName : {
@@ -112,7 +113,15 @@ const userSchema = new mongoose.Schema({
     // resume
 
     resetPasswordToken : String,
-    resetPasswordTokenExpire : Date
+    resetPasswordTokenExpire : Date,
+    walletBalance : {
+        type : Number,
+        default : 0
+    },
+    isWalletApplied : {
+        type : Boolean,
+        default : false
+    }
     
 }, {timestamps : true}
 )

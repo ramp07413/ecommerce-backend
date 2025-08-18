@@ -20,6 +20,8 @@ import { employeeRouter } from './routes/employeeRoute.js';
 import { departmentRouter } from './routes/departmentRoute.js';
 import { couponRouter } from './routes/couponRoute.js';
 import { invoiceRouter } from './routes/invoiceRoute.js';
+import { datemodify } from './testing.js';
+import { transactionRouter } from './routes/transactionRoute.js';
 
 
 
@@ -59,8 +61,11 @@ app.use("/api/v1/employee", employeeRouter)
 app.use("/api/v1/department", departmentRouter)
 app.use("/api/v1/coupon", couponRouter)
 app.use("/api/v1/invoice", invoiceRouter)
+app.use("/api/v1/transaction", transactionRouter)
 app.use(errorMiddleware)
 
+
+datemodify()
 
 app.listen(3001, ()=>{
     console.log("it's running...")
