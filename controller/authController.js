@@ -152,7 +152,7 @@ export const userLogout = (req, res, next)=>{
     const isLocalhost = req.headers.origin && req.headers.origin.includes("localhost");
         res.status(200).cookie("token", "",{
         expires: new Date(Date.now()),
-        httpOnly : true,
+        httpOnly : false,
         secure: !isLocalhost,  
         sameSite: isLocalhost ? "Lax" : "None", 
         path: "/"               
