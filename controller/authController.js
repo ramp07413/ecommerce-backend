@@ -150,7 +150,13 @@ catch(err){
 export const userLogout = (req, res, next)=>{
     try{
 
-        res.status(200).cookie("token", "").json({
+        res.status(200).cookie("token", "",{
+        expires: new Date(Date.now()),
+        httpOnly : true,
+        secure: !isLocalhost,  
+        sameSite: isLocalhost ? "Lax" : "None", 
+        path: "/"               
+    }).json({
             success : true,
             message : "logout successfully !"
         })
