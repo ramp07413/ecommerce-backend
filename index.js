@@ -36,10 +36,9 @@ app.use(cookieParser())
 app.set('view engine', 'ejs')
 
 app.use(cors({
-  origin: ['http://localhost:3001',
-    'http://localhost:5173',
-    'https://testapix.netlify.app'
-  ],
+  origin: 
+    'https://testapix.netlify.app',
+  
   credentials : true
 }));
 
