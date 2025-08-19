@@ -10,3 +10,12 @@ export const datemodify = async()=>{
         console.error(err)
     }
 }
+
+export const linkCreate = async()=>{
+    try {
+        const userId = ""
+        const data =  await user.findOne({_id})
+    } catch (err) {
+        
+    }
+}
