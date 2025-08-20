@@ -37,6 +37,7 @@ app.set('view engine', 'ejs')
 
 app.use(cors({
   origin: '*',
+  credentials : true
 }));
 
 
