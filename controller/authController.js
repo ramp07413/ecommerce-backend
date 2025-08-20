@@ -7,6 +7,7 @@ import { client, googleresponse } from "../utils/googletoken.js";
 import { sendEmail } from "../utils/emailSend.js";
 import crypto from 'crypto'
 import { ErrorHandler } from "../utils/Errorhandler.js";
+import { refer } from "../model/refer&earnModel.js";
 
 
 
@@ -14,6 +15,12 @@ export const userRegister = async(req, res, next)=>{
     try{
 
     const {userName, email , password, phoneNumber} = req.body;
+
+    const referlink = req.query.ref
+
+    const referdata = await user.findOne({referlink})
+    
+    console.log(referdata)
 
     if(!userName || !email || !password || !phoneNumber){
         return next(new ErrorHandler("please fill all the fields ! ", 400))
@@ -31,6 +38,45 @@ export const userRegister = async(req, res, next)=>{
         password : hashPassword,
         phoneNumber
     })
+
+    // if(referlink){
+    //     if(referdata._id){
+    //         const referdata = await refer.findOne(refer)
+    //         const refermodeldata = await refer.create({
+    //             referUserId : referdata._id,
+    //             userInvited : [
+    //                 {
+    //                     userId : data._id
+    //                 }
+    //             ],
+    //             inviteCount : inviteCount+1,
+    //             totalearning : 
+    //         })
+    //     }
+    //     data.isRefered = true
+    //     data.referedby  = referdata._id
+    //     await data.save()
+    // }
+
+    
+
+//     d: new ObjectId('68a58ebede696987875fc601'),
+//   userName: 'ram pareek',
+//   email: 'ramp07415@gmail.com',
+//   role: 'buyer',
+//   phoneNumber: '99299938858',
+//   isbanned: false,
+//   isdisable: false,
+//   walletBalance: 0,
+//   isWalletApplied: false,
+//   isRefered: false,
+//   referedby: null,
+//   createdAt: 2025-08-20T09:00:46.429Z,
+//   updatedAt: 2025-08-20T09:00:46.429Z,
+//   referlink: '820202523046P68a58ebed',
+//   __v: 0
+// }
+
 
 
     sendToken(data, 201 , "user registered successfully", req, res)

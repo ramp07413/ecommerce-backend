@@ -13,11 +13,20 @@ export const datemodify = async()=>{
 
 export const linkCreate = async()=>{
     try {
-        const userId = ""
-        const data =  await user.findOne({_id})
+        const userId = "689c3ffab78ad54300124100"
+        const data = new Date(Date.now())
+        const dateString = data.toLocaleString().replaceAll("/","").replaceAll(",","").replaceAll(" ", "").replaceAll(":", "").slice(0,13)
+        const dateString2 = data.toLocaleString().replace(/[-:/T,AM ]/g, "")
+        console.log(dateString)
+        console.log(dateString2)
+        console.log(data)
+
+        const userString = userId.slice(0,9)
+        const link = userString + dateString
+        console.log(link)
+      
     } catch (err) {
-        
+        console.error(err)
     }
 }
 
-// token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YTMwODk3ODM5OTVkMDlkNzFkZGMzOSIsImVtYWlsIjoicmFtMjNAZ21haWwuY29tIiwiaWF0IjoxNzU1NTk1NDk2fQ.RmKIg_Dn88wtorI7WSaBi4W58TK3s9vjph7qw5ygoIM; Path=/; HttpOnly; Secure; SameSite=None

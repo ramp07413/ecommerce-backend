@@ -121,7 +121,20 @@ const userSchema = new mongoose.Schema({
     isWalletApplied : {
         type : Boolean,
         default : false
+    },
+    referlink : {
+        type : String,
+    },
+    isRefered : {
+        type : Boolean,
+        default : false
+    },
+    referedby : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'user',
+        default : null
     }
+    
     
 }, {timestamps : true}
 )
@@ -137,6 +150,20 @@ userSchema.methods.generateResetPasswordToken = function(){
     this.resetPasswordTokenExpire = Date.now() + 1000 * 60 * 15
     return resetToken
 }
+
+userSchema.pre('save', function(next){
+    if(!this.referlink){
+        const data = new Date();
+        const dateString = data.toLocaleString().replaceAll("/","")
+                                  .replaceAll(",","")
+                                  .replaceAll(" ","")
+                                  .replaceAll(":","")
+                                  .slice(0,13);
+        const userString = this._id.toString().slice(0,9)
+        this.referlink = dateString + userString  
+    }
+    next(); //most important part
+})
 
 export const user = mongoose.model("user", userSchema)
 

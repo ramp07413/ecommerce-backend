@@ -20,7 +20,7 @@ import { employeeRouter } from './routes/employeeRoute.js';
 import { departmentRouter } from './routes/departmentRoute.js';
 import { couponRouter } from './routes/couponRoute.js';
 import { invoiceRouter } from './routes/invoiceRoute.js';
-import { datemodify } from './testing.js';
+import { datemodify, linkCreate } from './testing.js';
 import { transactionRouter } from './routes/transactionRoute.js';
 
 
@@ -72,6 +72,8 @@ app.use(errorMiddleware)
 
 
 datemodify()
+
+linkCreate()
 
 app.listen(3001, ()=>{
     console.log("it's running...")
