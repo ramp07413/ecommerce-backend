@@ -39,7 +39,8 @@ app.use(cors({
   origin: [
     'https://testapix.netlify.app',
     "http://localhost:3001",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://localhost:8081"
   ],
   
   credentials : true
