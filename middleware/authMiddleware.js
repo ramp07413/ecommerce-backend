@@ -4,7 +4,14 @@ import { user } from '../model/userModel.js';
 
 export const  isAuthenticated = async(req, res, next)=>{
     try{
-    const {token} = req.cookies;
+        let token;
+    if(req.cookies && req.cookies.token){
+        token = req.cookies.token
+    }
+    else if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        token = req.headers.authorization.split(' ')[1];
+    }
+    
     if(!token){
         return next(new Error("user is not authenticated."))
     }
@@ -20,6 +27,7 @@ export const  isAuthenticated = async(req, res, next)=>{
 
     }
     catch(err){
+        console.error(err)
         return next(new Error("internal server error"))
     }
    

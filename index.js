@@ -22,6 +22,7 @@ import { couponRouter } from './routes/couponRoute.js';
 import { invoiceRouter } from './routes/invoiceRoute.js';
 import { datemodify, linkCreate } from './testing.js';
 import { transactionRouter } from './routes/transactionRoute.js';
+import { referearnRouter } from './routes/refer&earnRoute.js';
 
 
 
@@ -69,6 +70,7 @@ app.use("/api/v1/department", departmentRouter)
 app.use("/api/v1/coupon", couponRouter)
 app.use("/api/v1/invoice", invoiceRouter)
 app.use("/api/v1/transaction", transactionRouter)
+app.use("/api/v1/referearn", referearnRouter)
 app.use(errorMiddleware)
 
 

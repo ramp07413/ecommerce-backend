@@ -17,10 +17,7 @@ export const userRegister = async(req, res, next)=>{
     const {userName, email , password, phoneNumber} = req.body;
 
     const referlink = req.query.ref
-
-    const referdata = await user.findOne({referlink})
-    
-    console.log(referdata)
+  
 
     if(!userName || !email || !password || !phoneNumber){
         return next(new ErrorHandler("please fill all the fields ! ", 400))
@@ -39,46 +36,60 @@ export const userRegister = async(req, res, next)=>{
         phoneNumber
     })
 
-    // if(referlink){
-    //     if(referdata._id){
-    //         const referdata = await refer.findOne(refer)
-    //         const refermodeldata = await refer.create({
-    //             referUserId : referdata._id,
-    //             userInvited : [
-    //                 {
-    //                     userId : data._id
-    //                 }
-    //             ],
-    //             inviteCount : inviteCount+1,
-    //             totalearning : 
-    //         })
-    //     }
-    //     data.isRefered = true
-    //     data.referedby  = referdata._id
-    //     await data.save()
-    // }
-
     
+    await data.save()
+        
+        if(referlink){
+        const referdata = await user.findOne({referlink : referlink})
 
-//     d: new ObjectId('68a58ebede696987875fc601'),
-//   userName: 'ram pareek',
-//   email: 'ramp07415@gmail.com',
-//   role: 'buyer',
-//   phoneNumber: '99299938858',
-//   isbanned: false,
-//   isdisable: false,
-//   walletBalance: 0,
-//   isWalletApplied: false,
-//   isRefered: false,
-//   referedby: null,
-//   createdAt: 2025-08-20T09:00:46.429Z,
-//   updatedAt: 2025-08-20T09:00:46.429Z,
-//   referlink: '820202523046P68a58ebed',
-//   __v: 0
-// }
-
-
-
+        if(referdata){
+            data.isRefered = true
+            data.referedby  = referdata._id
+            
+            const referuserIddata = await refer.findOne({referUserId: referdata._id})
+            let referalcash = 0
+            const referusercash  = await user.findOne({_id : referdata._id})
+    
+            await data.save()
+            if(!referuserIddata){ 
+                referalcash = 100
+            const refermodeldata = await refer.create({
+                referUserId : referdata._id,
+                userInvited : [
+                    {
+                        userId : data._id
+                    }
+                ],
+                inviteCount  : 1,
+                totalearning : referalcash
+            })
+            await refermodeldata.save() 
+        }
+         else{
+           
+            if(referuserIddata.inviteCount >= 1 ){
+                referalcash = 25
+                
+            }
+            else{
+                referalcash = 100
+            }
+            
+            referusercash.walletBalance += referalcash
+           
+            referuserIddata.inviteCount += 1
+            referuserIddata.totalearning += referalcash
+              referuserIddata.userInvited.push({
+                        userId : data._id
+                    })
+                    
+           await referuserIddata.save()
+                
+        }
+       
+           await referusercash.save()
+        }
+    }
     sendToken(data, 201 , "user registered successfully", req, res)
 
 }
@@ -173,6 +184,7 @@ export const userLogin = async(req, res, next)=>{
 
 }
 catch(err){
+    console.error(err)
     return next(new ErrorHandler("internal server error", 500))
 }
 
@@ -189,6 +201,7 @@ export const getUser = async(req, res, next)=>{
     })
 }
 catch(err){
+    console.error(err)
     return next(new ErrorHandler("internal server error", 500))
 }
 }
