@@ -95,7 +95,8 @@ export const userRegister = async(req, res, next)=>{
 }
 catch(err){
     console.error(err)
-    return next(new ErrorHandler("internal server error", 500))
+    return next(new ErrorHandler(`${err._message}`, 500))
+
 }
 
 }
@@ -142,11 +143,12 @@ export const googleurl = async(req, res, next)=>{
                 scope : ['profile', 'email']
             })
             
-            console.log(url)
+            res.send(url)
             res.redirect(url)
     }
     catch(err){
-        return next(new ErrorHandler("internal server error", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 }
 
@@ -156,15 +158,25 @@ export const userLogin = async(req, res, next)=>{
 
     const {email , password} = req.body;
 
+    if(!req.body){
+        return next(new ErrorHandler("required req.body !"))
+    }
+
     if(!email || !password){
         return next(new ErrorHandler("please fill all the fields ! ", 400))
     }
+    
+    const data = await user.findOne({email}).select("+password")
 
-    let data = await user.findOne({email}).select("+password")
 
     if(!data){
         return next(new ErrorHandler("user doesn't exits !", 404))
     }
+
+    if(!data.password){
+        return next(new ErrorHandler("please reset password ! for this login method", 400))
+    }
+
     if(data.isbanned){
         return(next(new ErrorHandler("user is banned please contact to support . ", 401)))
     }
@@ -172,6 +184,7 @@ export const userLogin = async(req, res, next)=>{
         return(next(new ErrorHandler("your id is disabled contact to support . ", 401)))
     }
    
+    
     
     const isPasswordMatched = await bcrypt.compare(password, data.password)
    
@@ -185,7 +198,8 @@ export const userLogin = async(req, res, next)=>{
 }
 catch(err){
     console.error(err)
-    return next(new ErrorHandler("internal server error", 500))
+    return next(new ErrorHandler(`${err._message}`, 500))
+
 }
 
 }
@@ -202,7 +216,8 @@ export const getUser = async(req, res, next)=>{
 }
 catch(err){
     console.error(err)
-    return next(new ErrorHandler("internal server error", 500))
+    return next(new ErrorHandler(`${err._message}`, 500))
+
 }
 }
 
@@ -307,7 +322,8 @@ export const getStates = async(req, res, next)=>{
     })
     }
     catch(err){
-        return next(new ErrorHandler("internal server error", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
     
 }
@@ -317,7 +333,11 @@ export const getStates = async(req, res, next)=>{
 export const forgetPassword = async (req, res , next)=>{
 try{
 
-    const { email } = req.body
+    const { email } = req.body || {}
+
+    if(!email){
+        return next(new ErrorHandler("please enter email", 400))
+    }
 
     const data = await user.findOne({email})
 
@@ -345,6 +365,7 @@ try{
 
 }
 catch(err){
+    console.error(err)
     if(data){
         data.resetPasswordToken = undefined,
         data.resetPasswordTokenExpire = undefined,

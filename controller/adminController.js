@@ -46,10 +46,14 @@ export const banuser  = async(req, res, next)=>{
 export const deleteUser = async(req, res, next)=>{
     try{
         const userId = req.params.id
-        let data = await user.findByIdAndDelete(userId)
+        let data = await user.findById(userId)
 
         if(!data){
             return next(new ErrorHandler("please enter valid user id", 400))
+        }
+
+        if(data){
+            await data.deleteOne({_id : userId})
         }
 
        
@@ -95,7 +99,8 @@ export const roleChange = async(req, res, next)=>{
         
     }catch(err){
         console.error(err)
-        return next(new ErrorHandler("internal server error !", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 }
 

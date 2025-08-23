@@ -35,7 +35,8 @@ export const sendEmailToAllUsers = async(req, res, next)=>{
 
     res.status(200).send({
         success : true,
-        emaillist
+        emaillist,
+        message : "email sent successfully !"
     })
 }
 catch(err){
@@ -48,8 +49,9 @@ catch(err){
 export const sendEmailTouser = async(req, res, next)=>{
     try{
 
-    const userId = req.user._id
-    const {subject , message} = req.body
+    const userId = req.params.id
+    const {subject , message} = req.body || {}
+
 
     if(!subject || !message){
         return next(new ErrorHandler("please fill all the fields ! ", 400))

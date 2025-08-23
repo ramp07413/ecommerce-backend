@@ -15,7 +15,7 @@ export const getAllnotification = async(req, res, next)=>{
         .limit(limit)
 
         if(data.length === 0){
-            return next(new ErrorHandler("no notification", 404))
+            return next(new ErrorHandler("no notification", 200))
         }
 
         res.status(200).json({
@@ -25,7 +25,8 @@ export const getAllnotification = async(req, res, next)=>{
         })
     }
     catch(err){
-        return next(new ErrorHandler("internal server error", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 
 }
@@ -89,7 +90,8 @@ export const deleteNotification = async(req, res, next)=>{
     }
     catch(err){
         console.log(err)
-        return next(new ErrorHandler("internal server error", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 
 }
@@ -115,7 +117,8 @@ export const clearNotifications = async(req, res, next)=>{
     }
     catch(err){
         console.log(err)
-        return next(new ErrorHandler("internal server error", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 
 }

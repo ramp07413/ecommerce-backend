@@ -9,5 +9,8 @@ export const getConnectWhatsapp = async(req, res, next)=>{
 
     console.log(base_link)
     
-    res.send("success")
+    res.status(200).json({
+        success : true,
+        walink : base_link
+    })
 }

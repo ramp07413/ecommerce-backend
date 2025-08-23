@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Cart } from "../model/cartModel.js"
 import { productDetails } from "../model/productModel.js";
 import { user } from "../model/userModel.js";
@@ -10,7 +11,13 @@ export const addToCart = async(req, res, next)=>{
 
         if(!productId || !quantity){
             return next(new ErrorHandler("please fill all the fields !"))
-        }        
+        }       
+        
+        if(!mongoose.Types.ObjectId.isValid(productId)){
+            return next(new ErrorHandler("enter valid product id"))
+        }
+
+
 
         let cart = await Cart.findOne({userId});
         if(!cart){
@@ -20,8 +27,11 @@ export const addToCart = async(req, res, next)=>{
                 }]
             })
         }
+        const existProduct = await productDetails.findOne({_id : productId})
 
-      
+      if(!existProduct){
+            return next(new ErrorHandler("product not found !", 404))
+      }
 
 
         const existingItem = cart.items.find(item => item.productId.equals(productId))
@@ -47,7 +57,8 @@ export const addToCart = async(req, res, next)=>{
     }
     catch(err){
         console.error(err)
-        return next(new ErrorHandler("internal server error !", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 }
 
@@ -55,10 +66,14 @@ export const getToCart = async(req, res, next)=>{
     try{
         const userId = req.user._id
 
-        let cart = await Cart.findOne({userId}).populate("items.productId")
+        let cart = await Cart.findOne({userId}).populate('items.productId')
         if(!cart){
             return next(new ErrorHandler("cart is empty !", 200))
         }
+
+       
+
+        console.log(cart)
 
         let totalprice = 0
         let total_discount = 0
@@ -95,7 +110,8 @@ export const getToCart = async(req, res, next)=>{
     }
     catch(err){
         console.error(err)
-        return next(new ErrorHandler("internal server error !", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 }
 
@@ -103,26 +119,32 @@ export const getToCart = async(req, res, next)=>{
 export const removeToCart = async(req, res, next)=>{
     try{
         const userId = req.user._id
-        const {productId} = req.body
+        const {productId} = req.body || {}
 
         let cart = await Cart.findOne({userId}).populate("items.productId")
 
         if(!cart){
-            return next(new ErrorHandler("cart not found !", 404))
+            return next(new ErrorHandler("cart not found !", 200))
+            
         }
 
         cart.items = cart.items.filter(item => !item.productId.equals(productId))
-
         await cart.save()
+
+        if(!cart.items || cart.items.length == 0){
+            await cart.deleteOne({userId : userId})
+        }
 
         res.status(200).send({
             success : true,
-            cart
+            message : "item removed successfully !"
         })
 
     }
     catch(err){
-        return next(new ErrorHandler("internal server error !", 500))
+        console.error(err)
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 }
 
@@ -165,7 +187,8 @@ export const updateCartItemQuantity = async(req, res, next)=>{
 
     }
     catch(err){
-        return next(new ErrorHandler("internal server error !", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 }
 
@@ -186,7 +209,8 @@ export const clearCart = async(req, res, next)=>{
 
     }
     catch(err){
-        return next(new ErrorHandler("internal server error !", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 }
 

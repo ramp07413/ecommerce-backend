@@ -28,7 +28,9 @@ export const createInvoice = async (req, res, next)=>{
         }
 
         const orderData = await order.findOne({_id : orderId}).populate("orderItems.product", 'name price discount').select('orderItems OrignalAmount productPrice finalAmount shippingAddress shippingStatus paymentStatus')
-
+        if(!orderData){
+            return next(new ErrorHandler("order id is invalid !", 400))
+        }
         const invoiceItem = []
 
         const AlreadyInvoice = await invoice.findOne({orderId})
@@ -36,6 +38,7 @@ export const createInvoice = async (req, res, next)=>{
         if(AlreadyInvoice){
             return next(new ErrorHandler("invoice already created !", 200))
         }
+
 
         for(let item of orderData.orderItems ){
             invoiceItem.push({
@@ -45,6 +48,8 @@ export const createInvoice = async (req, res, next)=>{
                 discount : item.product.discount
             })
         }
+
+        console.log(invoiceItem)
         const invoiceNumber = await generateInvoiceNumber()
 
 

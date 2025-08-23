@@ -8,21 +8,54 @@ dotenv.config();
 
 
 const router = Router()
+// userRoute.js
 
-
-
+// #swagger.path = '/api/v1/auth/register'
+// #swagger.tags = ['Auth']
 router.post("/register", userRegister)
-router.post("/login", userLogin)
-router.get("/google",googleurl)
-router.patch("/updatePassword", isAuthenticated, updatePassword)
-router.get("/google/callback", googleLogin)
-router.get("/me", isAuthenticated ,getUser)
-router.get("/logout", userLogout)
-router.post("/forget", forgetPassword)
-router.get("/profile", isAuthenticated, userProfile)
-router.put("/update", isAuthenticated, updateProfile)
-router.put("/reset/:token", resetPassword)
-router.get("/user-states", isAuthenticated, getStates)
 
+// #swagger.path = '/api/v1/auth/login'
+// #swagger.tags = ['Auth']
+router.post("/login", userLogin)
+
+// #swagger.path = '/api/v1/auth/google'
+// #swagger.tags = ['Auth']
+router.get("/google", googleurl)
+
+// #swagger.path = '/api/v1/auth/updatePassword'
+// #swagger.tags = ['Auth']
+router.patch("/updatePassword", isAuthenticated, updatePassword)
+
+// #swagger.path = '/api/v1/auth/google/callback'
+// #swagger.tags = ['Auth']
+router.get("/google/callback", googleLogin)
+
+// #swagger.path = '/api/v1/auth/me'
+// #swagger.tags = ['Auth']
+router.get("/me", isAuthenticated, getUser)
+
+// #swagger.path = '/api/v1/auth/logout'
+// #swagger.tags = ['Auth']
+router.get("/logout", userLogout)
+
+// #swagger.path = '/api/v1/auth/forget'
+// #swagger.tags = ['Auth']
+router.post("/forget", forgetPassword)
+
+// #swagger.path = '/api/v1/auth/profile'
+// #swagger.tags = ['Auth']
+router.get("/profile", isAuthenticated, userProfile)
+
+// #swagger.path = '/api/v1/auth/update'
+// #swagger.tags = ['Auth']
+router.put("/update", isAuthenticated, updateProfile)
+
+// #swagger.path = '/api/v1/auth/reset/{token}'
+// #swagger.tags = ['Auth']
+router.put("/reset/:token", resetPassword)
+
+// #swagger.path = '/api/v1/auth/user-states'
+// #swagger.tags = ['Auth']
+router.get("/user-states", isAuthenticated, getStates)
 
 export {router as userRouter}

@@ -3,13 +3,15 @@ import { ErrorHandler } from "../utils/Errorhandler.js"
 
 export const addCategory = async (req, res , next)=>{
     try{
-        const {name , type} = req.body
+        const {name , type} = req.body || {}
 
         if(!name || !type ){
             return next(new ErrorHandler("Name and type are required !", 400))
         }
 
         const category = new Category({name , type})
+        
+
         await category.save()
 
         res.status(201).send({
@@ -19,7 +21,8 @@ export const addCategory = async (req, res , next)=>{
         })
     }
     catch(err){
-         return next(new ErrorHandler("internal server error !", 500))
+
+         return next(new ErrorHandler(`${err._message}`, 500))
     }
 }
 
@@ -41,7 +44,8 @@ export const getAllCategory = async (req, res , next)=>{
         })
     }
     catch(err){
-         return next(new ErrorHandler("internal server error !", 500))
+                  return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 }
 
@@ -55,8 +59,9 @@ export const removeCategory = async(req, res, next)=>{
             return next(new ErrorHandler("category not found", 404))
         }
 
-        res.send({
-            success : true
+        res.status(200).json({
+            success : true,
+            message : "category deleted successfully!"
         })
     }
     catch(err){

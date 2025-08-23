@@ -4,7 +4,7 @@ import { ErrorHandler } from "../utils/Errorhandler.js";
 
 export const addProduct = async (req, res, next) => {
   const userId = req.user._id
-  const { name, shopName, price, category, itemTag, shippingTag } = req.body;
+  const { name, shopName, price, category, itemTag, shippingTag } = req.body || {};
   try {
     if ((!name || !shopName || !price || !category || !itemTag || !shippingTag)) {
         return next(new ErrorHandler("please fill all the fields !", 400))
@@ -37,6 +37,7 @@ export const getProduct = async (req, res, next) => {
     }
     res.status(200).send({
       success: true,
+      results : data.length,
       data: data,
     });
   } catch (err) {
@@ -81,7 +82,8 @@ export const updateProduct = async (req, res, next)=>{
 
   }
   catch(err){
-    return next(new ErrorHandler("internal server error", 500))
+    return next(new ErrorHandler(`${err._message}`, 500))
+
   }
 }
 
@@ -104,7 +106,8 @@ export const deleteProduct = async (req, res, next)=>{
 
   }
   catch(err){
-    return next(new ErrorHandler("internal server error", 500))
+    return next(new ErrorHandler(`${err._message}`, 500))
+
   }
 }
 
@@ -155,7 +158,8 @@ res.send({
 })
   }
 catch(err){
-    return next(new ErrorHandler("internal server error", 500))
+    return next(new ErrorHandler(`${err._message}`, 500))
+
   }
 
 }

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
-import { type } from "os";
+
 
 const userSchema = new mongoose.Schema({
     userName : {
@@ -133,8 +133,21 @@ const userSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'user',
         default : null
-    }
-    
+    },
+    // cashbacks : [
+    //     {
+    //         cashback : {
+    //             type : Number,
+    //         },
+    //         byShop : {
+    //             type : mongoose.Schema.Types.ObjectId
+    //         },
+    //         cashbackDate : {
+    //             type : Date,
+    //             default : Date.now
+    //         }
+    //     }
+    // ]
     
 }, {timestamps : true}
 )
@@ -162,7 +175,7 @@ userSchema.pre('save', function(next){
         const userString = this._id.toString().slice(0,9)
         this.referlink = dateString + userString  
     }
-    next(); //most important part
+    next(); 
 })
 
 export const user = mongoose.model("user", userSchema)

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Cart } from "../model/cartModel.js";
 import { notification } from "../model/notificationModel.js";
 import { order } from "../model/orderModel.js";
@@ -11,6 +12,7 @@ export const createOrder = async(req, res, next)=>{
     let totalAmount = 0
     let discountedPrice = 0
     let walletamount = 0
+    
     const userId = req.user._id;
     const usercart = await Cart.findOne({userId})
     const {shippingAddress} = req.body 
@@ -49,6 +51,7 @@ export const createOrder = async(req, res, next)=>{
     // console.log(product)
     
     totalAmount += product.price*item.quantity
+    
     finalOrderitem.push({
         product : item.productId,
         quantity : item.quantity
@@ -88,6 +91,7 @@ export const createOrder = async(req, res, next)=>{
     if(walletamount != 0){
         userData.walletBalance = 0
         userData.isWalletApplied = false
+        
         await userData.save()
     }
 
@@ -99,7 +103,7 @@ export const createOrder = async(req, res, next)=>{
       }
       catch(err){
         console.error(err)
-        return next(new ErrorHandler("failed to place order !", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
       }
 }
 
@@ -114,6 +118,7 @@ export const getMyorder = async(req, res, next)=>{
         
         res.status(200).json({
             success : true,
+            results : data.length,
             data
         })
     }
@@ -133,11 +138,13 @@ export const getAllorder = async(req, res, next)=>{
 
     res.status(200).json({
         success : true,
+        results : data.length,
         data
     })
     }
     catch(err){
-        return next(new ErrorHandler("internal server error", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
     
 }
@@ -148,6 +155,9 @@ export const cancelOrder = async(req, res, next)=>{
         const userId = req.user._id;
     const {orderId} = req.params;
   
+    if(!mongoose.Types.ObjectId.isValid(orderId)){
+        return next(new ErrorHandler("invalid order id !", 400))
+    }
     
     const shippingStatus = "cancelled";
 
@@ -173,7 +183,8 @@ export const cancelOrder = async(req, res, next)=>{
     })
     }
     catch(err){
-        return next(new ErrorHandler("internal server error", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
     
 }
@@ -182,7 +193,12 @@ export const cancelOrder = async(req, res, next)=>{
 export const updateOrder = async(req, res, next)=>{
     try{
     const {orderId} = req.params;
-    const {shippingAddress, shippingStatus} = req.body;
+    const {shippingAddress, shippingStatus} = req.body || {};
+
+    if(!mongoose.Types.ObjectId.isValid(orderId)){
+        return next(new ErrorHandler("invalid order id !", 400))
+    }
+
     if(!shippingAddress && !shippingStatus){
         return next(new ErrorHandler("at least one field is required !", 400))
     }
@@ -204,7 +220,9 @@ export const updateOrder = async(req, res, next)=>{
     })
      }
     catch(err){
-        return next(new ErrorHandler("internal server error", 500))
+        console.error(err)
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
     
 }
@@ -221,11 +239,13 @@ export const recentOrder = async (req, res, next)=>{
 
     res.status(200).json({
         success : true,
+        results : data.length,
         data        
     })
      }
     catch(err){
-        return next(new ErrorHandler("internal server error", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
     
 }

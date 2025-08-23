@@ -45,12 +45,18 @@ const eventSchema = new mongoose.Schema({
         default : false
     },
     products : [{
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "productDetails",
+        product : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "productDetails",
+        },
     }],
-    categories : [{
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "category"
+    categories : [
+        {
+            Category : {
+                type : mongoose.Schema.Types.ObjectId,
+            ref : "category"
+            },
+        
     }],
     bannerUrl : [{
         type : String,
@@ -63,10 +69,11 @@ const eventSchema = new mongoose.Schema({
 
 }, {timestamps : true})
 
-export const event = mongoose.model("event", eventSchema)
 
 eventSchema.pre("save", function(next){
     const now = new Date();
     this.iseventActive = now >= this.startDate && now <= this.endDate;
     next()
 })
+
+export const event = mongoose.model("event", eventSchema)

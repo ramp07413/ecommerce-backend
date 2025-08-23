@@ -5,7 +5,7 @@ import { isAuthenticated, isAuthorized } from "../middleware/authMiddleware.js";
 const router = Router();
 
 router.post("/sendAll",isAuthenticated, isAuthorized("admin"), sendEmailToAllUsers)
-router.post("/send/:userId", isAuthenticated, sendEmailTouser)
+router.post("/send/:id", isAuthenticated, sendEmailTouser)
 
 
 export {router as emailRouter}

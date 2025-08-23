@@ -20,7 +20,8 @@ export const myReferData = async (req, res, next)=>{
         })
     } catch (err) {
         console.error(err)
-        return next(new ErrorHandler("internal server error", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 }
 
@@ -41,7 +42,8 @@ export const allReferData = async (req, res, next)=>{
         })
     } catch (err) {
         console.error(err)
-        return next(new ErrorHandler("internal server error", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 }
 
@@ -64,7 +66,8 @@ export const OneUserReferData = async (req, res, next)=>{
         })
     } catch (err) {
         console.error(err)
-        return next(new ErrorHandler("internal server error", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 }
 
@@ -94,6 +97,7 @@ export const referDashboardData = async (req, res, next)=>{
         })
     } catch (err) {
         console.error(err)
-        return next(new ErrorHandler("internal server error", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
+
     }
 }

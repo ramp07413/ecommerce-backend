@@ -56,7 +56,7 @@ export const updateEmployee = async(req, res, next)=>{
         return next(new ErrorHandler("please fill atleast one the field", 400))
     }
 
-    let data = await user.findOne({employeeId : eId})
+    let data = await user.findOne({_id : eId})
 
     if(!data){
         return next(new ErrorHandler("invaild employeeId", 400))
@@ -163,10 +163,11 @@ export const getOneEmployee = async(req, res, next)=>{
         const eId = req.params.id
         const data = await user.findOne({
            
-                employeeId : eId
+                _id : eId
             
             }
             )
+            // console.log(data)
         if(!data){
             return next(new ErrorHandler("employee id is invaild !", 400))
         }
@@ -283,7 +284,7 @@ export const disableEmployee = async(req, res, next)=>{
     try {
         const eId = req.params.id;
 
-        const data = await user.findOne({employeeId : eId})
+        const data = await user.findOne({_id : eId})
 
         if(!data){
             return next(new ErrorHandler("invaild employeeId !", 400))

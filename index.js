@@ -24,6 +24,8 @@ import { datemodify, linkCreate } from './testing.js';
 import { transactionRouter } from './routes/transactionRoute.js';
 import { referearnRouter } from './routes/refer&earnRoute.js';
 import { eventRouter } from './routes/evnetRoute.js';
+import multer from "multer";
+
 
 
 
@@ -32,8 +34,10 @@ const app = express()
 connectDB()
 
 app.use(express.json())
-app.use(express.urlencoded({extended : true}))
+app.use(express.urlencoded({extended: true}));
 app.use(cookieParser())
+const upload = multer();
+app.use(upload.none());
 
 app.set('view engine', 'ejs')
 
@@ -59,6 +63,7 @@ app.get("/", (req,res)=>{
 })
 
 app.use("/api/v1/product", productRouter)
+// #swagger.tags = ['Auth']
 app.use("/api/v1/auth", userRouter)
 app.use("/api/v1/cart", cartRouter)
 app.use("/api/v1/category", catogoryRouter)

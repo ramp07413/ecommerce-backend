@@ -23,9 +23,9 @@ router.get("/getSalary/:id", isAuthenticated, isAuthorized("admin"), salaryHisto
 
 router.get("/getSalary", isAuthenticated, isAuthorized("employee"), mySalaryHistory)
 
-router.post("/leave", isAuthenticated, isAuthorized("employee"), applyingLeave)
+router.post("/leave", isAuthenticated, isAuthorized("employee", "admin"), applyingLeave)
 
-router.get("/checkleave", isAuthenticated, isAuthorized("employee"), checkLeave)
+router.get("/checkleave", isAuthenticated, isAuthorized("employee", "admin"), checkLeave)
 
 router.get("/checkleaves", isAuthenticated, isAuthorized("admin"), checkLeaves)
 

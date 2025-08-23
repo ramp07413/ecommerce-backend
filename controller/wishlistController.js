@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import { wishlist } from "../model/wishlistModel.js"
 import { ErrorHandler } from "../utils/Errorhandler.js"
 
@@ -9,6 +10,10 @@ export const addToWishlist = async(req, res, next)=>{
 
     if(!productId){
         return next(new ErrorHandler("please enter valid product id", 400))
+    }
+
+    if(!mongoose.Types.ObjectId.isValid(productId)){
+        return next(new ErrorHandler("product id is invalid", 400))
     }
 
     let data = await wishlist.findOne({userId})
@@ -60,6 +65,7 @@ export const removeToWishlist = async(req, res, next)=>{
         }
 
         data.items = data.items.filter(item => !item.productId.equals(productId))
+
 
         await data.save()
 

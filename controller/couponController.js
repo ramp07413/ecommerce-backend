@@ -119,6 +119,7 @@ export const getCoupon = async (req, res, next)=>{
         const data = await coupon.find({})
         res.status(200).json({
             success : true,
+            results : data.length,
             data
         })
     } catch (err) {

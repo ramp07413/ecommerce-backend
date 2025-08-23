@@ -8,8 +8,8 @@ router.get("/checkBalance",isAuthenticated, getBalance)
 // router.get("/allTransaction", allTransactions)
 // router.get("/history", myhistory)
 router.post("/addMoney",isAuthenticated, addMoney)
-router.get("/applyWallet",isAuthenticated, applyWalletMoney)
-router.get("/unapplyWallet",isAuthenticated, unapplyWalletMoney)
+router.post("/applyWallet",isAuthenticated, applyWalletMoney)
+router.post("/unapplyWallet",isAuthenticated, unapplyWalletMoney)
 
 
 export {router as transactionRouter}

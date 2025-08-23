@@ -5,7 +5,7 @@ import { ErrorHandler } from "../utils/Errorhandler.js"
 export const addSalary = async(req, res, next)=>{
     try {
         
-    const {user_Id ,employeeId, employeeName, amount, allowances, deductions } = req.body
+    const {user_Id ,employeeId, employeeName, amount, allowances, deductions } = req.body || {}
 
     if(!employeeId || !employeeName || !amount){
         return next(new ErrorHandler("please enter all the fields", 400))
@@ -45,7 +45,7 @@ export const addSalary = async(req, res, next)=>{
 
     } catch (err) {
         console.error(err)
-        return next(new ErrorHandler("something went wrong", 500))
+        return next(new ErrorHandler(`${err._message}`, 500))
     }
 }
 
