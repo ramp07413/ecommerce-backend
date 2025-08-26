@@ -20,11 +20,13 @@ import { employeeRouter } from './routes/employeeRoute.js';
 import { departmentRouter } from './routes/departmentRoute.js';
 import { couponRouter } from './routes/couponRoute.js';
 import { invoiceRouter } from './routes/invoiceRoute.js';
-import { datemodify, linkCreate } from './testing.js';
+import { datemodify, linkCreate, getreward } from './testing.js';
 import { transactionRouter } from './routes/transactionRoute.js';
 import { referearnRouter } from './routes/refer&earnRoute.js';
 import { eventRouter } from './routes/evnetRoute.js';
 import multer from "multer";
+import { rewardRouter } from './routes/rewardRoutes.js';
+import { scratchRouter } from './routes/scratchRoute.js';
 
 
 
@@ -80,6 +82,8 @@ app.use("/api/v1/invoice", invoiceRouter)
 app.use("/api/v1/transaction", transactionRouter)
 app.use("/api/v1/referearn", referearnRouter)
 app.use("/api/v1/event", eventRouter)
+app.use("/api/v1/reward", rewardRouter)
+app.use("/api/v1/scratch", scratchRouter)
 app.use(errorMiddleware)
 
 
@@ -87,6 +91,8 @@ datemodify()
 
 linkCreate()
 
+getreward()  
+   
 app.listen(3001, ()=>{
     console.log("it's running...")
 })

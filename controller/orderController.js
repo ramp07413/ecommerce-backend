@@ -5,6 +5,8 @@ import { order } from "../model/orderModel.js";
 import { productDetails } from "../model/productModel.js";
 import { user } from "../model/userModel.js";
 import { ErrorHandler } from "../utils/Errorhandler.js";
+import { assignreward } from "./scratchCardController.js";
+import { event } from "../model/eventModel.js";
 
 export const createOrder = async(req, res, next)=>{
     try{
@@ -21,11 +23,11 @@ export const createOrder = async(req, res, next)=>{
         return next(new ErrorHandler("cart is empty !", 200))
     }
 
-    console.log(usercart)
+    // console.log(usercart)
 
     const couponDiscount = usercart.couponDiscount
 
-    console.log(couponDiscount)
+    // console.log(couponDiscount)
 
 
     if(!shippingAddress ){
@@ -35,6 +37,7 @@ export const createOrder = async(req, res, next)=>{
     const finalOrderitem = []
 
     const userData = await user.findOne({_id : userId})
+    const eventData = await event.findOne({iseventActive : true})
 
     if(userData.isWalletApplied){
         walletamount = userData.walletBalance
@@ -56,6 +59,7 @@ export const createOrder = async(req, res, next)=>{
         product : item.productId,
         quantity : item.quantity
     })
+    // if()  
     discountedPrice = parseInt(totalAmount -  (totalAmount*product.discount)/100);
     }
 
@@ -95,10 +99,13 @@ export const createOrder = async(req, res, next)=>{
         await userData.save()
     }
 
+    const scratch_card = await assignreward(userId, data._id)
+
     res.status(201).json({
         success : true,
         message : "order confirmed !",
-        data
+        data,
+        scratch_card
     })
       }
       catch(err){

@@ -1,4 +1,6 @@
+import { randomreward } from "./controller/scratchCardController.js"
 import { invoice } from "./model/invoiceModel.js"
+
 
 export const datemodify = async()=>{
     try {
@@ -30,3 +32,16 @@ export const linkCreate = async()=>{
     }
 }
 
+export const getreward = async()=>{
+      try {
+             const reward = await randomreward() 
+     
+             console.log(reward) 
+      
+       
+    //    console.log(selectreward)          
+      
+    } catch (err) {
+        console.error(err)
+    }
+}

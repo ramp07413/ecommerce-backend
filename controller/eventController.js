@@ -105,7 +105,8 @@ export const updateEvent = async (req, res , next)=>{
                 products, 
                 categories,
                 bannerUrl,  
-                priority 
+                priority,
+                iseventActive
          } = req.body || {}
 
     if(!req.body){
@@ -125,19 +126,20 @@ export const updateEvent = async (req, res , next)=>{
         }
 
         const data = await event.findOne({})
-
-                eventName, 
-                eventType,
-                description, 
-                startDate, 
-                endDate, 
-                discount, 
-                maxDiscountAmount, 
-                minPurchaseAmount, 
-                products, 
-                categories,
-                bannerUrl,  
-                priority 
+            if(eventName) data.eventName = eventName
+            if(description) data.description = description
+            if(eventType) data.eventType = eventType
+            if(startDate) data.startDate = startDate
+            if(endDate) data.endDate = endDate
+            if(maxDiscountAmount) data.maxDiscountAmount = maxDiscountAmount
+            if(minPurchaseAmount) data.minPurchaseAmount = minPurchaseAmount
+            if(products) data.products = products
+            if(categories) data.categories = categories
+            if(bannerUrl) data.bannerUrl = bannerUrl
+            if(priority) data.priority = priority
+            if(iseventActive) data.iseventActive = iseventActive
+                
+                
         
 
         await data.save()
