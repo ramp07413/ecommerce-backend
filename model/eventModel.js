@@ -44,12 +44,7 @@ const eventSchema = new mongoose.Schema({
         type : Boolean,
         default : false
     },
-    products : [{
-        product : {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : "productDetails",
-        },
-    }],
+
     categories : [
         {
             Category : {

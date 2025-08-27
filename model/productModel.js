@@ -32,7 +32,13 @@ export const productSchema = new mongoose.Schema({
     },
     discount : {
         type : Number,
-        default : 0
+        default : 2
+    },
+    currentDiscount : {
+        type : Number,
+        default : function(){
+            return this.discount
+        }
     },
     
 }, {timestamps : true})

@@ -4,7 +4,7 @@ import { ErrorHandler } from "../utils/Errorhandler.js";
 
 export const addProduct = async (req, res, next) => {
   const userId = req.user._id
-  const { name, shopName, price, category, itemTag, shippingTag } = req.body || {};
+  const { name, shopName, price, category, itemTag, shippingTag, discount } = req.body || {};
   try {
     if ((!name || !shopName || !price || !category || !itemTag || !shippingTag)) {
         return next(new ErrorHandler("please fill all the fields !", 400))
@@ -15,6 +15,7 @@ export const addProduct = async (req, res, next) => {
       price,
       category,
       itemTag,
+      discount,
       shippingTag,
       userId
     });

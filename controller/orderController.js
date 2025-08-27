@@ -59,14 +59,14 @@ export const createOrder = async(req, res, next)=>{
         product : item.productId,
         quantity : item.quantity
     })
-    // if()  
-    discountedPrice = parseInt(totalAmount -  (totalAmount*product.discount)/100);
+        discountedPrice = parseInt(totalAmount -  (totalAmount*product.currentDiscount)/100);
     }
+    
 
     let finalAmount = discountedPrice - walletamount;
     
     if(couponDiscount != 0){
-        finalAmount =  discountedPrice - discountedPrice*couponDiscount/100
+        finalAmount =  parseInt(finalAmount - finalAmount*couponDiscount/100)
     }
     
     const data = await order.create({
@@ -117,7 +117,7 @@ export const createOrder = async(req, res, next)=>{
 export const getMyorder = async(req, res, next)=>{
     try{
         const userId = req.user._id;
-        const data = await order.find({user : userId}).populate('orderItems.product', 'name price discount').select('orderItems OrignalAmount productPrice finalAmount shippingAddress shippingStatus paymentStatus')
+        const data = await order.find({user : userId}).populate('orderItems.product', 'name price currentDiscount').select('orderItems OrignalAmount productPrice finalAmount shippingAddress usedWalletAmount shippingStatus paymentStatus')
 
         if(!data){
             return next(new ErrorHandler("oder not found !", 404))

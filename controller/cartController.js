@@ -3,6 +3,7 @@ import { Cart } from "../model/cartModel.js"
 import { productDetails } from "../model/productModel.js";
 import { user } from "../model/userModel.js";
 import { ErrorHandler } from "../utils/Errorhandler.js";
+import { event } from "../model/eventModel.js";
 
 export const addToCart = async(req, res, next)=>{
     try{
@@ -66,12 +67,12 @@ export const getToCart = async(req, res, next)=>{
     try{
         const userId = req.user._id
 
-        let cart = await Cart.findOne({userId}).populate('items.productId')
+        let cart = await Cart.findOne({userId}).populate('items.productId', 'name shopName price discount currentDiscount category itemTag shippingTag')
         if(!cart){
             return next(new ErrorHandler("cart is empty !", 200))
         }
 
-       
+        const eventData =  await event.findOne({iseventActive : true})
 
         console.log(cart)
 
@@ -81,8 +82,11 @@ export const getToCart = async(req, res, next)=>{
         let walletamount = 0
         
         cart.items.forEach((item)=>{
-            total_discount += parseInt((item.productId.price*item.productId.discount*item.quantity)/100)
-            totalamount += parseInt(item.productId.price*item.quantity)
+            
+            
+            total_discount += ((item.productId.price*item.productId.currentDiscount*item.quantity)/100)
+            
+            totalamount += (item.productId.price*item.quantity)
         })
 
         const userData = await user.findOne({_id : userId})
@@ -91,8 +95,17 @@ export const getToCart = async(req, res, next)=>{
             walletamount = userData.walletBalance
         }
 
-        totalprice = totalamount - total_discount - walletamount
-        totalprice -= parseInt(totalprice*cart.couponDiscount/100)
+        totalprice = parseInt(totalamount - total_discount - walletamount)
+      
+
+        const newCoupon_discount = (Math.round(totalprice*cart.couponDiscount/100))
+        
+        totalprice = parseInt(totalprice - totalprice*cart.couponDiscount/100)
+
+  
+
+        
+
        
 
 
@@ -102,9 +115,9 @@ export const getToCart = async(req, res, next)=>{
             cart,
             orignalprice : totalamount,
             totalAmount : totalprice, 
-            discount : total_discount,
+            discount : Math.round(total_discount),
             usedwalletamount : walletamount,
-            couponDiscount : parseInt(totalamount*cart.couponDiscount/100)
+            couponDiscount : newCoupon_discount
         })
 
     }
