@@ -31,6 +31,8 @@ import { scratchRouter } from './routes/scratchRoute.js';
 
 
 
+
+
 const app = express()
 
 connectDB()
@@ -50,11 +52,13 @@ app.use(cors({
     "http://localhost:5173",
     "http://localhost:8081",
     "http://localhost:8080",
-    '*'
+
   ],
   
   credentials : true
 }));
+
+
 
 
 
