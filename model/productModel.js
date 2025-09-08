@@ -10,6 +10,10 @@ export const productSchema = new mongoose.Schema({
         type : String,
         required : true
     },
+    shopId : {
+        type : String,
+        required : true
+    },
     price : {
         type : Number,
         required : true
@@ -17,6 +21,10 @@ export const productSchema = new mongoose.Schema({
     category : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "category"
+    },
+    quantity : {
+        type : Number,
+        required : true
     },
     itemTag : {
         type : String,

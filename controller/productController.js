@@ -1,19 +1,28 @@
+
 import { Category } from "../model/categories.js";
 import { productDetails } from "../model/productModel.js";
+import { shop } from "../model/shopModel.js";
 import { ErrorHandler } from "../utils/Errorhandler.js";
 
 export const addProduct = async (req, res, next) => {
   const userId = req.user._id
-  const { name, shopName, price, category, itemTag, shippingTag, discount } = req.body || {};
+  const { name, price, category, itemTag, shippingTag, discount, quantity } = req.body || {};
+
   try {
-    if ((!name || !shopName || !price || !category || !itemTag || !shippingTag)) {
+    if ((!name || !price || !category || !itemTag || !shippingTag || !quantity)) {
         return next(new ErrorHandler("please fill all the fields !", 400))
+    }
+    const shopdata = await shop.findOne({owner : userId})
+    if(!shopdata){
+      return next(new ErrorHandler("create shop to upload product !", 400))
     }
     const data = await productDetails.create({
       name,
-      shopName,
+      shopName : shopdata.shopName,
+      shopId : shopdata._id,
       price,
       category,
+      quantity, 
       itemTag,
       discount,
       shippingTag,

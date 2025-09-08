@@ -27,6 +27,7 @@ import { eventRouter } from './routes/evnetRoute.js';
 import multer from "multer";
 import { rewardRouter } from './routes/rewardRoutes.js';
 import { scratchRouter } from './routes/scratchRoute.js';
+import { shopRouter } from './routes/shopRoute.js';
 
 
 
@@ -88,6 +89,7 @@ app.use("/api/v1/referearn", referearnRouter)
 app.use("/api/v1/event", eventRouter)
 app.use("/api/v1/reward", rewardRouter)
 app.use("/api/v1/scratch", scratchRouter)
+app.use("/api/v1/shop", shopRouter)
 app.use(errorMiddleware)
 
 

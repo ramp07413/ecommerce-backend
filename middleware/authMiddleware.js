@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { user } from '../model/userModel.js';
+import { shop } from '../model/shopModel.js';
+import { ErrorHandler } from '../utils/Errorhandler.js';
 
 
 export const  isAuthenticated = async(req, res, next)=>{
@@ -39,5 +41,26 @@ export const  isAuthorized = (...role)=>{
             return next(new Error(`user with this role ${req.user.role} not allowed to access this resource `))
         }
         next()
+    }
+}
+
+export const isShopVerified = async(req, res, next)=>{
+    try {
+        const userId = req.user._id
+
+        const data = await shop.findOne({owner : userId})
+
+        if(!data){
+            return next(new ErrorHandler("shop is not registed !", 400))
+        }
+
+        if(!data.isShopVerified){
+            return next(new ErrorHandler("verify the shop", 200))
+        }
+
+        next()
+
+    } catch (err) {
+        return next(new ErrorHandler(err.message, 500))
     }
 }

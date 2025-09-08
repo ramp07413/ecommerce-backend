@@ -74,7 +74,6 @@ export const getToCart = async(req, res, next)=>{
 
         const eventData =  await event.findOne({iseventActive : true})
 
-        console.log(cart)
 
         let totalprice = 0
         let total_discount = 0
