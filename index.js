@@ -30,6 +30,7 @@ import { scratchRouter } from './routes/scratchRoute.js';
 import { shopRouter } from './routes/shopRoute.js';
 import { qnaRouter } from './routes/qnaRoute.js';
 import { reviewRouter } from './routes/reviewRoute.js';
+import { chatbotRouter } from './routes/chatbotRoute.js';
 
 
 
@@ -94,6 +95,8 @@ app.use("/api/v1/scratch", scratchRouter)
 app.use("/api/v1/shop", shopRouter)
 app.use("/api/v1/qna", qnaRouter)
 app.use("/api/v1/review", reviewRouter)
+app.use("/api/v1/chatbot", chatbotRouter)
+
 app.use(errorMiddleware)
 
 
