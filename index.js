@@ -28,6 +28,8 @@ import multer from "multer";
 import { rewardRouter } from './routes/rewardRoutes.js';
 import { scratchRouter } from './routes/scratchRoute.js';
 import { shopRouter } from './routes/shopRoute.js';
+import { qnaRouter } from './routes/qnaRoute.js';
+import { reviewRouter } from './routes/reviewRoute.js';
 
 
 
@@ -90,6 +92,8 @@ app.use("/api/v1/event", eventRouter)
 app.use("/api/v1/reward", rewardRouter)
 app.use("/api/v1/scratch", scratchRouter)
 app.use("/api/v1/shop", shopRouter)
+app.use("/api/v1/qna", qnaRouter)
+app.use("/api/v1/review", reviewRouter)
 app.use(errorMiddleware)
 
 
