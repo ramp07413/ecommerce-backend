@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-
+import { config } from "dotenv";
+config()
 
 export const productSchema = new mongoose.Schema({
     name : {
@@ -17,6 +18,10 @@ export const productSchema = new mongoose.Schema({
     price : {
         type : Number,
         required : true
+    },
+    images : {
+        type : Array,
+        default : []
     },
     category : {
         type : mongoose.Schema.Types.ObjectId,

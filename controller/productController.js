@@ -4,14 +4,65 @@ import { productDetails } from "../model/productModel.js";
 import { shop } from "../model/shopModel.js";
 import { ErrorHandler } from "../utils/Errorhandler.js";
 
+const fileupload = (imgs)=>{
+     if(!imgs || imgs.length===0){
+            return res.status(200).json({
+                success : false,
+                message : "no file is selected !"
+            })
+        }
+
+        const successfullyUploads = imgs.map(file => ({
+            filename: file.filename,
+            path: file.path,
+            mimetype: file.mimetype,
+            size: file.size,
+            fileurl : file.path
+        }));
+        return successfullyUploads
+
+}
+
+export const uploadtogoogledrive = async(req, res, next)=>{
+    try {
+
+        const data = fileupload(req.files)
+        const img = []
+        data.map(d=> img.push(d.fileurl))
+
+        res.status(200).json({
+            message : `${data.length} image uploaded successfully !`,
+            images : img
+        })
+        
+       
+        
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({
+            success : false,
+            message : "failed to upload"
+        })
+    }
+}
+
 export const addProduct = async (req, res, next) => {
+ 
   const userId = req.user._id
-  const { name, price, category, itemTag, shippingTag, discount, quantity } = req.body || {};
+  const { name, price, category, itemTag, shippingTag , discount, quantity } = req.body || {};
 
   try {
     if ((!name || !price || !category || !itemTag || !shippingTag || !quantity)) {
         return next(new ErrorHandler("please fill all the fields !", 400))
     }
+
+      if (!req.files || req.files.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "No image files provided."
+            });
+        }
+
     const shopdata = await shop.findOne({owner : userId})
     if(!shopdata){
       return next(new ErrorHandler("create shop to upload product !", 400))
@@ -29,12 +80,22 @@ export const addProduct = async (req, res, next) => {
       userId
     });
 
+     const imgdata = fileupload(req.files)
+      const img = []
+      imgdata.map(d=> img.push(d.fileurl))
+
+    data.images = img
+
+    await data.save()
+
+
     res.status(201).send({
       success: true,
       message: "product added successfully ! ",
       data: data,
     });
   } catch (err) {
+    console.error(err)
     return next(new ErrorHandler("internal server error !", 500));
   }
 };

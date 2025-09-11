@@ -44,8 +44,8 @@ connectDB()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser())
-const upload = multer();
-app.use(upload.none());
+
+app.use('/uploads', express.static('uploads'))
 
 app.set('view engine', 'ejs')
 
