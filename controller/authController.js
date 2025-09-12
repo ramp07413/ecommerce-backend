@@ -354,7 +354,7 @@ try{
      await data.save({validateBeforeSave : false
     })
 
-    const resetpasswordUrl = `http://localhost:3000/api/v1/auth/reset/${resetPasswordToken}`
+    const resetpasswordUrl = `${process.env.FRONTEND_URL}/api/v1/auth/reset/${resetPasswordToken}`
 
     await sendEmail({email : email, subject : "reset password", message : `<h1>${resetpasswordUrl}<h1/>`})
 

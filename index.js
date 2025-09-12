@@ -20,7 +20,7 @@ import { employeeRouter } from './routes/employeeRoute.js';
 import { departmentRouter } from './routes/departmentRoute.js';
 import { couponRouter } from './routes/couponRoute.js';
 import { invoiceRouter } from './routes/invoiceRoute.js';
-import { datemodify, linkCreate, getreward } from './testing.js';
+// import { datemodify, linkCreate, getreward } from './testing.js';
 import { transactionRouter } from './routes/transactionRoute.js';
 import { referearnRouter } from './routes/refer&earnRoute.js';
 import { eventRouter } from './routes/evnetRoute.js';
@@ -31,6 +31,8 @@ import { shopRouter } from './routes/shopRoute.js';
 import { qnaRouter } from './routes/qnaRoute.js';
 import { reviewRouter } from './routes/reviewRoute.js';
 import { chatbotRouter } from './routes/chatbotRoute.js';
+import { razorpayRouter } from './routes/razorpayRoute.js';
+
 
 
 
@@ -56,7 +58,8 @@ app.use(cors({
     "http://localhost:5173",
     "http://localhost:8081",
     "http://localhost:8080",
-
+    process.env.FRONTEND_URL,
+    process.env.FRONTEND_URL2,
   ],
   
   credentials : true
@@ -96,16 +99,17 @@ app.use("/api/v1/shop", shopRouter)
 app.use("/api/v1/qna", qnaRouter)
 app.use("/api/v1/review", reviewRouter)
 app.use("/api/v1/chatbot", chatbotRouter)
+app.use("/api/v1/razorpay",razorpayRouter);
 
 app.use(errorMiddleware)
 
 
-datemodify()
+// datemodify()
 
-linkCreate()
+// linkCreate()
 
-getreward()  
+// getreward()  
    
-app.listen(3001, ()=>{
-    console.log("it's running...")
+app.listen(process.env.PORT, ()=>{
+    console.log(`it's running... on port ${process.env.PORT}`)
 })

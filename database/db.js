@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export const connectDB = ()=>{
-    mongoose.connect("mongodb+srv://rp074:jrOMh07F39cAFJc0@inootbook.an4mp.mongodb.net/?retryWrites=true&w=majority&appName=iNootbook", {
+    mongoose.connect(process.env.MONGO_DB_URI, {
         dbName : "ecommerce"
     })
     .then(()=>{

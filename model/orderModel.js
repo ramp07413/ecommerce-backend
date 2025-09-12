@@ -56,7 +56,16 @@ shippingStatus : {
 },
 usedWalletAmount : {
     type : Number
-}
+},
+razorpayOrderId: {
+    type: String,
+  },
+  razorpayPaymentId: {
+    type: String,
+  },
+  razorpaySignature: {
+    type: String,
+  },
 
 }, {timestamps : true})
 
