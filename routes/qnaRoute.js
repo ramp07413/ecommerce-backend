@@ -7,7 +7,6 @@ router.get("/get", getQNA)
 
 router.get("/get/:id", getOneQNA)
 
-
 router.post("/create", createQNA)
 
 router.put("/update/:id", updateQNA)

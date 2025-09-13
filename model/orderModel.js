@@ -57,6 +57,11 @@ shippingStatus : {
 usedWalletAmount : {
     type : Number
 },
+paymentMethod: {
+    type : String,
+    enum : ['Cash', 'Online'],
+
+},
 razorpayOrderId: {
     type: String,
   },

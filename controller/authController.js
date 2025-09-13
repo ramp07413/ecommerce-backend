@@ -8,6 +8,8 @@ import { sendEmail } from "../utils/emailSend.js";
 import crypto from 'crypto'
 import { ErrorHandler } from "../utils/Errorhandler.js";
 import { refer } from "../model/refer&earnModel.js";
+import { config } from "dotenv";
+config()
 
 
 

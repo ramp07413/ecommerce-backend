@@ -17,7 +17,7 @@ export const createOrder = async(req, res, next)=>{
     
     const userId = req.user._id;
     const usercart = await Cart.findOne({userId})
-    const {shippingAddress} = req.body 
+    const {shippingAddress, paymentMethod} = req.body 
 
     if(!usercart || usercart.items.length == 0){
         return next(new ErrorHandler("cart is empty !", 200))
@@ -68,6 +68,10 @@ export const createOrder = async(req, res, next)=>{
     if(couponDiscount != 0){
         finalAmount =  parseInt(finalAmount - finalAmount*couponDiscount/100)
     }
+
+    if(paymentMethod !== 'Cash'){
+        return next(new ErrorHandler("choose correct payment method", 400))
+    }
     
     const data = await order.create({
        
@@ -80,7 +84,8 @@ export const createOrder = async(req, res, next)=>{
         couponDiscount : couponDiscount,
         usedWalletAmount : walletamount,
         paymentStatus : "pending",
-        shippingStatus : "processing"
+        shippingStatus : "processing",
+        paymentMethod : paymentMethod
     })
 
     await Cart.findOneAndDelete({userId})

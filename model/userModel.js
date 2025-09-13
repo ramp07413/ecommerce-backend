@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
+import { config } from "dotenv";
+
+config()
 
 
 const userSchema = new mongoose.Schema({
@@ -153,7 +156,7 @@ const userSchema = new mongoose.Schema({
 )
 
 userSchema.methods.generateToken = function(){
-    return jwt.sign({id : this.id, email : this.email}, process.env.process.env.JWT_SECRET)
+    return jwt.sign({id : this.id, email : this.email}, process.env.JWT_SECRET)
 }
 
 
