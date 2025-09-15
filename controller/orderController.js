@@ -8,6 +8,7 @@ import { ErrorHandler } from "../utils/Errorhandler.js";
 import { assignreward } from "./scratchCardController.js";
 import { event } from "../model/eventModel.js";
 
+
 export const createOrder = async(req, res, next)=>{
     try{
 
@@ -23,11 +24,11 @@ export const createOrder = async(req, res, next)=>{
         return next(new ErrorHandler("cart is empty !", 200))
     }
 
-    // console.log(usercart)
+
 
     const couponDiscount = usercart.couponDiscount
 
-    // console.log(couponDiscount)
+   
 
 
     if(!shippingAddress ){
@@ -261,3 +262,4 @@ export const recentOrder = async (req, res, next)=>{
     }
     
 }
+

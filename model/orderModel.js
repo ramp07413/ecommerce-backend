@@ -72,6 +72,17 @@ razorpayOrderId: {
     type: String,
   },
 
+  isRefunded : {
+    type : Boolean,
+    default : false
+  },
+
+  orderReturnRequest : {
+    type : String,
+    enum : ["none", "return_request", "return_process", "return_complete"]
+  }
+
+
 }, {timestamps : true})
 
 

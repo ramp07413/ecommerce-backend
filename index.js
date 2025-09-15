@@ -32,6 +32,7 @@ import { qnaRouter } from './routes/qnaRoute.js';
 import { reviewRouter } from './routes/reviewRoute.js';
 import { chatbotRouter } from './routes/chatbotRoute.js';
 import { razorpayRouter } from './routes/razorpayRoute.js';
+import { returnRouter } from './routes/returnRoute.js';
 
 
 
@@ -100,6 +101,7 @@ app.use("/api/v1/qna", qnaRouter)
 app.use("/api/v1/review", reviewRouter)
 app.use("/api/v1/chatbot", chatbotRouter)
 app.use("/api/v1/razorpay",razorpayRouter);
+app.use("/api/v1/returnRefund",returnRouter);
 
 app.use(errorMiddleware)
 

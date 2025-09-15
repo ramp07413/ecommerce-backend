@@ -1,4 +1,3 @@
-import Razorpay from "razorpay";
 import crypto from "crypto";
 import { order } from "../model/orderModel.js";
 import { ErrorHandler } from "../utils/Errorhandler.js";
@@ -7,6 +6,7 @@ import { productDetails } from "../model/productModel.js";
 import { user } from "../model/userModel.js";
 import { notification } from "../model/notificationModel.js";
 import { assignreward } from "./scratchCardController.js";
+import { RazorpayInstance } from "../services/razorpayInstance.js";
 
 export const createRazorpayOrderAndVerify = async (req, res, next) => {
     try {
@@ -16,7 +16,7 @@ export const createRazorpayOrderAndVerify = async (req, res, next) => {
 
         const userId = req.user._id;
         const usercart = await Cart.findOne({ userId })
-        const { shippingAddress } = req.body
+        const { shippingAddress, paymetnMethod } = req.body
 
         if (!usercart || usercart.items.length == 0) {
             return next(new ErrorHandler("cart is empty !", 200))
@@ -26,6 +26,10 @@ export const createRazorpayOrderAndVerify = async (req, res, next) => {
 
         if (!shippingAddress) {
             return next(new ErrorHandler("please fill all the fields", 400))
+        }
+
+        if(paymetnMethod !== 'Online'){
+            return next(new ErrorHandler("choose correct payment Method !", 400))
         }
 
         const finalOrderitem = []
@@ -58,17 +62,17 @@ export const createRazorpayOrderAndVerify = async (req, res, next) => {
             finalAmount = parseInt(finalAmount - finalAmount * couponDiscount / 100)
         }
 
-        const instance = new Razorpay({
-            key_id: process.env.RAZORPAY_KEY_ID,
-            key_secret: process.env.RAZORPAY_KEY_SECRET,
-        });
+        
 
         const options = {
             amount: finalAmount * 100, // amount in the smallest currency unit
             currency: "INR",
         };
 
-        const razorpayOrder = await instance.orders.create(options);
+        const razorpayInstance = await RazorpayInstance()
+
+        const razorpayOrder = await razorpayInstance.orders.create(options);
+
 
         res.status(200).json({
             success: true,
@@ -91,7 +95,23 @@ export const createRazorpayOrderAndVerify = async (req, res, next) => {
 
 export const verifyPaymentAndCreateOrder = async (req, res, next) => {
     try {
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, finalOrderitem, shippingAddress, couponDiscount, usedWalletAmount } = req.body;
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, shippingAddress, paymentMethod } = req.body || {};
+
+
+        if(!razorpay_order_id || !razorpay_payment_id || !razorpay_signature){
+            return next(new ErrorHandler("razorpay_order_id, razorpay_payment_id, razorpay_signature", 400))
+        }
+        const userId = req.user._id
+        const usercart = await Cart.findOne({userId})
+        if(!usercart || usercart.items.length == 0){
+                return next(new ErrorHandler("cart is empty !", 200))
+            }
+
+        
+
+        if(paymentMethod !== 'Online'){
+            return next(new ErrorHandler('choose correct payment method !', 400))
+        }
 
         const body = razorpay_order_id + "|" + razorpay_payment_id;
 
@@ -103,33 +123,52 @@ export const verifyPaymentAndCreateOrder = async (req, res, next) => {
         const isAuthentic = expectedSignature === razorpay_signature;
 
         if (isAuthentic) {
-            let totalAmount = 0;
-            let discountedPrice = 0;
+            
+        let totalAmount = 0
+        let discountedPrice = 0
+        let walletamount = 0
 
-            for (let item of finalOrderitem) {
-                let product = await productDetails.findById(item.product);
-                if (!product) {
-                    return next(new ErrorHandler(`Product not found: ${item.product}`, 404));
-                }
-                totalAmount += product.price * item.quantity;
-                discountedPrice = parseInt(totalAmount - (totalAmount * product.currentDiscount) / 100);
+        const couponDiscount = usercart.couponDiscount
+
+        if(!shippingAddress ){
+                return next(new ErrorHandler("please fill all the fields", 400))
+            }
+        
+            const finalOrderitem = []
+        
+            const userData = await user.findOne({_id : userId})
+            const eventData = await event.findOne({iseventActive : true})
+
+
+            if(userData.isWalletApplied){
+                walletamount = userData.walletBalance
             }
 
-            let finalAmountRecalculated = discountedPrice - usedWalletAmount;
+          
+    totalAmount += product.price*item.quantity
+    
+    finalOrderitem.push({
+        product : item.productId,
+        quantity : item.quantity
+    })
+        discountedPrice = parseInt(totalAmount -  (totalAmount*product.currentDiscount)/100);
+   
+    
 
-            if (couponDiscount != 0) {
-                finalAmountRecalculated = parseInt(finalAmountRecalculated - finalAmountRecalculated * couponDiscount / 100);
-            }
-
+    let finalAmount = discountedPrice - walletamount;
+    
+    if(couponDiscount != 0){
+        finalAmount =  parseInt(finalAmount - finalAmount*couponDiscount/100)
+    }
             const data = await order.create({
-                user: req.user._id,
+                user: userId,
                 orderItems: finalOrderitem,
                 shippingAddress: shippingAddress,
                 OrignalAmount: totalAmount, 
                 productPrice: discountedPrice, 
-                finalAmount: finalAmountRecalculated, 
+                finalAmount: finalAmount, 
                 couponDiscount: couponDiscount,
-                usedWalletAmount: usedWalletAmount,
+                usedWalletAmount: walletamount,
                 paymentStatus: "paid",
                 shippingStatus: "processing",
                 razorpayOrderId: razorpay_order_id,
@@ -152,10 +191,10 @@ export const verifyPaymentAndCreateOrder = async (req, res, next) => {
                 type: "order"
             })
 
-            if (usedWalletAmount != 0) {
-                const userData = await user.findById(req.user._id);
+            if (walletamount != 0) {
                 userData.walletBalance = 0
                 userData.isWalletApplied = false
+                
                 await userData.save()
             }
 
@@ -167,7 +206,8 @@ export const verifyPaymentAndCreateOrder = async (req, res, next) => {
                 data,
                 scratch_card
             })
-        } else {
+        }
+         else {
             return next(new ErrorHandler("Payment verification failed", 400));
         }
     }
@@ -176,3 +216,4 @@ export const verifyPaymentAndCreateOrder = async (req, res, next) => {
         return next(new ErrorHandler(`${err._message}`, 500))
     }
 }
+
