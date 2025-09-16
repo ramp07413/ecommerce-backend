@@ -11,7 +11,6 @@ router.get("/request/:id", isAuthenticated, getOneRequest)
 router.post("/approveRequest", isAuthenticated, approveRequest)
 router.patch("/rejectRequest", isAuthenticated, rejectRequest)
 router.put("/updateRequest/:id", isAuthenticated, updateRequest)
-// router.get("/allReturnedProduct", isAuthenticated, allReturnedProduct)
 router.post("/refundToWallet", isAuthenticated, refundPaymentToWallet )
 router.post("/refundToRazorpay", isAuthenticated, paymentRefund);
 

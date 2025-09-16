@@ -33,6 +33,8 @@ import { reviewRouter } from './routes/reviewRoute.js';
 import { chatbotRouter } from './routes/chatbotRoute.js';
 import { razorpayRouter } from './routes/razorpayRoute.js';
 import { returnRouter } from './routes/returnRoute.js';
+import { warehouseRouter } from './routes/warehouseRoute.js';
+import { rackRouter } from './routes/rackRoute.js';
 
 
 
@@ -102,7 +104,8 @@ app.use("/api/v1/review", reviewRouter)
 app.use("/api/v1/chatbot", chatbotRouter)
 app.use("/api/v1/razorpay",razorpayRouter);
 app.use("/api/v1/returnRefund",returnRouter);
-
+app.use("/api/v1/warehouse",warehouseRouter);
+app.use("/api/v1/rack",rackRouter);
 app.use(errorMiddleware)
 
 
