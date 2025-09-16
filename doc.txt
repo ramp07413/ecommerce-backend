@@ -2047,7 +2047,356 @@ To authenticate, include the `Authorization` header with the value `Bearer <YOUR
 [/response]
     
 
-### 3.18. QNA
+### 3.18. Rack
+
+#### `GET /api/v1/rack/`
+*   Description: Retrieves all racks.
+*   Authentication: None
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": [
+            // ... array of rack objects
+        ]
+    }
+    
+[/response]
+    
+
+#### `POST /api/v1/rack/`
+*   Description: Adds a new rack row.
+*   Authentication: None
+[example]
+*   Request Body:
+    
+    {
+        "warehouseId": "string",
+        "rowNumber": "number",
+        "rackNumber": "number"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... rack object
+        }
+    }
+    
+[/response]
+    
+
+#### `PATCH /api/v1/rack/:id`
+*   Description: Updates a rack row.
+*   Authentication: None
+*   URL Parameters:
+    *   `id`: The ID of the rack to update.
+[example]
+*   Request Body:
+    
+    {
+        "rowNumber": "number",
+        "rackNumber": "number"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... rack object
+        }
+    }
+    
+[/response]
+    
+
+#### `DELETE /api/v1/rack/:id`
+*   Description: Deletes a rack.
+*   Authentication: None
+*   URL Parameters:
+    *   `id`: The ID of the rack to delete.
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "message": "rack deleted successfully !"
+    }
+    
+[/response]
+    
+
+#### `POST /api/v1/rack/addToRack`
+*   Description: Adds a product to a rack.
+*   Authentication: None
+[example]
+*   Request Body:
+    
+    {
+        "rackId": "string",
+        "warehouseProductId": "string",
+        "quantity": "number"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... rack product object
+        }
+    }
+    
+[/response]
+    
+
+#### `GET /api/v1/rack/getByRack/:id`
+*   Description: Retrieves products from a rack.
+*   Authentication: None
+*   URL Parameters:
+    *   `id`: The ID of the rack.
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": [
+            // ... array of rack product objects
+        ]
+    }
+    
+[/response]
+    
+
+#### `PATCH /api/v1/rack/updateToRack/:id`
+*   Description: Updates a product in a rack.
+*   Authentication: None
+*   URL Parameters:
+    *   `id`: The ID of the rack product to update.
+[example]
+*   Request Body:
+    
+    {
+        "quantity": "number"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... rack product object
+        }
+    }
+    
+[/response]
+    
+
+#### `DELETE /api/v1/rack/deleteFromRack/:rackId/:warehouseProductId`
+*   Description: Deletes a product from a rack.
+*   Authentication: None
+*   URL Parameters:
+    *   `rackId`: The ID of the rack.
+    *   `warehouseProductId`: The ID of the warehouse product.
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "message": "product deleted from rack successfully !"
+    }
+    
+[/response]
+    
+
+### 3.19. Return
+
+#### `POST /api/v1/return/returnRequest`
+*   Description: Creates a return request for an order.
+*   Authentication: Required (Bearer Token)
+[example]
+*   Request Body:
+    
+    {
+        "orderId": "string",
+        "reason": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... return request object
+        }
+    }
+    
+[/response]
+    
+
+#### `GET /api/v1/return/allRequest`
+*   Description: Retrieves all return requests.
+*   Authentication: Required (Bearer Token)
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": [
+            // ... array of return request objects
+        ]
+    }
+    
+[/response]
+    
+
+#### `GET /api/v1/return/request/:id`
+*   Description: Retrieves a single return request by its ID.
+*   Authentication: Required (Bearer Token)
+*   URL Parameters:
+    *   `id`: The ID of the return request.
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... return request object
+        }
+    }
+    
+[/response]
+    
+
+#### `POST /api/v1/return/approveRequest`
+*   Description: Approves a return request.
+*   Authentication: Required (Bearer Token)
+[example]
+*   Request Body:
+    
+    {
+        "requestId": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "message": "request approved successfully !"
+    }
+    
+[/response]
+    
+
+#### `PATCH /api/v1/return/rejectRequest`
+*   Description: Rejects a return request.
+*   Authentication: Required (Bearer Token)
+[example]
+*   Request Body:
+    
+    {
+        "requestId": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "message": "request rejected successfully !"
+    }
+    
+[/response]
+    
+
+#### `PUT /api/v1/return/updateRequest/:id`
+*   Description: Updates a return request.
+*   Authentication: Required (Bearer Token)
+*   URL Parameters:
+    *   `id`: The ID of the return request to update.
+[example]
+*   Request Body:
+    
+    {
+        "status": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... return request object
+        }
+    }
+    
+[/response]
+    
+
+#### `POST /api/v1/return/refundToWallet`
+*   Description: Refunds the payment for a return request to the user's wallet.
+*   Authentication: Required (Bearer Token)
+[example]
+*   Request Body:
+    
+    {
+        "requestId": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "message": "refund to wallet successfully !"
+    }
+    
+[/response]
+    
+
+#### `POST /api/v1/return/refundToRazorpay`
+*   Description: Refunds the payment for a return request to Razorpay.
+*   Authentication: Required (Bearer Token)
+[example]
+*   Request Body:
+    
+    {
+        "requestId": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "message": "refund to razorpay successfully !"
+    }
+    
+[/response]
+    
+
+### 3.20. QNA
 
 #### `GET /api/v1/qna/get`
 *   Description: Retrieves all Q&A items.
@@ -2151,13 +2500,8 @@ To authenticate, include the `Authorization` header with the value `Bearer <YOUR
     
 [/response]
     
-    {
-        "success": true,
-        "message": "qna deleted succesfully !"
-    }
-    
 
-### 3.19. Refer & Earn
+### 3.21. Refer & Earn
 
 #### `GET /api/v1/refer/myrefer`
 *   Description: Retrieves the referral data for the authenticated user.
@@ -2225,7 +2569,7 @@ To authenticate, include the `Authorization` header with the value `Bearer <YOUR
 [/response]
     
 
-### 3.20. Reward
+### 3.22. Reward
 
 #### `GET /api/v1/reward/`
 *   Description: Base reward route.
@@ -2322,7 +2666,7 @@ To authenticate, include the `Authorization` header with the value `Bearer <YOUR
 [/response]
     
 
-### 3.21. Scratch Card
+### 3.23. Scratch Card
 
 #### `GET /api/v1/scratch/myscratch`
 *   Description: Retrieves all scratch cards for the authenticated user.
@@ -2359,7 +2703,7 @@ To authenticate, include the `Authorization` header with the value `Bearer <YOUR
 [/response]
     
 
-### 3.22. Transaction
+### 3.24. Transaction
 
 #### `GET /api/v1/transaction/checkBalance`
 *   Description: Retrieves the wallet balance for the authenticated user.
@@ -2415,7 +2759,7 @@ To authenticate, include the `Authorization` header with the value `Bearer <YOUR
     }
     
 
-### 3.23. WhatsApp
+### 3.25. WhatsApp
 
 #### `POST /api/v1/whatsapp/message`
 *   Description: Generates a WhatsApp chat link for a user.
@@ -2434,7 +2778,7 @@ To authenticate, include the `Authorization` header with the value `Bearer <YOUR
     }
     
 
-### 3.24. Razorpay
+### 3.26. Razorpay
 
 #### `POST /api/v1/razorpay/create-order`
 *   Description: Creates a Razorpay order.
