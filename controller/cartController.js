@@ -19,7 +19,6 @@ export const addToCart = async(req, res, next)=>{
         }
 
 
-
         let cart = await Cart.findOne({userId});
         if(!cart){
             cart = new Cart({
@@ -100,13 +99,6 @@ export const getToCart = async(req, res, next)=>{
         const newCoupon_discount = (Math.round(totalprice*cart.couponDiscount/100))
         
         totalprice = parseInt(totalprice - totalprice*cart.couponDiscount/100)
-
-  
-
-        
-
-       
-
 
         
         res.status(200).send({

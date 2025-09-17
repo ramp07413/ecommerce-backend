@@ -12,8 +12,4 @@ router.put("/cancel/:orderId", isAuthenticated, cancelOrder)
 router.patch("/update/:orderId", isAuthenticated, isAuthorized("admin"), updateOrder)
 
 
-
-
-
-
 export {router as orderRouter}

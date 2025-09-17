@@ -10,6 +10,7 @@ import { RazorpayInstance } from "../services/razorpayInstance.js";
 
 export const createRazorpayOrderAndVerify = async (req, res, next) => {
     try {
+
         let totalAmount = 0
         let discountedPrice = 0
         let walletamount = 0
@@ -216,4 +217,3 @@ export const verifyPaymentAndCreateOrder = async (req, res, next) => {
         return next(new ErrorHandler(`${err._message}`, 500))
     }
 }
-

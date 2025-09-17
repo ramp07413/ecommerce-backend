@@ -13,7 +13,7 @@ const warehouseProductSchema = new mongoose.Schema({
     },
     sku : { //stoke keeping unit
         type : String,
-        unique : true //IP15-256GB-BLK
+        required : true
     },
     quantity : {
         type : Number,
@@ -33,4 +33,4 @@ const warehouseProductSchema = new mongoose.Schema({
     timestamps : true
 })
 
-export const warehouseProduct = mongoose.model("warehouseProudct", warehouseProductSchema)
+export const warehouseProduct = mongoose.model("warehouseProuduct", warehouseProductSchema)

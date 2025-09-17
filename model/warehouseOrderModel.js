@@ -34,11 +34,30 @@ const warehouseOrderSchema = new mongoose.Schema({
         type : Number
     },
 
+    paymentStatus : {
+        type : String,
+        enum : ["pending", "paid"]
+    },
+
     status : {
         type : String,
-        enum : ["pending", "approved", "delivered"],
+        enum : ["pending","processing", "approved", "delivered"],
         default : "pending"
-    }
+    },
+    shippingAddress : {
+        type : Object
+    },
+    razorpayOrderId: {
+    type: String,
+  },
+  razorpayPaymentId: {
+    type: String,
+  },
+  razorpaySignature: {
+    type: String,
+  }
+
+    
 
 }, {timestamps : true})
 
