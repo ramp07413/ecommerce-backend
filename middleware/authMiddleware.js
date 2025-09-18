@@ -20,6 +20,10 @@ export const  isAuthenticated = async(req, res, next)=>{
         return next(new Error("user is not authenticated."))
     }
 
+    if (!process.env.JWT_SECRET) {
+        return next(new Error("JWT_SECRET is not defined in the environment variables."));
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
     const data = await user.findById(decoded.id)
     if(!data){
