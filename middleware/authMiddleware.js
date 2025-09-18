@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken'
 import { user } from '../model/userModel.js';
 import { shop } from '../model/shopModel.js';
 import { ErrorHandler } from '../utils/Errorhandler.js';
+import { config } from 'dotenv';
+config()
 
 
 export const  isAuthenticated = async(req, res, next)=>{

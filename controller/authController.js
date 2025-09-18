@@ -145,7 +145,6 @@ export const googleurl = async(req, res, next)=>{
                 scope : ['profile', 'email']
             })
             
-            res.send(url)
             res.redirect(url)
     }
     catch(err){

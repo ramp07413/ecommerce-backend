@@ -19,7 +19,6 @@ const warehouseProductSchema = new mongoose.Schema({
         type : Number,
         default : 0
     },
-
     costPrice : {
         type : Number
     },
@@ -33,4 +32,4 @@ const warehouseProductSchema = new mongoose.Schema({
     timestamps : true
 })
 
-export const warehouseProduct = mongoose.model("warehouseProuduct", warehouseProductSchema)
+export const warehouseProduct = mongoose.model("warehouseProduct", warehouseProductSchema)

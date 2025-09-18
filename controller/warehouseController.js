@@ -7,6 +7,9 @@ import { isAuthenticated, isAuthorized } from "../middleware/authMiddleware.js";
 import { warehouseOrder } from "../model/warehouseOrderModel.js"
 import { RazorpayInstance } from "../services/razorpayInstance.js"
 
+import { warehouseInvoice } from "../model/warehouseInvoiceModel.js"
+
+
 
 export const createWarehouse = async (req, res, next)=>{
     try {
@@ -450,7 +453,12 @@ export const getWarehouseOrder = async (req, res, next)=>{
     try {
         const sellerId = req.user._id
 
-        const warehouseOrderData = await warehouseOrder.find({sellerId : sellerId})
+        const warehouseOrderData = await warehouseOrder.find({sellerId : sellerId}).populate({path : 'items.warehouseProduct',
+            populate : {
+                path : "productId",
+                model : "productDetails"
+            }
+        })
 
         res.status(200).json({
             success : true,
@@ -470,7 +478,12 @@ export const createWarehouseOrder = async (req, res, next)=>{
         const sellerId = req.user._id
         const { warehouseId, shippingAddress } = req.body
 
-        const warehouseCartData = await warehouseCart.findOne({sellerId : sellerId}).populate('items.warehouseProductId')
+        const warehouseCartData = await warehouseCart.findOne({sellerId : sellerId}).populate({path : 'items.warehouseProduct',
+            populate : {
+                path : "productId",
+                model : "productDetails"
+            }
+        })
 
         if(!warehouseCartData || warehouseCartData.items.length === 0){
             return next(new ErrorHandler("cart is empty", 400))
@@ -627,7 +640,7 @@ export const verifyPaymentOfWarehouse = async (req, res, next) => {
       return next(new ErrorHandler("cart is empty !", 400));
     }
 
-    // 🔒 verify signature
+  
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
@@ -679,3 +692,92 @@ export const verifyPaymentOfWarehouse = async (req, res, next) => {
   }
 };
 
+
+export const createInvoiceforWarehouse = async (req, res, next)=>{
+    try {
+        
+        const {warehouseOrderId} = req.params
+        
+        const warehouseOrderData = await warehouseOrder.findOne({_id : warehouseOrderId}).populate({ 
+            path : 'items.warehouseProduct', 
+            select :  'productId sku',
+            populate : {
+                path : 'productId',
+                select : 'images name'
+            }
+         })
+
+        //  if(warehouseOrderData.status !== "delivered"){
+        //     return next(new ErrorHandler("invoice will created after product delivered !", 400))
+        //  }
+
+
+        if(!warehouseOrderData){
+            return next(new ErrorHandler("order id is inavlid", 400))
+        }
+
+        const isInvoiceExits  = await warehouseInvoice.findOne({warehouseOrderId : warehouseOrderId})
+
+        if(isInvoiceExits){
+            return next(new ErrorHandler("invoice already created !", 400))
+        }
+
+        const orderItems = []
+
+        for(let item of warehouseOrderData.items){
+            orderItems.push({
+                productName : item.warehouseProduct.productId.name,
+                sku : item.warehouseProduct.sku,
+                quantity : item.quantity,
+                price : item.unitPrice
+            })
+        }
+        const invoiceData = await warehouseInvoice.create({
+            sellerId : warehouseOrderData.sellerId,
+            warehouseId : warehouseOrderData.warehouseId,
+            warehouseOrderId : warehouseOrderId,
+            items : orderItems,
+            shippingAddress : warehouseOrderData.shippingAddress,
+            totalAmount : warehouseOrderData.totalAmount
+        })
+
+        res.status(200).json({
+            success : true,
+            message : "invoice created successfully !",
+            invoiceData
+        })
+
+        
+    } catch (err) {
+        console.error(err)
+        return next(new ErrorHandler("failed to create invoice", 500))
+    }
+}
+
+
+export const getInvoiceOfWarehouse = async (req, res, next)=>{
+    try {
+        
+        const {warehouseOrderId} = req.params
+        console.log(warehouseOrderId)
+        
+        const invoiceData = await warehouseInvoice.findOne({warehouseOrderId : warehouseOrderId}).populate('sellerId', 'userName email role phoneNumber').populate("warehouseId", 'name location')
+
+        if(!invoiceData){
+            return next(new ErrorHandler("invaild invoice Id", 400))
+        }
+
+        res.status(200).json({
+            success : true,
+            invoiceData
+        })
+
+        
+    } catch (err) {
+        console.error(err)
+        return next(new ErrorHandler("failed to create invoice", 500))
+    }
+}
+
+
+// warehouse return and refund

@@ -1,5 +1,5 @@
 import { Router  } from "express";
-import { addProductToWarehouse, addToWarehouseCart, clearWarehouseCart, createrazorpayOrder, createWarehouse, createWarehouseOrder, deleteProductToWarehouse, editWarehouse, getAllWarehouse, getOneWarehouse, getProductOfWarehouse, getToWarehouseCart, getWarehouseOrder, removeFromWarehouseCart, updateProductToWarehouse, updateToWarehouseCart, updateWarehouseOrder, verifyPaymentOfWarehouse } from "../controller/warehouseController.js";
+import { addProductToWarehouse, addToWarehouseCart, clearWarehouseCart, createInvoiceforWarehouse, createrazorpayOrder, createWarehouse, createWarehouseOrder, deleteProductToWarehouse, editWarehouse, getAllWarehouse, getInvoiceOfWarehouse, getOneWarehouse, getProductOfWarehouse, getToWarehouseCart, getWarehouseOrder, removeFromWarehouseCart, updateProductToWarehouse, updateToWarehouseCart, updateWarehouseOrder, verifyPaymentOfWarehouse } from "../controller/warehouseController.js";
 import { isAuthenticated } from "../middleware/authMiddleware.js";
 
 
@@ -38,6 +38,18 @@ router.post("/order/verifyPayment", verifyPaymentOfWarehouse)
 
 // // Invoices
 // router.get("/invoices/:invoiceId", getInvoice);
-// router.post("/invoices", creatInvoice);
+router.post("/:warehouseOrderId/invoice",isAuthenticated, createInvoiceforWarehouse);
+router.get("/:warehouseOrderId/invoice",isAuthenticated, getInvoiceOfWarehouse);
+
+
+// return and refund routes
+
+// router.get("/request", warehouseReturnRequests)
+// router.get("/request/:id", warehouseReturnRequestCheck)
+// router.post("/request", createWarehouseReturnRequest)
+// router.patch("/update/:id", updateWarehouseRequest)
+
+// router.post("/refund", warehouseRefundToWallet)
+
 
 export { router as warehouseRouter };

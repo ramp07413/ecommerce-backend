@@ -20,7 +20,7 @@ export const refundPaymentToWallet = async (req, res, next)=>{
         const {userId, orderId} = returnRefundData
 
         if(!userId || !orderId){
-            return next(new ErrorHandler("please fill all the fields", 400))
+            return next(new ErrorHandler("invalid requestId", 400))
         }
 
         let userData = await user.findOne({_id : userId})

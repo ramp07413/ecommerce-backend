@@ -10,7 +10,7 @@ const warehouseCartSchema = new mongoose.Schema({
         {
             warehouseProductId : {
                 type : mongoose.Schema.Types.ObjectId,
-                ref  : "warehouseProuduct",
+                ref  : "warehouseProduct",
                 required : true
             }, 
             quantity : {
