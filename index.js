@@ -1,4 +1,5 @@
 import express from 'express'
+import { createServer } from 'http'
 import { productRouter } from './routes/productRoute.js'
 import { connectDB } from './database/db.js'
 import swaggerUi from 'swagger-ui-express';
@@ -35,6 +36,8 @@ import { razorpayRouter } from './routes/razorpayRoute.js';
 import { returnRouter } from './routes/returnRoute.js';
 import { warehouseRouter } from './routes/warehouseRoute.js';
 import { rackRouter } from './routes/rackRoute.js';
+import { chatRouter } from './routes/chatRoute.js';
+import { initializeSocket } from './services/socketService.js';
 
 
 
@@ -43,8 +46,12 @@ import { rackRouter } from './routes/rackRoute.js';
 
 
 const app = express()
+const server = createServer(app)
 
 connectDB()
+
+// Initialize Socket.IO
+const io = initializeSocket(server)
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
@@ -78,6 +85,10 @@ app.get("/", (req,res)=>{
     res.render("index")
 })
 
+app.get("/chat", (req,res)=>{
+    res.render("chat")
+})
+
 app.use("/api/v1/product", productRouter)
 // #swagger.tags = ['Auth']
 app.use("/api/v1/auth", userRouter)
@@ -106,6 +117,7 @@ app.use("/api/v1/razorpay",razorpayRouter);
 app.use("/api/v1/returnRefund",returnRouter);
 app.use("/api/v1/warehouse",warehouseRouter);
 app.use("/api/v1/rack",rackRouter);
+app.use("/api/v1/chat", chatRouter);
 app.use(errorMiddleware)
 
 
@@ -115,6 +127,6 @@ app.use(errorMiddleware)
 
 // getreward()  
    
-app.listen(process.env.PORT, ()=>{
+server.listen(process.env.PORT, ()=>{
     console.log(`it's running... on port ${process.env.PORT}`)
 })

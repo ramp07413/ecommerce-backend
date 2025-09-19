@@ -2503,7 +2503,7 @@ To authenticate, include the `Authorization` header with the value `Bearer <YOUR
 
 ### 3.21. Refer & Earn
 
-#### `GET /api/v1/refer/myrefer`
+#### `GET /api/v1/referearn/myrefer`
 *   Description: Retrieves the referral data for the authenticated user.
 *   Authentication: Required (Bearer Token)
 [response]
@@ -2519,7 +2519,7 @@ To authenticate, include the `Authorization` header with the value `Bearer <YOUR
 [/response]
     
 
-#### `GET /api/v1/refer/allrefer`
+#### `GET /api/v1/referearn/allrefer`
 *   Description: Retrieves all referral data.
 *   Authentication: Required (Bearer Token)
 [response]
@@ -2535,7 +2535,7 @@ To authenticate, include the `Authorization` header with the value `Bearer <YOUR
 [/response]
     
 
-#### `GET /api/v1/refer/userrefer/:id`
+#### `GET /api/v1/referearn/userrefer/:id`
 *   Description: Retrieves the referral data for a specific user.
 *   Authentication: Required (Bearer Token)
 *   URL Parameters:
@@ -2553,7 +2553,7 @@ To authenticate, include the `Authorization` header with the value `Bearer <YOUR
 [/response]
     
 
-#### `GET /api/v1/refer/referDashboard`
+#### `GET /api/v1/referearn/referDashboard`
 *   Description: Retrieves the referral dashboard data.
 *   Authentication: Required (Bearer Token)
 [response]
@@ -2825,6 +2825,600 @@ To authenticate, include the `Authorization` header with the value `Bearer <YOUR
     }
     
 [/response]
+
+### 3.27. Warehouse Management
+
+#### `POST /api/v1/warehouse/create`
+*   Description: Creates a new warehouse.
+*   Authentication: None
+[example]
+*   Request Body:
+    
+    {
+        "warehouseName": "string",
+        "location": "string",
+        "capacity": "number"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... warehouse object
+        }
+    }
+    
+[/response]
+
+#### `GET /api/v1/warehouse/getAll`
+*   Description: Retrieves all warehouses.
+*   Authentication: None
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": [
+            // ... array of warehouse objects
+        ]
+    }
+    
+[/response]
+
+#### `GET /api/v1/warehouse/get/:No`
+*   Description: Retrieves a specific warehouse by number.
+*   Authentication: None
+*   URL Parameters:
+    *   `No`: The warehouse number.
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... warehouse object
+        }
+    }
+    
+[/response]
+
+#### `PATCH /api/v1/warehouse/edit/:No`
+*   Description: Updates a warehouse.
+*   Authentication: None
+*   URL Parameters:
+    *   `No`: The warehouse number.
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... warehouse object
+        }
+    }
+    
+[/response]
+
+#### `GET /api/v1/warehouse/:warehouseNo/products`
+*   Description: Retrieves products in a warehouse.
+*   Authentication: None
+*   URL Parameters:
+    *   `warehouseNo`: The warehouse number.
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": [
+            // ... array of warehouse product objects
+        ]
+    }
+    
+[/response]
+
+#### `POST /api/v1/warehouse/:warehouseNo/products`
+*   Description: Adds a product to a warehouse.
+*   Authentication: None
+*   URL Parameters:
+    *   `warehouseNo`: The warehouse number.
+[example]
+*   Request Body:
+    
+    {
+        "productId": "string",
+        "quantity": "number"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... warehouse product object
+        }
+    }
+    
+[/response]
+
+#### `PATCH /api/v1/warehouse/:warehouseNo/products/:productId`
+*   Description: Updates a product in a warehouse.
+*   Authentication: None
+*   URL Parameters:
+    *   `warehouseNo`: The warehouse number.
+    *   `productId`: The product ID.
+[example]
+*   Request Body:
+    
+    {
+        "quantity": "number"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... warehouse product object
+        }
+    }
+    
+[/response]
+
+#### `DELETE /api/v1/warehouse/:warehouseNo/products/:productId`
+*   Description: Removes a product from a warehouse.
+*   Authentication: None
+*   URL Parameters:
+    *   `warehouseNo`: The warehouse number.
+    *   `productId`: The product ID.
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "message": "Product removed from warehouse successfully"
+    }
+    
+[/response]
+
+#### `GET /api/v1/warehouse/cart/get`
+*   Description: Retrieves the warehouse cart for the authenticated user.
+*   Authentication: Required (Bearer Token)
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "cart": {
+            // ... warehouse cart object
+        }
+    }
+    
+[/response]
+
+#### `POST /api/v1/warehouse/cart/add`
+*   Description: Adds a product to the warehouse cart.
+*   Authentication: Required (Bearer Token)
+[example]
+*   Request Body:
+    
+    {
+        "productId": "string",
+        "quantity": "number"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "message": "Product added to warehouse cart"
+    }
+    
+[/response]
+
+#### `PUT /api/v1/warehouse/cart/update`
+*   Description: Updates the quantity of a product in the warehouse cart.
+*   Authentication: Required (Bearer Token)
+[example]
+*   Request Body:
+    
+    {
+        "productId": "string",
+        "quantity": "number"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "cart": {
+            // ... warehouse cart object
+        }
+    }
+    
+[/response]
+
+#### `PATCH /api/v1/warehouse/cart/remove`
+*   Description: Removes a product from the warehouse cart.
+*   Authentication: Required (Bearer Token)
+[example]
+*   Request Body:
+    
+    {
+        "productId": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "message": "Product removed from warehouse cart"
+    }
+    
+[/response]
+
+#### `DELETE /api/v1/warehouse/cart/clear`
+*   Description: Clears the warehouse cart.
+*   Authentication: Required (Bearer Token)
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "message": "Warehouse cart cleared"
+    }
+    
+[/response]
+
+#### `GET /api/v1/warehouse/orders/get`
+*   Description: Retrieves warehouse orders for the authenticated user.
+*   Authentication: Required (Bearer Token)
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": [
+            // ... array of warehouse order objects
+        ]
+    }
+    
+[/response]
+
+#### `POST /api/v1/warehouse/orders/create`
+*   Description: Creates a new warehouse order.
+*   Authentication: Required (Bearer Token)
+[example]
+*   Request Body:
+    
+    {
+        "shippingAddress": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... warehouse order object
+        }
+    }
+    
+[/response]
+
+#### `PATCH /api/v1/warehouse/orders/update/:warehouseOrderId`
+*   Description: Updates a warehouse order.
+*   Authentication: Required (Bearer Token)
+*   URL Parameters:
+    *   `warehouseOrderId`: The warehouse order ID.
+[example]
+*   Request Body:
+    
+    {
+        "status": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... warehouse order object
+        }
+    }
+    
+[/response]
+
+#### `POST /api/v1/warehouse/orders/razorpay`
+*   Description: Creates a Razorpay order for warehouse purchase.
+*   Authentication: None
+[example]
+*   Request Body:
+    
+    {
+        "amount": "number"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "order": {
+            // ... razorpay order object
+        }
+    }
+    
+[/response]
+
+#### `POST /api/v1/warehouse/order/verifyPayment`
+*   Description: Verifies warehouse order payment.
+*   Authentication: None
+[example]
+*   Request Body:
+    
+    {
+        "razorpay_order_id": "string",
+        "razorpay_payment_id": "string",
+        "razorpay_signature": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "message": "Payment verified successfully"
+    }
+    
+[/response]
+
+#### `POST /api/v1/warehouse/:warehouseOrderId/invoice`
+*   Description: Creates an invoice for a warehouse order.
+*   Authentication: Required (Bearer Token)
+*   URL Parameters:
+    *   `warehouseOrderId`: The warehouse order ID.
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... warehouse invoice object
+        }
+    }
+    
+[/response]
+
+#### `GET /api/v1/warehouse/:warehouseOrderId/invoice`
+*   Description: Retrieves an invoice for a warehouse order.
+*   Authentication: Required (Bearer Token)
+*   URL Parameters:
+    *   `warehouseOrderId`: The warehouse order ID.
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... warehouse invoice object
+        }
+    }
+    
+[/response]
+
+#### `GET /api/v1/warehouse/request`
+*   Description: Retrieves warehouse return requests.
+*   Authentication: Required (Bearer Token)
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": [
+            // ... array of warehouse return request objects
+        ]
+    }
+    
+[/response]
+
+#### `GET /api/v1/warehouse/request/:id`
+*   Description: Retrieves a specific warehouse return request.
+*   Authentication: Required (Bearer Token)
+*   URL Parameters:
+    *   `id`: The return request ID.
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... warehouse return request object
+        }
+    }
+    
+[/response]
+
+#### `POST /api/v1/warehouse/request`
+*   Description: Creates a warehouse return request.
+*   Authentication: Required (Bearer Token)
+[example]
+*   Request Body:
+    
+    {
+        "warehouseOrderId": "string",
+        "reason": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... warehouse return request object
+        }
+    }
+    
+[/response]
+
+#### `PATCH /api/v1/warehouse/update/:id`
+*   Description: Updates a warehouse return request.
+*   Authentication: Required (Bearer Token)
+*   URL Parameters:
+    *   `id`: The return request ID.
+[example]
+*   Request Body:
+    
+    {
+        "status": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "data": {
+            // ... warehouse return request object
+        }
+    }
+    
+[/response]
+
+#### `POST /api/v1/warehouse/refund`
+*   Description: Processes a refund to wallet for warehouse return.
+*   Authentication: Required (Bearer Token)
+[example]
+*   Request Body:
+    
+    {
+        "requestId": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "message": "Refund processed successfully"
+    }
+    
+[/response]
+
+### 3.28. Chat Support
+
+#### `POST /api/v1/chat/start`
+*   Description: Starts a new chat session for customer support.
+*   Authentication: None
+[example]
+*   Request Body:
+    
+    {
+        "customerId": "string"
+    }
+    
+[/example]
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "chatId": "string"
+    }
+    
+[/response]
+
+#### `GET /api/v1/chat/history/:chatId`
+*   Description: Retrieves the chat history for a specific chat session.
+*   Authentication: None
+*   URL Parameters:
+    *   `chatId`: The ID of the chat session.
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "chat": {
+            "_id": "string",
+            "customerId": "string",
+            "supportAgentId": "string",
+            "status": "string",
+            "messages": [
+                {
+                    "sender": "string",
+                    "message": "string",
+                    "timestamp": "datetime"
+                }
+            ],
+            "createdAt": "datetime",
+            "updatedAt": "datetime"
+        }
+    }
+    
+[/response]
+
+#### `GET /api/v1/chat/active`
+*   Description: Retrieves all active chat sessions.
+*   Authentication: None
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "chats": [
+            // ... array of active chat objects
+        ]
+    }
+    
+[/response]
+
+#### `PUT /api/v1/chat/close/:chatId`
+*   Description: Closes an active chat session.
+*   Authentication: None
+*   URL Parameters:
+    *   `chatId`: The ID of the chat session to close.
+[response]
+*   Response (Success - 200 OK):
+    
+    {
+        "success": true,
+        "message": "Chat closed successfully"
+    }
+    
+[/response]
+
+#### Real-time Chat with Socket.IO
+*   Description: Real-time messaging functionality using WebSocket connections.
+*   Connection URL: `ws://localhost:PORT` or `wss://your-domain.com`
+*   Events:
+    *   `join-chat`: Join a specific chat room
+        *   Payload: `chatId` (string)
+    *   `send-message`: Send a message in real-time
+        *   Payload: `{ chatId: "string", message: "string", sender: "customer|agent" }`
+    *   `new-message`: Receive new messages
+        *   Payload: `{ sender: "string", message: "string", timestamp: "datetime" }`
 
 ## 4. Error Handling
 All error responses will follow a consistent JSON structure:
