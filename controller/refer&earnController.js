@@ -10,9 +10,7 @@ export const myReferData = async (req, res, next)=>{
         .populate('referUserId', 'userName email role referlink')
         .populate('userInvited.userId', 'userName email')
         console.log(data)
-        if(!data){
             return next(new ErrorHandler("no refer record",200 ))
-        }
        
         res.status(200).json({
             success : true,
@@ -32,9 +30,7 @@ export const allReferData = async (req, res, next)=>{
         .populate('referUserId', 'userName email role referlink')
         .populate('userInvited.userId', 'userName email')
         
-        if(!data){
             return next(new ErrorHandler("no refer record",200 ))
-        }
        
         res.status(200).json({
             success : true,
@@ -56,9 +52,7 @@ export const OneUserReferData = async (req, res, next)=>{
         .populate('referUserId', 'userName email role referlink')
         .populate('userInvited.userId', 'userName email')
         console.log(data)
-        if(!data){
             return next(new ErrorHandler("no refer record",200 ))
-        }
        
         res.status(200).json({
             success : true,
@@ -87,9 +81,7 @@ export const referDashboardData = async (req, res, next)=>{
             }
         ])
 
-        if(!data || data.length == 0){
             return next(new ErrorHandler("no records", 200))
-        }
        
         res.status(200).json({
             success : true,

@@ -5,9 +5,6 @@ export const createQNA = async(req, res, next)=>{
     try {
         const {question , answer} = req.body
 
-        if(!question || !answer){
-            return next(new ErrorHandler("please fill all the fields", 400))
-        }
 
         const data = await qna.create({
             question,
@@ -59,14 +56,10 @@ export const updateQNA = async(req, res, next)=>{
 
         const qnaId = req.params.id
         const {question , answer} = req.body
-    if(!question && !answer){
         return next(new ErrorHandler("at least one field is requied", 400))
-    }
     const data =  await qna.findOne({_id : qnaId})
 
-    if(!data){
         return next(new ErrorHandler("qna not found", 404))
-    }
 
     if(question) data.question = question
     if(answer) data.answer = answer
@@ -90,9 +83,7 @@ export const deleteQNA = async(req, res, next)=>{
         const qnaId = req.params.id
         const data =  await qna.findOne({_id : qnaId})
 
-        if(!data){
             return next(new ErrorHandler("qna already deleted !", 200))
-        }
 
         await data.deleteOne()
         res.status(200).json({

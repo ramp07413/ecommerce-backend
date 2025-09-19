@@ -21,9 +21,7 @@ export const banuser  = async(req, res, next)=>{
         console.log(userId)
         let data = await user.findById(userId)
 
-        if(!data){
             return next(new ErrorHandler("please enter valid user id", 400))
-        }
 
         data.isbanned = !data.isbanned
         console.log(data.isbanned)
@@ -48,9 +46,7 @@ export const deleteUser = async(req, res, next)=>{
         const userId = req.params.id
         let data = await user.findById(userId)
 
-        if(!data){
             return next(new ErrorHandler("please enter valid user id", 400))
-        }
 
         if(data){
             await data.deleteOne({_id : userId})
@@ -78,9 +74,7 @@ export const roleChange = async(req, res, next)=>{
         const {role} = req.body
         let data = await user.findById(userId)
 
-        if(!data){
             return next(new ErrorHandler("please enter valid user id", 400))
-        }
 
         if(data.isbanned){
             return next(new ErrorHandler("user is banned !", 403))

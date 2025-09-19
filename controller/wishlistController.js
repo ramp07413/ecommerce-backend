@@ -8,13 +8,9 @@ export const addToWishlist = async(req, res, next)=>{
         const {productId} = req.body
     const userId = req.user._id
 
-    if(!productId){
         return next(new ErrorHandler("please enter valid product id", 400))
-    }
 
-    if(!mongoose.Types.ObjectId.isValid(productId)){
         return next(new ErrorHandler("product id is invalid", 400))
-    }
 
     let data = await wishlist.findOne({userId})
 
@@ -25,8 +21,7 @@ export const addToWishlist = async(req, res, next)=>{
                 {productId}
             ]
         })
-    }
-    else{
+    } else{
         const existWishlist = data.items.some(item=> item.productId.equals(productId))
 
         if(existWishlist){
@@ -54,15 +49,11 @@ export const removeToWishlist = async(req, res, next)=>{
         const userId = req.user._id
         const {productId} = req.body
 
-        if(!productId){
             return next(new ErrorHandler("product id invalid", 400))
-        }
 
         const data = await wishlist.findOne({userId})
 
-        if(!data){
             return next(new ErrorHandler("wishlist not found", 404))
-        }
 
         data.items = data.items.filter(item => !item.productId.equals(productId))
 
@@ -86,12 +77,10 @@ export const getWishlist = async(req, res, next)=>{
     
     const data = await wishlist.findOne({userId}).populate("items.productId")
 
-    if(!data){
       return res.status(200).send({
         success : true,
         wishlist : []
       })
-    }
 
     res.status(200).send({
         success : true,
@@ -117,9 +106,7 @@ export const recentFav = async (req, res, next)=>{
     }
 } )
 
-    if(!data){
         return next(new ErrorHandler("no recent fav found !", 404))
-    }
 
     data.items.sort((a, b)=>{
         return new Date(b.productId.createdAt) - new Date(a.productId.createdAt)

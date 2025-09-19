@@ -36,9 +36,6 @@ export const sendNotificationToAll = async(req, res, next)=>{
     try{
         const {title, message, link , type } = req.body
 
-        if(!title || !message || !type){
-            return next(new ErrorHandler("please enter all the fields !", 400))
-        }
         
         const data = await user.find({})
 
@@ -79,9 +76,7 @@ export const deleteNotification = async(req, res, next)=>{
             user : userId})
  
 
-        if(!data){
             return next(new ErrorHandler("notification already deleted", 404))
-        }
 
         res.status(200).json({
             success : true,
@@ -121,4 +116,48 @@ export const clearNotifications = async(req, res, next)=>{
 
     }
 
+}
+
+export const getOneNotification = async(req, res, next)=>{
+    try{
+        const userId = req.user._id
+        const notificationId = req.params.id
+
+        const data = await notification.findOne({_id: notificationId, user: userId})
+
+            return next(new ErrorHandler("Notification not found", 404))
+
+        res.status(200).json({
+            success: true,
+            notification: data
+        })
+    }
+    catch(err){
+        return next(new ErrorHandler("Error getting notification", 500))
+    }
+}
+
+export const updateNotification = async(req, res, next)=>{
+    try{
+        const userId = req.user._id
+        const notificationId = req.params.id
+        const {isRead} = req.body
+
+        const data = await notification.findOneAndUpdate(
+            {_id: notificationId, user: userId},
+            {isRead},
+            {new: true}
+        )
+
+            return next(new ErrorHandler("Notification not found", 404))
+
+        res.status(200).json({
+            success: true,
+            message: "Notification updated successfully",
+            notification: data
+        })
+    }
+    catch(err){
+        return next(new ErrorHandler("Error updating notification", 500))
+    }
 }

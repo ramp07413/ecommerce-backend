@@ -16,9 +16,6 @@ export const createWarehouse = async (req, res, next)=>{
 
         const { name , location, warehouseNo, managerId} = req.body
 
-        if(!name || !location || !warehouseNo || !managerId){
-            return next(new ErrorHandler("please fill all the filled !", 400))
-        }
 
         const iswarehouseExits = await warehouse.findOne({warehouseNo : warehouseNo})
 
@@ -52,9 +49,7 @@ export const getOneWarehouse = async (req, res, next)=>{
 
         const warehouseNo = req.params.No
 
-        if(!warehouseNo){
             return next(new ErrorHandler("no warehouse found", 404))
-        }
       
         const warehouseData = await warehouse.findOne({warehouseNo : warehouseNo}).populate("manager", 'userName email role')
 
@@ -88,15 +83,11 @@ export const editWarehouse  = async (req, res, next)=>{
         const warehouseNo = req.params.No
         const {name , location , managerId} = req.body
 
-        if(!name && !location && !managerId){
             return next(new ErrorHandler("please fill atleast one field !", 400))
-        }
 
         const warehouseData = await warehouse.findOne({warehouseNo : warehouseNo}).populate("manager", 'userName email role')
 
-        if(!warehouseData){
             return next(new ErrorHandler("warehouse not found ",  404))
-        }
 
         if(name) warehouseData.name = name
         if(location) warehouseData.location = location
@@ -122,9 +113,7 @@ export const getProductOfWarehouse = async (req, res , next)=>{
 
         const {warehouseNo} = req.params
         const warehousedata = await warehouse.findOne({warehouseNo : warehouseNo})
-        if(!warehousedata){
             return next(new ErrorHandler("invalid warehouse No", 400))
-        }
         const warehouseProductData = await warehouseProduct.find({warehouseId : warehousedata._id})       
         
         res.status(200).json({
@@ -143,15 +132,10 @@ export const addProductToWarehouse = async (req, res , next)=>{
         const {warehouseNo} = req.params
         const {productId, sku, quantity, costPrice, expiryDate, batchNumber} = req.body
 
-        if(!productId || !sku || quantity===undefined || !costPrice){
-                return next(new ErrorHandler("please fill all the required fields !", 400))
-        }
 
         const warehouseData = await warehouse.findOne({warehouseNo : warehouseNo})
 
-        if(!warehouseData){
             return next(new ErrorHandler("invalid warehouseNo", 400))
-        }
 
         const isalreadyProductExits = await warehouseProduct.findOne({warehouseId : warehouseData._id, sku : sku})
 
@@ -192,9 +176,7 @@ export const updateProductToWarehouse = async (req, res , next)=>{
 
         const {sku, quantity, costPrice, expiryDate, batchNumber} = req.body
 
-        if(!sku && quantity === undefined && !costPrice && !expiryDate && !batchNumber){
             return next(new ErrorHandler("atleast fill one field to update !", 400))
-        }
 
         const filter = {}
 
@@ -206,9 +188,7 @@ export const updateProductToWarehouse = async (req, res , next)=>{
 
         const warehouseData = await warehouse.findOne({warehouseNo : warehouseNo})
 
-        if(!warehouseData){
             return next(new ErrorHandler("invalid warehouse No", 400))
-        }
 
        
         const warehouseProductData = await warehouseProduct.findOneAndUpdate({warehouseId : warehouseData._id, productId : productId},
@@ -216,9 +196,7 @@ export const updateProductToWarehouse = async (req, res , next)=>{
             {new : true}
         )
 
-        if(!warehouseProductData){
             return next(new ErrorHandler("warehouse product not found !", 400))
-        }
 
    
         res.status(200).json({
@@ -243,15 +221,11 @@ export const deleteProductToWarehouse = async (req, res , next)=>{
 
         const warehouseData = await warehouse.findOne({warehouseNo : warehouseNo})
 
-        if(!warehouseData){
             return next(new ErrorHandler("invaild warehouse No", 400))
-        }
 
         const warehouseProductData = await warehouseProduct.findOneAndDelete({warehouseId : warehouseData._id, productId : productId})
 
-        if(!warehouseProductData){
             return next(new ErrorHandler("product was already deleted or not found !", 404))
-        }
 
         res.status(200).json({
             success : true,
@@ -273,13 +247,9 @@ export const addToWarehouseCart = async (req, res, next)=>{
 
         const { warehouseProductId , quantity} = req.body
 
-        if(!warehouseProductId || !quantity){
-            return next(new ErrorHandler("please fill all the fields", 400))
-        }
 
         let cartData = await warehouseCart.findOne({sellerId : sellerId})
 
-        if(!cartData){
             cartData = await warehouseCart.create({
                 sellerId,
                 items : [{
@@ -287,7 +257,6 @@ export const addToWarehouseCart = async (req, res, next)=>{
                     quantity
                 }]
             })
-        }
 
         const exitingItem = cartData.items.find((item)=>item.warehouseProductId.equals(warehouseProductId))
 
@@ -344,13 +313,9 @@ export const updateToWarehouseCart = async (req, res, next)=>{
 
         const { warehouseProductId } = req.body
 
-        if(!warehouseProductId){
-            return next(new ErrorHandler("please fill all the fields", 400))
-        }
 
         let cartData = await warehouseCart.findOne({sellerId : sellerId})
 
-        if(!cartData){
             cartData = await warehouseCart.create({
                 sellerId,
                 items : [{
@@ -358,7 +323,6 @@ export const updateToWarehouseCart = async (req, res, next)=>{
                     quantity : 1
                 }]
             })
-        }
 
         const exitingItem = cartData.items.find((item)=>item.warehouseProductId.equals(warehouseProductId))
 
@@ -395,15 +359,10 @@ export const removeFromWarehouseCart = async (req, res, next)=>{
 
         const { warehouseProductId } = req.body
 
-        if(!warehouseProductId){
-            return next(new ErrorHandler("please fill all the fields", 400))
-        }
 
         let cartData = await warehouseCart.findOne({sellerId : sellerId})
 
-        if(!cartData){
             return next(new ErrorHandler("cart not found !", 404))
-        }
         cartData.items = cartData.items.filter((item)=>!item.warehouseProductId.equals(warehouseProductId))
 
         await cartData.save()
@@ -430,9 +389,7 @@ export const clearWarehouseCart = async (req, res, next)=>{
 
         let cartData = await warehouseCart.findOneAndDelete({sellerId : sellerId})
 
-        if(!cartData){
             return next(new ErrorHandler("cart not found !", 404))
-        }
 
 
         res.status(200).json({
@@ -485,13 +442,9 @@ export const createWarehouseOrder = async (req, res, next)=>{
             }
         })
 
-        if(!warehouseCartData || warehouseCartData.items.length === 0){
             return next(new ErrorHandler("cart is empty", 400))
-        }
 
-        if(!warehouseId || !shippingAddress){
             return next(new ErrorHandler("please fill all the required fields!", 400))
-        }
 
         // const warehouseProductData = await warehouseProduct.findOne({_id : warehouseProductId})
         const finalItems = []
@@ -569,13 +522,9 @@ export const createrazorpayOrder = async(req, res, next)=>{
 
         const warehouseCartData = await warehouseCart.findOne({sellerId : sellerId}).populate('items.warehouseProductId')
 
-        if(!warehouseCartData || warehouseCartData.items.length === 0){
             return next(new ErrorHandler("cart is empty", 400))
-        }
 
-        if(!warehouseId || !shippingAddress){
             return next(new ErrorHandler("please fill all the required fields!", 400))
-        }
 
         // const warehouseProductData = await warehouseProduct.findOne({_id : warehouseProductId})
         const finalItems = []
@@ -712,9 +661,7 @@ export const createInvoiceforWarehouse = async (req, res, next)=>{
         //  }
 
 
-        if(!warehouseOrderData){
             return next(new ErrorHandler("order id is inavlid", 400))
-        }
 
         const isInvoiceExits  = await warehouseInvoice.findOne({warehouseOrderId : warehouseOrderId})
 
@@ -763,9 +710,7 @@ export const getInvoiceOfWarehouse = async (req, res, next)=>{
         
         const invoiceData = await warehouseInvoice.findOne({warehouseOrderId : warehouseOrderId}).populate('sellerId', 'userName email role phoneNumber').populate("warehouseId", 'name location')
 
-        if(!invoiceData){
             return next(new ErrorHandler("invaild invoice Id", 400))
-        }
 
         res.status(200).json({
             success : true,

@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
         enum : ["user","buyer", "seller","employee", "admin"],
         default : 'buyer'
     },
+    roleId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Role'
+    },
     
     phoneNumber : {
         type : String,

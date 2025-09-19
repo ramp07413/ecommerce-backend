@@ -20,9 +20,7 @@ export const randomreward = async()=>{
         random -= reward.probability
        }
 
-       if(!selectreward){
         return null
-       }
 
        return selectreward
 
@@ -59,9 +57,7 @@ export const myScratch = async (req, res, next)=>{
     try {
         const userId = req.user._id
         const data = await scratchCard.find({userId : userId}).sort({createdAt : -1})
-        if(!data){
             return next(new ErrorHandler("there is no scratch card !", 200))
-        }
         res.status(200).json({
             success : true,
             results : data.length,
@@ -83,9 +79,7 @@ export const Scratchreward = async (req, res, next)=>{
             userId : userId
         })
        
-        if(!data){
             return next(new ErrorHandler("scratch card not found !", 404))
-        }
 
         if(data.isScratched){
             return next(new ErrorHandler("scratch card alreay scratched !", 400))

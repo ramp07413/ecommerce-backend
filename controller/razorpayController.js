@@ -26,7 +26,6 @@ export const createRazorpayOrderAndVerify = async (req, res, next) => {
         const couponDiscount = usercart.couponDiscount
 
         if (!shippingAddress) {
-            return next(new ErrorHandler("please fill all the fields", 400))
         }
 
         if(paymetnMethod !== 'Online'){
@@ -99,14 +98,9 @@ export const verifyPaymentAndCreateOrder = async (req, res, next) => {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature, shippingAddress, paymentMethod } = req.body || {};
 
 
-        if(!razorpay_order_id || !razorpay_payment_id || !razorpay_signature){
-            return next(new ErrorHandler("razorpay_order_id, razorpay_payment_id, razorpay_signature", 400))
-        }
         const userId = req.user._id
         const usercart = await Cart.findOne({userId})
-        if(!usercart || usercart.items.length == 0){
                 return next(new ErrorHandler("cart is empty !", 200))
-            }
 
         
 
@@ -131,9 +125,6 @@ export const verifyPaymentAndCreateOrder = async (req, res, next) => {
 
         const couponDiscount = usercart.couponDiscount
 
-        if(!shippingAddress ){
-                return next(new ErrorHandler("please fill all the fields", 400))
-            }
         
             const finalOrderitem = []
         

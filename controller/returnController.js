@@ -13,21 +13,15 @@ export const refundPaymentToWallet = async (req, res, next)=>{
 
         const returnRefundData = await returnRefund.findOne({_id : requestId})
 
-        if(!returnRefundData){
             return next(new ErrorHandler("no return data and refund found !", 404))
-        }
 
         const {userId, orderId} = returnRefundData
 
-        if(!userId || !orderId){
             return next(new ErrorHandler("invalid requestId", 400))
-        }
 
         let userData = await user.findOne({_id : userId})
 
-        if(!userData){
             return next(new ErrorHandler("user not found !", 404))
-        }
 
         const orderData = await order.findOne({_id : orderId})
 
@@ -41,9 +35,7 @@ export const refundPaymentToWallet = async (req, res, next)=>{
             return next(new ErrorHandler("request already reslove !", 400))
         }
 
-        if(!orderData){
             return next(new ErrorHandler("order not found", 404))
-        }
 
         if(orderData.isRefunded){
             return next(new ErrorHandler("payment was already refunded", 400))
@@ -91,26 +83,18 @@ export const paymentRefund = async(req, res, next)=>{
 
         
         
-        if(!paymentId || !requestId){
             return next(new ErrorHandler("please enter all the required filled", 400))
-        }
 
         const returnRefundData = await returnRefund.findOne({_id : requestId})
 
         const {orderId, userId} = returnRefundData
         
-        if(!returnRefundData){
             return next(new ErrorHandler("no return data and refund found !", 404))
-        }
         const orderData = await order.findOne({_id : orderId})
 
-        if(!orderData){
             return next(new ErrorHandler("order not found !", 400))
-        }
 
-        if(!orderData.isRefunded){
             return next(new ErrorHandler("payment is alrady refunded !", 400))
-        }
 
 
         if(returnRefundData.status === "rejected" || returnRefundData.refundStatus === "closed" || returnRefundData.refundStatus === "refundedToWallet" || returnRefundData.refundStatus === "refundedByRazorpay"){
@@ -159,13 +143,9 @@ export const returnRequest = async (req, res, next)=>{
         const { orderId, returnReason } = req.body
         const userId = req.user._id
 
-        if(!orderId){
             return next(new ErrorHandler("please enter orderId", 400))
-        }
 
-        if(!mongoose.Types.ObjectId.isValid(orderId)){
             return next(new ErrorHandler("orderId is not valid !", 400))
-        }
 
         const alreadyRequested = await returnRefund.findOne({orderId : orderId})
 
@@ -221,9 +201,7 @@ try {
 
     const {requestId} = req.body
 
-    if(!requestId){
         return next(new ErrorHandler("request not found !", 400))
-    }
 
     const alreadyapproved = await returnRefund.findOne({_id : requestId, status : "approved"})
 
@@ -257,13 +235,9 @@ export const getOneRequest = async (req, res, next)=>{
 try {
     const requestId = req.params.id
 
-    if(!requestId){
         return next(new ErrorHandler("requestId is required !", 400))
-    }
 
-    if(!mongoose.Types.ObjectId.isValid(requestId)){
         return next(new ErrorHandler("requestId is not vaild !", 400))
-    }
 
     const data = await returnRefund.findOne({_id : requestId})
 
@@ -284,13 +258,9 @@ export const rejectRequest = async (req, res, next)=>{
 try {
     
     const {rejectReason, requestId} = req.body;
-    if(!requestId){
         return next(new ErrorHandler("requestId is required !", 400))
-    }
 
-    if(!mongoose.Types.ObjectId.isValid(requestId)){
         return next(new ErrorHandler("requestId is not vaild !", 400))
-    }
 
     const data = await returnRefund.findOne({_id : requestId})
 
@@ -320,19 +290,13 @@ try {
 
     const {status, returnStatus, returnDetails} = req.body
 
-    if(!requestId){
         return next(new ErrorHandler("requestId is required !", 400))
-    }
 
-    if(!mongoose.Types.ObjectId.isValid(requestId)){
         return next(new ErrorHandler("requestId is not vaild !", 400))
-    }
 
     const data = await returnRefund.findOne({_id : requestId})
 
-    if(!data){
         return next(new ErrorHandler("request not found !", 400))
-    }
 
     if(data.status === "closed"){
         return next(new ErrorHandler("request was closed !", 400))

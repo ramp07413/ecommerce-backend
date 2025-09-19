@@ -6,9 +6,7 @@ export const getBalance = async(req, res, next)=>{
     try {
         const userId = req.user._id
         const data = await user.findOne({_id : userId})
-        if(!data){
             return next(new ErrorHandler("user not found !", 404))
-        }
 
         const balance = data.walletBalance
         res.status(200).json({
@@ -26,9 +24,7 @@ export const addMoney = async(req, res, next)=>{
     try {
         const userId = req.user._id
         const {amount, description} = req.body || {}
-        if(!amount){
             return next(new ErrorHandler("please enter req.body"))
-        }
         const userData = await user.findOne({_id : userId})
         const transactionData = await transation.create({
             user : userId,
@@ -36,12 +32,8 @@ export const addMoney = async(req, res, next)=>{
             description,
             type : "credit"
         })
-        if(!userData){
             return next(new ErrorHandler("user not found !", 404))
-        }
-        if(!transactionData || transactionData.length === 0){
             return next(new ErrorHandler("no transtion record!", 200))
-        }
 
         await transactionData.save()
 
@@ -67,9 +59,7 @@ export const applyWalletMoney = async(req, res, next)=>{
         
         const userData = await user.findOne({_id : userId})
         
-        if(!userData){
             return next(new ErrorHandler("user not found !", 404))
-        }
     
         userData.isWalletApplied = true
 
@@ -93,9 +83,7 @@ export const unapplyWalletMoney = async(req, res, next)=>{
         
         const userData = await user.findOne({_id : userId})
         
-        if(!userData){
             return next(new ErrorHandler("user not found !", 404))
-        }
     
         userData.isWalletApplied = false
 

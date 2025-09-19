@@ -37,9 +37,7 @@ export const createEvent = async (req, res , next)=>{
                 priority 
          } = req.body || {}
 
-    if(!req.body){
         return next(new ErrorHandler("required req.body", 400))
-    }
 
     if( !eventName || 
         !description || 
@@ -84,13 +82,9 @@ export const updateEvent = async (req, res , next)=>{
     try {
         const eventId = req.params.id
 
-        if(!eventId){
             return next (new ErrorHandler("event Id is required !", 400))
-        }
 
-        if(!mongoose.Types.ObjectId.isValid(eventId)){
             return next(new ErrorHandler("event Id is invalid !", 400))
-        }
         const { 
              eventName, 
                 eventType,
@@ -107,9 +101,7 @@ export const updateEvent = async (req, res , next)=>{
                 iseventActive
          } = req.body || {}
 
-    if(!req.body){
         return next(new ErrorHandler("required req.body", 400))
-    }
 
     if( !eventName && 
         !description && 
@@ -158,9 +150,7 @@ export const updateEvent = async (req, res , next)=>{
 export const stopAllevent = async (req, res , next)=>{
     try {
     const data = await event.updateMany({}, {iseventActive : false})
-    if(!data){
         return next(new ErrorHandler("no event is active", 200))
-    }
     await productDetails.updateMany({}, [
         {
             $set : {
@@ -185,26 +175,18 @@ export const activeEvent = async (req, res , next)=>{
     const eventId = req.params.id
     const data = await event.findOne({_id : eventId})
 
-    if(!req.params){
         return next(new ErrorHandler("req.params required !", 400))
-    }
 
-    if(!mongoose.Types.ObjectId.isValid(eventId)){
         return next(new ErrorHandler("event id is not valid", 400))
-    }
 
-    if(!data){
         return next(new ErrorHandler("event not found !", 404))
-    }
 
     await data.updateOne({iseventActive : true})
 
     const newdata = await event.findOne({iseventActive : true})
 
 
-    if(!newdata){
         return next(new ErrorHandler("no events !", 400))
-    }
 
     console.log(newdata.discount)
 
@@ -232,17 +214,11 @@ export const stopOneEvent = async (req, res , next)=>{
     const eventId = req.params.id
     const data = await event.findOne({_id : eventId})
 
-    if(!eventId){
         return next(new ErrorHandler("event id is required !", 400))
-    }
 
-    if(!mongoose.Types.ObjectId.isValid(eventId)){
         return next(new ErrorHandler("event id is invalid", 400))
-    }
 
-    if(!data){
         return next(new ErrorHandler("evnet not found !", 404))
-    }
 
     await data.updateOne({iseventActive : false})
 

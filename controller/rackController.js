@@ -7,9 +7,6 @@ export const addRackRoW = async (req, res, next)=>{
 
         const {warehouseId, rackNo, rowNo, maxCapacity} = req.body
 
-        if(!warehouseId || !rackNo || !rowNo || !maxCapacity){
-            return next(new ErrorHandler("please fill all the fields !", 400))
-        }
 
         const isRackNoAndRowNO = await rack.findOne({warehouseId ,rackNo, rowNo})
 
@@ -68,16 +65,12 @@ export const updateRackRoW = async (req, res, next)=>{
 
         const rackId = req.params.id
 
-        if(!rackNo && !rowNo && !maxCapacity && !currentQuantity){
             return next(new ErrorHandler("please fill at least one  field !", 400))
-        }
 
 
         const rackData = await rack.findOne({_id : rackId })
         
-        if(!rackData){
             return next(new ErrorHandler("rack not found !", 404))
-        }
 
         if(rackNo) rackData.rackNo = rackNo
         if(rowNo) rackData.rowNo = rowNo
@@ -103,15 +96,11 @@ export const deleteRack = async (req, res, next)=>{
 
         const rackId = req.params.id
 
-        if(!rackId){
             return next(new ErrorHandler("rackId is required !", 400))
-        }
 
         const rackData = await rack.findByIdAndDelete(rackId)
 
-        if(!rackData){
             return next(new ErrorHandler("no rack found ", 404))
-        }
         
 
         res.status(200).json({
@@ -134,9 +123,6 @@ export const addProductToRack = async (req, res, next)=>{
 
         const {rackId , warehouseProductId, quantity} = req.body
 
-        if(!rackId || !warehouseProductId || !quantity){
-            return next(new ErrorHandler("please fill all the fields !", 400))
-        }
 
         const isalreadyadded = await rackProducts.findOne({rackId, warehouseProductId})
 
@@ -171,15 +157,10 @@ export const updateProductToRack = async (req, res, next)=>{
         const rackId = req.params.id
         const {warehouseProductId, quantity} = req.body
 
-        if(!rackId || !warehouseProductId || quantity === undefined){
-            return next(new ErrorHandler("please fill all the fields !", 400))
-        }
 
         const rackData = await rackProducts.findOne({rackId, warehouseProductId})
 
-        if(!rackData){
             return next(new ErrorHandler("product not found in this rack !", 404))
-        }
 
         rackData.quantity = quantity
 
@@ -235,9 +216,7 @@ export const DeleteProductToRack = async (req, res, next)=>{
 
         const rackData = await rackProducts.findOne({rackId, warehouseProductId})
 
-        if(!rackData){
             return next(new ErrorHandler("rack not found !", 404))
-        }
 
         await rackData.deleteOne()
 

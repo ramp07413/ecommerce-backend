@@ -18,7 +18,6 @@ export const createCoupon = async (req, res, next)=>{
             !couponCode ||
             !couponExpiry ||
             !couponDiscount ){
-                return next(new ErrorHandler("please fill all the fields!", 400))
             }
 
              let data = await coupon.findOne({couponCode})
@@ -83,16 +82,12 @@ export const editCoupon = async (req, res, next)=>{
             return next(new ErrorHandler("required couponId !", 400))
         }
 
-        if(!mongoose.Types.ObjectId.isValid(couponId)){
             return next(new ErrorHandler("coupon id is invalid !", 400))
-        }
 
        
        const data = await coupon.findOne({_id : couponId})
 
-       if(!data){
         return next(new Error("coupon not found !", 404))
-       }
 
        if(couponTitle) data.couponTitle = couponTitle
        if(couponCode) data.couponCode = couponCode
@@ -132,19 +127,13 @@ export const deleteCoupon = async (req, res, next)=>{
     try {
         const couponId = req.params.id
 
-        if(!couponId){
             return next(new ErrorHandler("give parameters", 400))
-        }
 
-        if(!mongoose.Types.ObjectId.isValid(couponId)){
             return next(new ErrorHandler("coupon id is invalid !"))
-        }
 
         const data = await coupon.findOneAndDelete({_id : couponId}) 
 
-        if(!data){
             return next(new ErrorHandler("coupon already deleted !", 200))
-        }
     
         res.status(200).json({
             success : true,
@@ -163,9 +152,7 @@ export const removeCoupon = async (req, res, next)=>{
 
        let data = await Cart.findOne({userId})
 
-        if(!data){
             return next(new ErrorHandler("cart is empty !", 200))
-        }
 
         if(data.couponDiscount === 0){
             return next(new ErrorHandler("first apply coupon to remove !", 200))
@@ -188,20 +175,14 @@ export const applyCoupon = async (req, res, next)=>{
         const userId = req.user._id
         const { couponCode } = req.body || { }
         console.log(couponCode)
-        if(!couponCode){
             return next(new ErrorHandler("parameter is required !", 400))
-        }
 
         let data = await coupon.findOne({couponCode : couponCode})
         let discount = data.couponDiscount
-        if(!data){
             return next(new ErrorHandler("coupon not found", 404))
-        }
 
         data = await Cart.findOne({userId})
-        if(!data){
             return next(new ErrorHandler("cart is empty add item to apply coupon", 400))
-        }
         data.couponDiscount = discount
         await data.save()
         res.status(200).json({

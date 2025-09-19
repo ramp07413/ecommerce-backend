@@ -13,22 +13,18 @@ export const askGemini = async (req, res, next)=>{
 
         const userId = req.user._id;
 
-        if(!question){
             return next(new ErrorHandler("please provide a question", 400))
-        }
 
         const model = getAI.getGenerativeModel({model : "gemini-1.5-flash"})
 
         let convertsation = await chatAI.findOne({userId : userId , status : "active"})
 
-        if(!convertsation){
             const title = question.substring(0,30)
             convertsation = new chatAI({
                 userId : userId,
                 history : [],
                 title : title
             })
-        }
 
         const history = convertsation.history.map(item =>({
             role : item.role,
@@ -86,9 +82,7 @@ export const closechat = async (req, res, next)=>{
 
         let convertsation = await chatAI.findOne({userId : userId , status : 'active'})
 
-        if(!convertsation){
             return next(new ErrorHandler("no active conversation found", 404))
-        }
 
         convertsation.status = "closed"
 
@@ -155,22 +149,18 @@ export const ask2Gemini = async (req, res, next)=>{
 
         const userId = req.user._id;
 
-        if(!question){
             return next(new ErrorHandler("please provide a question", 400))
-        }
 
         const model = getAI.getGenerativeModel({model : "gemini-1.5-flash"})
 
         let convertsation = await chatAI.findOne({userId : userId , status : "active"})
 
-        if(!convertsation){
             const title = question.substring(0,30)
             convertsation = new chatAI({
                 userId : userId,
                 history : [],
                 title : title
             })
-        }
 
         const history = convertsation.history.map(item =>({
             role : item.role,

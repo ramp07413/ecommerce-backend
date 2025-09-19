@@ -58,9 +58,7 @@ export const updateEmployee = async(req, res, next)=>{
 
     let data = await user.findOne({_id : eId})
 
-    if(!data){
         return next(new ErrorHandler("invaild employeeId", 400))
-    }
     
     if(userName){
         data.userName = userName 
@@ -142,9 +140,7 @@ if(taxId){
 export const getEmployee = async(req, res, next)=>{
     try {
         const data = await user.find({role : "employee"})
-        if(!data){
             return next(new ErrorHandler("no employee found !", 200))
-        }
 
         res.status(200).json({
             success : true,
@@ -168,9 +164,7 @@ export const getOneEmployee = async(req, res, next)=>{
             }
             )
             // console.log(data)
-        if(!data){
             return next(new ErrorHandler("employee id is invaild !", 400))
-        }
 
         res.status(200).json({
             success : true,
@@ -286,9 +280,7 @@ export const disableEmployee = async(req, res, next)=>{
 
         const data = await user.findOne({_id : eId})
 
-        if(!data){
             return next(new ErrorHandler("invaild employeeId !", 400))
-        }
 
         data.isdisable = !data.isdisable
         await data.save()

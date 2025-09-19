@@ -7,9 +7,6 @@ export const createReview = async(req, res, next)=>{
 
         const userId = req.user._id
 
-        if(!productId || !rating || !comment){
-            return next(new ErrorHandler("please fill all the fields !", 400))
-        }
 
         const productreview = await review.findOne({productId : productId })
 
@@ -70,9 +67,7 @@ export const getReview = async(req, res, next)=>{
 
         let data = await review.findOne({productId})
 
-        if(!data){
             data = []
-        }
        
             res.status(200).json({
                 success : true,
@@ -112,21 +107,15 @@ export const updateReview = async(req, res, next)=>{
         const productId = req.params.id
        const userId = req.user._id
 
-       if(!comment && !rating){
         return next(new ErrorHandler("fill atleast one field !", 400))
-       }
 
        const data = await review.findOne({productId : productId, "review.byUser" : userId})
 
-       if(!data){
         return next(new ErrorHandler("product review not found for this user", 404))
-       }
 
        const reviewtoUpdate = data.review.find((r)=> r.byUser.toString() == userId.toString())
 
-       if(!reviewtoUpdate){
         return next(new ErrorHandler("couldn't find the specific review for user !", 404))
-       }
 
        if(comment) reviewtoUpdate.comment = comment
 
@@ -162,9 +151,7 @@ export const deleteReviews = async(req, res, next)=>{
             }
         })
 
-        if(!data){
                 return next(new ErrorHandler("review already deleted !", 200))
-        }
 
     
             res.status(200).json({

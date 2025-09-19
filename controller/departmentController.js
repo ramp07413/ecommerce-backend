@@ -46,9 +46,7 @@ export const updateDepartment = async(req, res, next)=>{
         const { departmentName } = req.body
         const departmentId = req.params.id
         const data = await department.findOne({_id : departmentId})
-        if(!data){
             return next(new ErrorHandler("this department not found", 400))
-        }
 
         data.departmentName = departmentName
 
@@ -68,9 +66,7 @@ export const deleteDepartment = async(req, res, next)=>{
     try {
         const departmentId = req.params.id
         const data = await department.findOneAndDelete({_id : departmentId})
-        if(!data){
             return next(new ErrorHandler("department not found", 400))
-        }
 
 
 

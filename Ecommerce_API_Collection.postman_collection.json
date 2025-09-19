@@ -1,0 +1,785 @@
+{
+	"info": {
+		"_postman_id": "ecommerce-api-collection",
+		"name": "Ecommerce API Collection",
+		"description": "Complete API collection for ecommerce platform with validation testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userName\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"phoneNumber\": \"+1234567890\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('authToken', response.token);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Forget Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/forget",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "forget"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Add Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sample Product\",\n  \"price\": 99.99,\n  \"category\": \"electronics\",\n  \"quantity\": 10,\n  \"itemTag\": \"featured\",\n  \"shippingTag\": \"free-shipping\",\n  \"discount\": 5\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/product/add",
+							"host": ["{{baseUrl}}"],
+							"path": ["product", "add"]
+						}
+					}
+				},
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/product/get",
+							"host": ["{{baseUrl}}"],
+							"path": ["product", "get"]
+						}
+					}
+				},
+				{
+					"name": "Get One Product",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/product/getone/{{productId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["product", "getone", "{{productId}}"]
+						}
+					}
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Updated Product\",\n  \"price\": 89.99,\n  \"category\": \"electronics\",\n  \"quantity\": 15\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/product/update/{{productId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["product", "update", "{{productId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Add Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Electronics\",\n  \"type\": \"main\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/category/add",
+							"host": ["{{baseUrl}}"],
+							"path": ["category", "add"]
+						}
+					}
+				},
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/category/get",
+							"host": ["{{baseUrl}}"],
+							"path": ["category", "get"]
+						}
+					}
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Updated Electronics\",\n  \"type\": \"main\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/category/update/{{categoryId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["category", "update", "{{categoryId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Add to Cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productId\": \"{{productId}}\",\n  \"quantity\": 2\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cart/add",
+							"host": ["{{baseUrl}}"],
+							"path": ["cart", "add"]
+						}
+					}
+				},
+				{
+					"name": "Get Cart",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/cart/get",
+							"host": ["{{baseUrl}}"],
+							"path": ["cart", "get"]
+						}
+					}
+				},
+				{
+					"name": "Update Cart Item",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productId\": \"{{productId}}\",\n  \"quantity\": 3\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cart/update",
+							"host": ["{{baseUrl}}"],
+							"path": ["cart", "update"]
+						}
+					}
+				},
+				{
+					"name": "Remove from Cart",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productId\": \"{{productId}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cart/remove",
+							"host": ["{{baseUrl}}"],
+							"path": ["cart", "remove"]
+						}
+					}
+				},
+				{
+					"name": "Clear Cart",
+					"request": {
+						"method": "POST",
+						"url": {
+							"raw": "{{baseUrl}}/cart/clear",
+							"host": ["{{baseUrl}}"],
+							"path": ["cart", "clear"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"shippingAddress\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"postalCode\": \"10001\",\n    \"country\": \"USA\"\n  },\n  \"paymentMethod\": \"Online\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/order/create",
+							"host": ["{{baseUrl}}"],
+							"path": ["order", "create"]
+						}
+					}
+				},
+				{
+					"name": "Get My Orders",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/order/myorder",
+							"host": ["{{baseUrl}}"],
+							"path": ["order", "myorder"]
+						}
+					}
+				},
+				{
+					"name": "Get All Orders",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/order/get",
+							"host": ["{{baseUrl}}"],
+							"path": ["order", "get"]
+						}
+					}
+				},
+				{
+					"name": "Get One Order",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/order/getone/{{orderId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["order", "getone", "{{orderId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Wishlist",
+			"item": [
+				{
+					"name": "Add to Wishlist",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productId\": \"{{productId}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/wishlist/add",
+							"host": ["{{baseUrl}}"],
+							"path": ["wishlist", "add"]
+						}
+					}
+				},
+				{
+					"name": "Get Wishlist",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/wishlist",
+							"host": ["{{baseUrl}}"],
+							"path": ["wishlist"]
+						}
+					}
+				},
+				{
+					"name": "Remove from Wishlist",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productId\": \"{{productId}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/wishlist/remove",
+							"host": ["{{baseUrl}}"],
+							"path": ["wishlist", "remove"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Shops",
+			"item": [
+				{
+					"name": "Create Shop",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"shopName\": \"My Electronics Store\",\n  \"location\": {\n    \"address\": \"123 Business St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"country\": \"USA\",\n    \"passcode\": \"10001\"\n  },\n  \"contactNumber\": \"+1234567890\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/shop/create",
+							"host": ["{{baseUrl}}"],
+							"path": ["shop", "create"]
+						}
+					}
+				},
+				{
+					"name": "Get My Shop",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/shop/myshop",
+							"host": ["{{baseUrl}}"],
+							"path": ["shop", "myshop"]
+						}
+					}
+				},
+				{
+					"name": "Get All Shops",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/shop/allshop",
+							"host": ["{{baseUrl}}"],
+							"path": ["shop", "allshop"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Coupons",
+			"item": [
+				{
+					"name": "Create Coupon",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"code\": \"SAVE20\",\n  \"discount\": 20,\n  \"expiryDate\": \"2024-12-31T23:59:59.000Z\",\n  \"minOrderAmount\": 100\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/coupon/create",
+							"host": ["{{baseUrl}}"],
+							"path": ["coupon", "create"]
+						}
+					}
+				},
+				{
+					"name": "Get All Coupons",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/coupon/get",
+							"host": ["{{baseUrl}}"],
+							"path": ["coupon", "get"]
+						}
+					}
+				},
+				{
+					"name": "Apply Coupon",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"couponCode\": \"SAVE20\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/coupon/apply",
+							"host": ["{{baseUrl}}"],
+							"path": ["coupon", "apply"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Create Review",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productId\": \"{{productId}}\",\n  \"rating\": 5,\n  \"comment\": \"Excellent product! Highly recommended.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/review/create",
+							"host": ["{{baseUrl}}"],
+							"path": ["review", "create"]
+						}
+					}
+				},
+				{
+					"name": "Get All Reviews",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/review/Allreviews",
+							"host": ["{{baseUrl}}"],
+							"path": ["review", "Allreviews"]
+						}
+					}
+				},
+				{
+					"name": "Get Product Reviews",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/review/getreviews/{{productId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["review", "getreviews", "{{productId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "Add Employee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userName\": \"Jane Smith\",\n  \"email\": \"jane@company.com\",\n  \"department\": \"{{departmentId}}\",\n  \"designation\": \"Software Engineer\",\n  \"salary\": 75000,\n  \"phoneNumber\": \"+1234567891\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/employee/add",
+							"host": ["{{baseUrl}}"],
+							"path": ["employee", "add"]
+						}
+					}
+				},
+				{
+					"name": "Get All Employees",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/employee/get",
+							"host": ["{{baseUrl}}"],
+							"path": ["employee", "get"]
+						}
+					}
+				},
+				{
+					"name": "Apply Leave",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"startDate\": \"2024-01-15\",\n  \"endDate\": \"2024-01-17\",\n  \"reason\": \"Personal leave\",\n  \"leaveType\": \"casual\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/employee/leave",
+							"host": ["{{baseUrl}}"],
+							"path": ["employee", "leave"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Add Money to Wallet",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 100\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/transaction/addMoney",
+							"host": ["{{baseUrl}}"],
+							"path": ["transaction", "addMoney"]
+						}
+					}
+				},
+				{
+					"name": "Check Balance",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/transaction/checkBalance",
+							"host": ["{{baseUrl}}"],
+							"path": ["transaction", "checkBalance"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Validation Tests",
+			"item": [
+				{
+					"name": "Test Empty Body - Cart Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cart/add",
+							"host": ["{{baseUrl}}"],
+							"path": ["cart", "add"]
+						}
+					}
+				},
+				{
+					"name": "Test Missing Fields - Product Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Test Product\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/product/add",
+							"host": ["{{baseUrl}}"],
+							"path": ["product", "add"]
+						}
+					}
+				},
+				{
+					"name": "Test Invalid Email - Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userName\": \"Test User\",\n  \"email\": \"invalid-email\",\n  \"password\": \"123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Test Invalid Quantity - Cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productId\": \"invalid-id\",\n  \"quantity\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cart/add",
+							"host": ["{{baseUrl}}"],
+							"path": ["cart", "add"]
+						}
+					}
+				}
+			]
+		}
+	]
+}

@@ -7,9 +7,6 @@ export const addSalary = async(req, res, next)=>{
         
     const {user_Id ,employeeId, employeeName, amount, allowances, deductions } = req.body || {}
 
-    if(!employeeId || !employeeName || !amount){
-        return next(new ErrorHandler("please enter all the fields", 400))
-    }
 
     
 

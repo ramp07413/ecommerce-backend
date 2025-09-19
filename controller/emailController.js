@@ -11,15 +11,10 @@ export const sendEmailToAllUsers = async(req, res, next)=>{
     const userId = req.user._id
     const {subject , message} = req.body
 
-    if(!subject || !message){
-        return next(new ErrorHandler("please fill all the fields ! ", 400))
-    }
 
     const data = await user.find({}, "email")
 
-    if(!data || data.length == 0){
         return next(new ErrorHandler("no email founds !", 400))
-    }
 
     const emaillist = data.map((item)=>item.email)
 
@@ -53,15 +48,10 @@ export const sendEmailTouser = async(req, res, next)=>{
     const {subject , message} = req.body || {}
 
 
-    if(!subject || !message){
-        return next(new ErrorHandler("please fill all the fields ! ", 400))
-    }
 
     const data = await user.findById(userId)
 
-    if(!data){
         return next(new ErrorHandler("no email founds !", 400))
-    }
 
     const email = data.email
 

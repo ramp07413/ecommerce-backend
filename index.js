@@ -35,6 +35,8 @@ import { razorpayRouter } from './routes/razorpayRoute.js';
 import { returnRouter } from './routes/returnRoute.js';
 import { warehouseRouter } from './routes/warehouseRoute.js';
 import { rackRouter } from './routes/rackRoute.js';
+import permissionRouter from './routes/permissionRoute.js';
+import { seedPermissions } from './utils/seedPermissions.js';
 
 
 
@@ -106,7 +108,11 @@ app.use("/api/v1/razorpay",razorpayRouter);
 app.use("/api/v1/returnRefund",returnRouter);
 app.use("/api/v1/warehouse",warehouseRouter);
 app.use("/api/v1/rack",rackRouter);
+app.use("/api/v1/permissions", permissionRouter);
 app.use(errorMiddleware)
+
+// Seed permissions on startup
+seedPermissions();
 
 
 // datemodify()

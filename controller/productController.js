@@ -5,12 +5,10 @@ import { shop } from "../model/shopModel.js";
 import { ErrorHandler } from "../utils/Errorhandler.js";
 
 const fileupload = (imgs)=>{
-     if(!imgs || imgs.length===0){
             return res.status(200).json({
                 success : false,
                 message : "no file is selected !"
             })
-        }
 
         const successfullyUploads = imgs.map(file => ({
             filename: file.filename,
@@ -52,9 +50,6 @@ export const addProduct = async (req, res, next) => {
   const { name, price, category, itemTag, shippingTag , discount, quantity } = req.body || {};
 
   try {
-    if ((!name || !price || !category || !itemTag || !shippingTag || !quantity)) {
-        return next(new ErrorHandler("please fill all the fields !", 400))
-    }
 
       if (!req.files || req.files.length === 0) {
             return res.status(400).json({
@@ -64,9 +59,7 @@ export const addProduct = async (req, res, next) => {
         }
 
     const shopdata = await shop.findOne({owner : userId})
-    if(!shopdata){
       return next(new ErrorHandler("create shop to upload product !", 400))
-    }
     const data = await productDetails.create({
       name,
       shopName : shopdata.shopName,
@@ -103,9 +96,7 @@ export const addProduct = async (req, res, next) => {
 export const getProduct = async (req, res, next) => {
   try {
     const data = await productDetails.find();
-    if(!data){
       return next(new ErrorHandler("product not found !", 404))
-    }
     res.status(200).send({
       success: true,
       results : data.length,
@@ -141,9 +132,7 @@ export const updateProduct = async (req, res, next)=>{
         new : true
       } )
 
-      if(!data){
         return next(new ErrorHandler("product not found !", 404))
-      }
 
       res.status(200).send({
         success : true,
@@ -164,9 +153,7 @@ export const deleteProduct = async (req, res, next)=>{
     
       const data = await productDetails.findByIdAndDelete(id)
 
-      if(!data){
         return next(new ErrorHandler("product not found !", 404))
-      }
 
 
       res.status(200).send({

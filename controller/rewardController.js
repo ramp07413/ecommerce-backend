@@ -12,9 +12,6 @@ export const createReward = async(req, res, next)=>{
                 expiresAt 
         } = req.body || {}
 
-        if(!type || !value || !probability || !isActive || !expiresAt){
-            return next(new ErrorHandler("please fill all the fields !", 400))
-        }
 
 
         const data = await reward.create({
@@ -69,15 +66,10 @@ export const editReward = async(req, res, next)=>{
 
         const rewardId = req.params.id
 
-        if(!type && !value && !probability && !isActive && !expiresAt){
-            return next(new ErrorHandler("please fill all the fields !", 400))
-        }
 
         const data = await reward.findOne({_id : rewardId})
 
-        if(!data){
             return next(new ErrorHandler("reward id is invaild", 400))
-        }
         if(type) data.type = type
         if(value) data.value = value
         if(probability) data.probability = probability
@@ -107,9 +99,7 @@ export const deleteReward = async(req, res, next)=>{
 
         const data = await reward.findOne({_id : rewardId})
 
-         if(!data){
             return next(new ErrorHandler("reward id is invaild", 400))
-        }
         
         await data.deleteOne()
 
@@ -145,9 +135,7 @@ export const randomreward = async(req, res, next)=>{
         random -= reward.probability
        }
 
-       if(!selectreward){
         return null
-       }
         
        res.send(selectreward)        
       

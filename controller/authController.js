@@ -19,11 +19,6 @@ export const userRegister = async(req, res, next)=>{
     const {userName, email , password, phoneNumber} = req.body;
 
     const referlink = req.query.ref
-  
-
-    if(!userName || !email || !password || !phoneNumber){
-        return next(new ErrorHandler("please fill all the fields ! ", 400))
-    }
 
     let data = await user.findOne({email})
 
@@ -117,12 +112,10 @@ export const googleLogin = async(req, res, next)=>{
 
     let mydata = await user.findOne({email})
 
-    if(!mydata){
         mydata = await user.create({
          userName : name,
          email
             })
-    }
 
     if(mydata.isbanned){
         return(next(new ErrorHandler("user is banned please contact to support . ", 401)))
@@ -159,24 +152,15 @@ export const userLogin = async(req, res, next)=>{
 
     const {email , password} = req.body;
 
-    if(!req.body){
         return next(new ErrorHandler("required req.body !"))
-    }
 
-    if(!email || !password){
-        return next(new ErrorHandler("please fill all the fields ! ", 400))
-    }
     
     const data = await user.findOne({email}).select("+password")
 
 
-    if(!data){
         return next(new ErrorHandler("user doesn't exits !", 404))
-    }
 
-    if(!data.password){
         return next(new ErrorHandler("please reset password ! for this login method", 400))
-    }
 
     if(data.isbanned){
         return(next(new ErrorHandler("user is banned please contact to support . ", 401)))
@@ -190,9 +174,7 @@ export const userLogin = async(req, res, next)=>{
     const isPasswordMatched = await bcrypt.compare(password, data.password)
    
 
-    if(!isPasswordMatched){
         return next(new ErrorHandler("invaild email or password", 400))
-    }
 
     sendToken(data, 200, "login successfully", req, res)
 
@@ -248,9 +230,7 @@ export const userProfile = async (req, res, next)=>{
         console.log(userId)
         let userdata = await user.findById(userId).select("userName email phoneNumber address")
 
-        if(!userdata){
             return next(new ErrorHandler("user not found", 404))
-        }
 
         res.status(200).send({
             success : true,
@@ -286,9 +266,7 @@ export const updateProfile = async (req, res, next)=>{
            $set :  data
         }, {new : true}).select("+phoneNumber")
 
-        if(!userdata){
             return next(new ErrorHandler("user not found", 404))
-        }
 
         res.status(200).send({
             success : true,
@@ -336,15 +314,11 @@ try{
 
     const { email } = req.body || {}
 
-    if(!email){
         return next(new ErrorHandler("please enter email", 400))
-    }
 
     const data = await user.findOne({email})
 
-    if(!data){
         return next(new ErrorHandler("please enter vaild email", 400))
-    }
 
     if(data.isbanned){
         return(next(new ErrorHandler("user is banned please contact to support . ", 401)))
@@ -383,9 +357,7 @@ try{
     const { token } = req.params;
     const { newPassword, confirmNewPassword } = req.body;
 
-    if(!newPassword || !confirmNewPassword){
         return next(new ErrorHandler("please enter all the fields !", 400))
-    }
 
     if(newPassword !== confirmNewPassword){
         return next(new ErrorHandler("password doesn't match !", 400))
@@ -399,9 +371,7 @@ try{
     const data = await user.findOne({resetPasswordToken : resetPasswordToken, 
         resetPasswordTokenExpire : {$gte : Date.now()}}).select("+password")
 
-    if(!data){
         return next(new ErrorHandler("invaild token or token had expired !", 400))
-    }
 
     if(data.isbanned){
         return(next(new ErrorHandler("user is banned please contact to support . ", 403)))
@@ -437,17 +407,12 @@ export const updatePassword = async (req, res , next)=>{
 
         const userId = req.user._id
     const {oldPassword, newPassword, confirmNewPassword} = req.body;
-    if(!oldPassword || !newPassword || !confirmNewPassword){
-        return next(new ErrorHandler("please enter fill all the fields !", 400))
-    }
 
     const data = await user.findById({_id : userId}).select("+password")
 
     const oldHasPassword = await bcrypt.compare(oldPassword, data.password)
 
-    if(!oldHasPassword){
         return next(new ErrorHandler("old pass is invalid", 400))
-    }
 
     if(newPassword !== confirmNewPassword){
         return next(new ErrorHandler("password not matched !", 400))

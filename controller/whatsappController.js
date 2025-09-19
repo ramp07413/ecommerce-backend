@@ -1,16 +1,23 @@
 import { user } from "../model/userModel.js"
+import { ErrorHandler } from "../utils/Errorhandler.js"
 
 export const getConnectWhatsapp = async(req, res, next)=>{
-    const { userId } = req.body
+    try{
+        const { userId } = req.body
 
-    const data = await user.findById({_id : userId})
+        const data = await user.findById({_id : userId})
+        
+        if(!data){
+            return next(new ErrorHandler("User not found", 404))
+        }
 
-    const base_link = `https://api.whatsapp.com/send?phone=91${data.phoneNumber}`
+        const base_link = `https://api.whatsapp.com/send?phone=91${data.phoneNumber}`
 
-    console.log(base_link)
-    
-    res.status(200).json({
-        success : true,
-        walink : base_link
-    })
+        res.status(200).json({
+            success : true,
+            walink : base_link
+        })
+    } catch(error){
+        next(error)
+    }
 }
