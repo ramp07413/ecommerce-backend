@@ -1,0 +1,4981 @@
+{
+  "info": {
+    "name": "My API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "default",
+      "item": [
+        {
+          "name": "/",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": []
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/chat",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/chat",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "chat"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "product",
+      "item": [
+        {
+          "name": "/api/v1/product/get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/product/get",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "product",
+                "get"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/product/get/{categoryId}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/product/get/{categoryId}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "product",
+                "get",
+                "{categoryId}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/product/add",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/product/add",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "product",
+                "add"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": {\n    \"example\": \"any\"\n  },\n  \"price\": {\n    \"example\": \"any\"\n  },\n  \"category\": {\n    \"example\": \"any\"\n  },\n  \"itemTag\": {\n    \"example\": \"any\"\n  },\n  \"shippingTag\": {\n    \"example\": \"any\"\n  },\n  \"discount\": {\n    \"example\": \"any\"\n  },\n  \"quantity\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/product/update/{id}",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/product/update/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "product",
+                "update",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/product/updateOne/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/product/updateOne/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "product",
+                "updateOne",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/product/delete/{id}",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/product/delete/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "product",
+                "delete",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/product/filter",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/product/filter",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "product",
+                "filter"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "/api/v1/auth/register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userName\": {\n    \"example\": \"any\"\n  },\n  \"email\": {\n    \"example\": \"any\"\n  },\n  \"password\": {\n    \"example\": \"any\"\n  },\n  \"phoneNumber\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/auth/login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": {\n    \"example\": \"any\"\n  },\n  \"password\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/auth/google",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/google",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "google"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/auth/updatePassword",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/updatePassword",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "updatePassword"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldPassword\": {\n    \"example\": \"any\"\n  },\n  \"newPassword\": {\n    \"example\": \"any\"\n  },\n  \"confirmNewPassword\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/auth/google/callback",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/google/callback",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "google",
+                "callback"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/auth/me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "me"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/auth/logout",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "origin",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "logout"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/auth/forget",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/forget",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "forget"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/auth/profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "profile"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/auth/update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/update",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "update"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userName\": {\n    \"example\": \"any\"\n  },\n  \"email\": {\n    \"example\": \"any\"\n  },\n  \"address\": {\n    \"example\": \"any\"\n  },\n  \"phoneNumber\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/auth/reset/{token}",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/reset/{token}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "reset",
+                "{token}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newPassword\": {\n    \"example\": \"any\"\n  },\n  \"confirmNewPassword\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/auth/user-states",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/user-states",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "user-states"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "cart",
+      "item": [
+        {
+          "name": "/api/v1/cart/add",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/add",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "add"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": {\n    \"example\": \"any\"\n  },\n  \"quantity\": {\n    \"example\": \"any\"\n  },\n  \"couponCode\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/cart/get",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/get",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "get"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/cart/clear",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/clear",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "clear"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/cart/remove",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/remove",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "remove"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/cart/update",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/cart/update",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "update"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": {\n    \"example\": \"any\"\n  },\n  \"quantity\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "category",
+      "item": [
+        {
+          "name": "/api/v1/category/",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/category/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "category"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/category/add",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/category/add",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "category",
+                "add"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": {\n    \"example\": \"any\"\n  },\n  \"type\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/category/{id}",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/category/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "category",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "wishlist",
+      "item": [
+        {
+          "name": "/api/v1/wishlist/",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/wishlist/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "wishlist"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/wishlist/recent-fav",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/wishlist/recent-fav",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "wishlist",
+                "recent-fav"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/wishlist/add",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/wishlist/add",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "wishlist",
+                "add"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/wishlist/remove",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/wishlist/remove",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "wishlist",
+                "remove"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "order",
+      "item": [
+        {
+          "name": "/api/v1/order/my-order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/order/my-order",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "order",
+                "my-order"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/order/all-order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/order/all-order",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "order",
+                "all-order"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/order/recent-order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/order/recent-order",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "order",
+                "recent-order"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/order/create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/order/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "order",
+                "create"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shippingAddress\": {\n    \"example\": \"any\"\n  },\n  \"paymentMethod\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/order/cancel/{orderId}",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/order/cancel/{orderId}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "order",
+                "cancel",
+                "{orderId}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/order/update/{orderId}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/order/update/{orderId}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "order",
+                "update",
+                "{orderId}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shippingAddress\": {\n    \"example\": \"any\"\n  },\n  \"shippingStatus\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "admin",
+      "item": [
+        {
+          "name": "/api/v1/admin/user",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/admin/user",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "user"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/admin/ban/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/admin/ban/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "ban",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/admin/delete/{id}",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/admin/delete/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "delete",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/admin/role/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/admin/role/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "role",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "notification",
+      "item": [
+        {
+          "name": "/api/v1/notification/get",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notification/get",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notification",
+                "get"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/notification/create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notification/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notification",
+                "create"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": {\n    \"example\": \"any\"\n  },\n  \"message\": {\n    \"example\": \"any\"\n  },\n  \"link\": {\n    \"example\": \"any\"\n  },\n  \"type\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/notification/delete/{id}",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notification/delete/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notification",
+                "delete",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/notification/clear",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/notification/clear",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notification",
+                "clear"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "whatsapp",
+      "item": [
+        {
+          "name": "/api/v1/whatsapp/message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/whatsapp/message",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "whatsapp",
+                "message"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "email",
+      "item": [
+        {
+          "name": "/api/v1/email/sendAll",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/email/sendAll",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "email",
+                "sendAll"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": {\n    \"example\": \"any\"\n  },\n  \"message\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/email/send/{id}",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/email/send/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "email",
+                "send",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": {\n    \"example\": \"any\"\n  },\n  \"message\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "employee",
+      "item": [
+        {
+          "name": "/api/v1/employee/add",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employee/add",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "employee",
+                "add"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userName\": {\n    \"example\": \"any\"\n  },\n  \"email\": {\n    \"example\": \"any\"\n  },\n  \"password\": {\n    \"example\": \"any\"\n  },\n  \"role\": {\n    \"example\": \"any\"\n  },\n  \"phoneNumber\": {\n    \"example\": \"any\"\n  },\n  \"address\": {\n    \"example\": \"any\"\n  },\n  \"dateOfBirth\": {\n    \"example\": \"any\"\n  },\n  \"gender\": {\n    \"example\": \"any\"\n  },\n  \"maritalStatus\": {\n    \"example\": \"any\"\n  },\n  \"employeeId\": {\n    \"example\": \"any\"\n  },\n  \"nationality\": {\n    \"example\": \"any\"\n  },\n  \"emergencyContactName\": {\n    \"example\": \"any\"\n  },\n  \"emergencyContactNumber\": {\n    \"example\": \"any\"\n  },\n  \"department\": {\n    \"example\": \"any\"\n  },\n  \"designation\": {\n    \"example\": \"any\"\n  },\n  \"dateOfJoined\": {\n    \"example\": \"any\"\n  },\n  \"contractType\": {\n    \"example\": \"any\"\n  },\n  \"salary\": {\n    \"example\": \"any\"\n  },\n  \"bankAccount\": {\n    \"example\": \"any\"\n  },\n  \"taxId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/employee/get",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employee/get",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "employee",
+                "get"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/employee/getone/{id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employee/getone/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "employee",
+                "getone",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/employee/update/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employee/update/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "employee",
+                "update",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userName\": {\n    \"example\": \"any\"\n  },\n  \"email\": {\n    \"example\": \"any\"\n  },\n  \"password\": {\n    \"example\": \"any\"\n  },\n  \"role\": {\n    \"example\": \"any\"\n  },\n  \"phoneNumber\": {\n    \"example\": \"any\"\n  },\n  \"address\": {\n    \"example\": \"any\"\n  },\n  \"dateOfBirth\": {\n    \"example\": \"any\"\n  },\n  \"gender\": {\n    \"example\": \"any\"\n  },\n  \"maritalStatus\": {\n    \"example\": \"any\"\n  },\n  \"employeeId\": {\n    \"example\": \"any\"\n  },\n  \"nationality\": {\n    \"example\": \"any\"\n  },\n  \"emergencyContactName\": {\n    \"example\": \"any\"\n  },\n  \"emergencyContactNumber\": {\n    \"example\": \"any\"\n  },\n  \"department\": {\n    \"example\": \"any\"\n  },\n  \"designation\": {\n    \"example\": \"any\"\n  },\n  \"dateOfJoined\": {\n    \"example\": \"any\"\n  },\n  \"contractType\": {\n    \"example\": \"any\"\n  },\n  \"salary\": {\n    \"example\": \"any\"\n  },\n  \"bankAccount\": {\n    \"example\": \"any\"\n  },\n  \"taxId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/employee/disable/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employee/disable/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "employee",
+                "disable",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/employee/addSalary",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employee/addSalary",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "employee",
+                "addSalary"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_Id\": {\n    \"example\": \"any\"\n  },\n  \"employeeId\": {\n    \"example\": \"any\"\n  },\n  \"employeeName\": {\n    \"example\": \"any\"\n  },\n  \"amount\": {\n    \"example\": \"any\"\n  },\n  \"allowances\": {\n    \"example\": \"any\"\n  },\n  \"deductions\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/employee/getSalary/{id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employee/getSalary/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "employee",
+                "getSalary",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/employee/getSalary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employee/getSalary",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "employee",
+                "getSalary"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/employee/leave",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employee/leave",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "employee",
+                "leave"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"leaveType\": {\n    \"example\": \"any\"\n  },\n  \"from\": {\n    \"example\": \"any\"\n  },\n  \"to\": {\n    \"example\": \"any\"\n  },\n  \"description\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/employee/checkleave",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employee/checkleave",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "employee",
+                "checkleave"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/employee/checkleaves",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employee/checkleaves",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "employee",
+                "checkleaves"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/employee/approveleaves",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employee/approveleaves",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "employee",
+                "approveleaves"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"leaveId\": {\n    \"example\": \"any\"\n  },\n  \"status\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/employee/dashboard/overview",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employee/dashboard/overview",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "employee",
+                "dashboard",
+                "overview"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "department",
+      "item": [
+        {
+          "name": "/api/v1/department/",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/department/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "department"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/department/add",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/department/add",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "department",
+                "add"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"departmentName\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/department/update/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/department/update/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "department",
+                "update",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"departmentName\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/department/delete/{id}",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/department/delete/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "department",
+                "delete",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "coupon",
+      "item": [
+        {
+          "name": "/api/v1/coupon/get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/coupon/get",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coupon",
+                "get"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/coupon/create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/coupon/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coupon",
+                "create"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"couponTitle\": {\n    \"example\": \"any\"\n  },\n  \"couponCode\": {\n    \"example\": \"any\"\n  },\n  \"couponExpiry\": {\n    \"example\": \"any\"\n  },\n  \"couponDiscount\": {\n    \"example\": \"any\"\n  },\n  \"useLimit\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/coupon/edit/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/coupon/edit/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coupon",
+                "edit",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"couponTitle\": {\n    \"example\": \"any\"\n  },\n  \"couponCode\": {\n    \"example\": \"any\"\n  },\n  \"couponExpiry\": {\n    \"example\": \"any\"\n  },\n  \"couponDiscount\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/coupon/delete/{id}",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/coupon/delete/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coupon",
+                "delete",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/coupon/applyCoupon",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/coupon/applyCoupon",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coupon",
+                "applyCoupon"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"couponCode\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/coupon/removeCoupon",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/coupon/removeCoupon",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coupon",
+                "removeCoupon"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "invoice",
+      "item": [
+        {
+          "name": "/api/v1/invoice/get",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/invoice/get",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "invoice",
+                "get"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/invoice/create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/invoice/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "invoice",
+                "create"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/invoice/download/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/invoice/download/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "invoice",
+                "download",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "transaction",
+      "item": [
+        {
+          "name": "/api/v1/transaction/checkBalance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/transaction/checkBalance",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transaction",
+                "checkBalance"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/transaction/addMoney",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/transaction/addMoney",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transaction",
+                "addMoney"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {\n    \"example\": \"any\"\n  },\n  \"description\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/transaction/applyWallet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/transaction/applyWallet",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transaction",
+                "applyWallet"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/transaction/unapplyWallet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/transaction/unapplyWallet",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "transaction",
+                "unapplyWallet"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "referearn",
+      "item": [
+        {
+          "name": "/api/v1/referearn/myrefer",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/referearn/myrefer",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "referearn",
+                "myrefer"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/referearn/allrefer",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/referearn/allrefer",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "referearn",
+                "allrefer"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/referearn/userrefer/{id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/referearn/userrefer/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "referearn",
+                "userrefer",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/referearn/referDashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/referearn/referDashboard",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "referearn",
+                "referDashboard"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "event",
+      "item": [
+        {
+          "name": "/api/v1/event/create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/event/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "event",
+                "create"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventName\": {\n    \"example\": \"any\"\n  },\n  \"eventType\": {\n    \"example\": \"any\"\n  },\n  \"description\": {\n    \"example\": \"any\"\n  },\n  \"startDate\": {\n    \"example\": \"any\"\n  },\n  \"endDate\": {\n    \"example\": \"any\"\n  },\n  \"discount\": {\n    \"example\": \"any\"\n  },\n  \"maxDiscountAmount\": {\n    \"example\": \"any\"\n  },\n  \"minPurchaseAmount\": {\n    \"example\": \"any\"\n  },\n  \"categories\": {\n    \"example\": \"any\"\n  },\n  \"bannerUrl\": {\n    \"example\": \"any\"\n  },\n  \"priority\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/event/update/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/event/update/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "event",
+                "update",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventName\": {\n    \"example\": \"any\"\n  },\n  \"eventType\": {\n    \"example\": \"any\"\n  },\n  \"description\": {\n    \"example\": \"any\"\n  },\n  \"startDate\": {\n    \"example\": \"any\"\n  },\n  \"endDate\": {\n    \"example\": \"any\"\n  },\n  \"discount\": {\n    \"example\": \"any\"\n  },\n  \"maxDiscountAmount\": {\n    \"example\": \"any\"\n  },\n  \"minPurchaseAmount\": {\n    \"example\": \"any\"\n  },\n  \"products\": {\n    \"example\": \"any\"\n  },\n  \"categories\": {\n    \"example\": \"any\"\n  },\n  \"bannerUrl\": {\n    \"example\": \"any\"\n  },\n  \"priority\": {\n    \"example\": \"any\"\n  },\n  \"iseventActive\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/event/getEvents",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/event/getEvents",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "event",
+                "getEvents"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/event/stopall",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/event/stopall",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "event",
+                "stopall"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/event/stop/{id}",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/event/stop/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "event",
+                "stop",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/event/active/{id}",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/event/active/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "event",
+                "active",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "reward",
+      "item": [
+        {
+          "name": "/api/v1/reward/",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reward/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reward"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/reward/random",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reward/random",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reward",
+                "random"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/reward/rewardlist",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reward/rewardlist",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reward",
+                "rewardlist"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/reward/create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reward/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reward",
+                "create"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": {\n    \"example\": \"any\"\n  },\n  \"value\": {\n    \"example\": \"any\"\n  },\n  \"probability\": {\n    \"example\": \"any\"\n  },\n  \"isActive\": {\n    \"example\": \"any\"\n  },\n  \"expiresAt\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/reward/edit/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reward/edit/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reward",
+                "edit",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": {\n    \"example\": \"any\"\n  },\n  \"value\": {\n    \"example\": \"any\"\n  },\n  \"probability\": {\n    \"example\": \"any\"\n  },\n  \"isActive\": {\n    \"example\": \"any\"\n  },\n  \"expiresAt\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/reward/delete/{id}",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/reward/delete/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reward",
+                "delete",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "scratch",
+      "item": [
+        {
+          "name": "/api/v1/scratch/myscratch",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/scratch/myscratch",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "scratch",
+                "myscratch"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/scratch/scratch/{id}",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/scratch/scratch/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "scratch",
+                "scratch",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "shop",
+      "item": [
+        {
+          "name": "/api/v1/shop/myshop",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/shop/myshop",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "shop",
+                "myshop"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/shop/myshopProduct",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/shop/myshopProduct",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "shop",
+                "myshopProduct"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/shop/allshop",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/shop/allshop",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "shop",
+                "allshop"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/shop/Oneshop/{id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/shop/Oneshop/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "shop",
+                "Oneshop",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/shop/getShopProduct/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/shop/getShopProduct/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "shop",
+                "getShopProduct",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/shop/create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/shop/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "shop",
+                "create"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shopName\": {\n    \"example\": \"any\"\n  },\n  \"location\": {\n    \"example\": \"any\"\n  },\n  \"contactNumber\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/shop/updateShop/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/shop/updateShop/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "shop",
+                "updateShop",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shopName\": {\n    \"example\": \"any\"\n  },\n  \"contactNumber\": {\n    \"example\": \"any\"\n  },\n  \"location\": {\n    \"example\": \"any\"\n  },\n  \"isShopVerified\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/shop/disable/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/shop/disable/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "shop",
+                "disable",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "qna",
+      "item": [
+        {
+          "name": "/api/v1/qna/get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/qna/get",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "qna",
+                "get"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/qna/get/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/qna/get/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "qna",
+                "get",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/qna/create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/qna/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "qna",
+                "create"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": {\n    \"example\": \"any\"\n  },\n  \"answer\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/qna/update/{id}",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/qna/update/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "qna",
+                "update",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": {\n    \"example\": \"any\"\n  },\n  \"answer\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/qna/delete/{id}",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/qna/delete/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "qna",
+                "delete",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "review",
+      "item": [
+        {
+          "name": "/api/v1/review/create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/review/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "review",
+                "create"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": {\n    \"example\": \"any\"\n  },\n  \"rating\": {\n    \"example\": \"any\"\n  },\n  \"comment\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/review/Allreviews",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/review/Allreviews",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "review",
+                "Allreviews"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/review/getreviews/{id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/review/getreviews/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "review",
+                "getreviews",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/review/update/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/review/update/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "review",
+                "update",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comment\": {\n    \"example\": \"any\"\n  },\n  \"rating\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/review/delete/{id}",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/review/delete/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "review",
+                "delete",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "chatbot",
+      "item": [
+        {
+          "name": "/api/v1/chatbot/ask",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/chatbot/ask",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "chatbot",
+                "ask"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/chatbot/ask2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/chatbot/ask2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "chatbot",
+                "ask2"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/chatbot/close",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/chatbot/close",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "chatbot",
+                "close"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/chatbot/history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/chatbot/history",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "chatbot",
+                "history"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/chatbot/history/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/chatbot/history/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "chatbot",
+                "history",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "razorpay",
+      "item": [
+        {
+          "name": "/api/v1/razorpay/create-order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/razorpay/create-order",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "razorpay",
+                "create-order"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shippingAddress\": {\n    \"example\": \"any\"\n  },\n  \"paymetnMethod\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/razorpay/verify-payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/razorpay/verify-payment",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "razorpay",
+                "verify-payment"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"razorpay_order_id\": {\n    \"example\": \"any\"\n  },\n  \"razorpay_payment_id\": {\n    \"example\": \"any\"\n  },\n  \"razorpay_signature\": {\n    \"example\": \"any\"\n  },\n  \"shippingAddress\": {\n    \"example\": \"any\"\n  },\n  \"paymentMethod\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "returnRefund",
+      "item": [
+        {
+          "name": "/api/v1/returnRefund/returnRequest",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/returnRefund/returnRequest",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "returnRefund",
+                "returnRequest"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": {\n    \"example\": \"any\"\n  },\n  \"returnReason\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/returnRefund/allRequest",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/returnRefund/allRequest",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "returnRefund",
+                "allRequest"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/returnRefund/request/{id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/returnRefund/request/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "returnRefund",
+                "request",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/returnRefund/approveRequest",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/returnRefund/approveRequest",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "returnRefund",
+                "approveRequest"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"const\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/returnRefund/rejectRequest",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/returnRefund/rejectRequest",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "returnRefund",
+                "rejectRequest"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rejectReason\": {\n    \"example\": \"any\"\n  },\n  \"requestId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/returnRefund/updateRequest/{id}",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/returnRefund/updateRequest/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "returnRefund",
+                "updateRequest",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": {\n    \"example\": \"any\"\n  },\n  \"returnStatus\": {\n    \"example\": \"any\"\n  },\n  \"returnDetails\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/returnRefund/refundToWallet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/returnRefund/refundToWallet",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "returnRefund",
+                "refundToWallet"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"const\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/returnRefund/refundToRazorpay",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/returnRefund/refundToRazorpay",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "returnRefund",
+                "refundToRazorpay"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentId\": {\n    \"example\": \"any\"\n  },\n  \"requestId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "warehouse",
+      "item": [
+        {
+          "name": "/api/v1/warehouse/create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "create"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": {\n    \"example\": \"any\"\n  },\n  \"location\": {\n    \"example\": \"any\"\n  },\n  \"warehouseNo\": {\n    \"example\": \"any\"\n  },\n  \"managerId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/getAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/getAll",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "getAll"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/get/{No}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/get/{No}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "get",
+                "{No}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/edit/{No}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/edit/{No}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "edit",
+                "{No}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": {\n    \"example\": \"any\"\n  },\n  \"location\": {\n    \"example\": \"any\"\n  },\n  \"managerId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/{warehouseNo}/products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/{warehouseNo}/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "{warehouseNo}",
+                "products"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/{warehouseNo}/products",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/{warehouseNo}/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "{warehouseNo}",
+                "products"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": {\n    \"example\": \"any\"\n  },\n  \"sku\": {\n    \"example\": \"any\"\n  },\n  \"quantity\": {\n    \"example\": \"any\"\n  },\n  \"costPrice\": {\n    \"example\": \"any\"\n  },\n  \"expiryDate\": {\n    \"example\": \"any\"\n  },\n  \"batchNumber\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/{warehouseNo}/products/{productId}",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/{warehouseNo}/products/{productId}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "{warehouseNo}",
+                "products",
+                "{productId}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/{warehouseNo}/products/{productId}",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/{warehouseNo}/products/{productId}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "{warehouseNo}",
+                "products",
+                "{productId}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/cart/get",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/cart/get",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "cart",
+                "get"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/cart/add",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/cart/add",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "cart",
+                "add"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warehouseProductId\": {\n    \"example\": \"any\"\n  },\n  \"quantity\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/cart/update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/cart/update",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "cart",
+                "update"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/cart/remove",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/cart/remove",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "cart",
+                "remove"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/cart/clear",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/cart/clear",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "cart",
+                "clear"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/orders/get",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/orders/get",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "orders",
+                "get"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/orders/create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/orders/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "orders",
+                "create"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warehouseId\": {\n    \"example\": \"any\"\n  },\n  \"shippingAddress\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/orders/update/{warehouseOrderId}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/orders/update/{warehouseOrderId}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "orders",
+                "update",
+                "{warehouseOrderId}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/orders/razorpay",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/orders/razorpay",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "orders",
+                "razorpay"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warehouseId\": {\n    \"example\": \"any\"\n  },\n  \"shippingAddress\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/order/verifyPayment",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/order/verifyPayment",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "order",
+                "verifyPayment"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/{warehouseOrderId}/invoice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/{warehouseOrderId}/invoice",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "{warehouseOrderId}",
+                "invoice"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/{warehouseOrderId}/invoice",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/{warehouseOrderId}/invoice",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "{warehouseOrderId}",
+                "invoice"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/request",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/request",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "request"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/request",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "request"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/request/{id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/request/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "request",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/update/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/update/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "update",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/warehouse/refund",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/warehouse/refund",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "warehouse",
+                "refund"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "rack",
+      "item": [
+        {
+          "name": "/api/v1/rack/",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/rack/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rack"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/rack/",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/rack/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rack"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warehouseId\": {\n    \"example\": \"any\"\n  },\n  \"rackNo\": {\n    \"example\": \"any\"\n  },\n  \"rowNo\": {\n    \"example\": \"any\"\n  },\n  \"maxCapacity\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/rack/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/rack/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rack",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rackNo\": {\n    \"example\": \"any\"\n  },\n  \"rowNo\": {\n    \"example\": \"any\"\n  },\n  \"maxCapacity\": {\n    \"example\": \"any\"\n  },\n  \"currentQuantity\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/rack/{id}",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/rack/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rack",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/rack/addToRack",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/rack/addToRack",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rack",
+                "addToRack"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rackId\": {\n    \"example\": \"any\"\n  },\n  \"warehouseProductId\": {\n    \"example\": \"any\"\n  },\n  \"quantity\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/rack/getByRack/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/rack/getByRack/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rack",
+                "getByRack",
+                "{id}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/rack/updateToRack/{id}",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/rack/updateToRack/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rack",
+                "updateToRack",
+                "{id}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warehouseProductId\": {\n    \"example\": \"any\"\n  },\n  \"quantity\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/rack/deleteFromRack/{rackId}/{warehouseProductId}",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/rack/deleteFromRack/{rackId}/{warehouseProductId}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rack",
+                "deleteFromRack",
+                "{rackId}",
+                "{warehouseProductId}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "chat",
+      "item": [
+        {
+          "name": "/api/v1/chat/start",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/chat/start",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "chat",
+                "start"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": {\n    \"example\": \"any\"\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/chat/history/{chatId}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/chat/history/{chatId}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "chat",
+                "history",
+                "{chatId}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/chat/close/{chatId}",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/chat/close/{chatId}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "chat",
+                "close",
+                "{chatId}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "/api/v1/chat/active",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/chat/active",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "chat",
+                "active"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001",
+      "type": "string"
+    }
+  ]
+}

@@ -26,3 +26,12 @@ dist-ssr
 frontend
 
 changes.txt
+
+generate_postman_collection.py
+
+permissions.txt
+
+.DS_Store
+
+.gitignore
+

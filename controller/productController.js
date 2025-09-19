@@ -63,6 +63,12 @@ export const addProduct = async (req, res, next) => {
             });
         }
 
+    const categoryData = await Category.findOne({_id : category})
+
+    if(!categoryData){
+      return next(new ErrorHandler("category is invalid", 400))
+    }
+
     const shopdata = await shop.findOne({owner : userId})
     if(!shopdata){
       return next(new ErrorHandler("create shop to upload product !", 400))
@@ -96,7 +102,7 @@ export const addProduct = async (req, res, next) => {
     });
   } catch (err) {
     console.error(err)
-    return next(new ErrorHandler("internal server error !", 500));
+    return next(new ErrorHandler(err.message, 500));
   }
 };
 
