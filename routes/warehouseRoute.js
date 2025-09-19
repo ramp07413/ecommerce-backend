@@ -1,5 +1,5 @@
 import { Router  } from "express";
-import { addProductToWarehouse, addToWarehouseCart, clearWarehouseCart, createInvoiceforWarehouse, createrazorpayOrder, createWarehouse, createWarehouseOrder, deleteProductToWarehouse, editWarehouse, getAllWarehouse, getInvoiceOfWarehouse, getOneWarehouse, getProductOfWarehouse, getToWarehouseCart, getWarehouseOrder, removeFromWarehouseCart, updateProductToWarehouse, updateToWarehouseCart, updateWarehouseOrder, verifyPaymentOfWarehouse } from "../controller/warehouseController.js";
+import { addProductToWarehouse, addToWarehouseCart, clearWarehouseCart, createInvoiceforWarehouse, createrazorpayOrder, createWarehouse, createWarehouseOrder, deleteProductToWarehouse, editWarehouse, getAllWarehouse, getInvoiceOfWarehouse, getOneWarehouse, getProductOfWarehouse, getToWarehouseCart, getWarehouseOrder, removeFromWarehouseCart, updateProductToWarehouse, updateToWarehouseCart, updateWarehouseOrder, verifyPaymentOfWarehouse, warehouseReturnRequests, warehouseReturnRequestCheck, createWarehouseReturnRequest, updateWarehouseRequest, warehouseRefundToWallet } from "../controller/warehouseController.js";
 import { isAuthenticated } from "../middleware/authMiddleware.js";
 
 
@@ -43,13 +43,12 @@ router.get("/:warehouseOrderId/invoice",isAuthenticated, getInvoiceOfWarehouse);
 
 
 // return and refund routes
+router.get("/request", isAuthenticated, warehouseReturnRequests)
+router.get("/request/:id", isAuthenticated, warehouseReturnRequestCheck)
+router.post("/request", isAuthenticated, createWarehouseReturnRequest)
+router.patch("/update/:id", isAuthenticated, updateWarehouseRequest)
 
-// router.get("/request", warehouseReturnRequests)
-// router.get("/request/:id", warehouseReturnRequestCheck)
-// router.post("/request", createWarehouseReturnRequest)
-// router.patch("/update/:id", updateWarehouseRequest)
-
-// router.post("/refund", warehouseRefundToWallet)
+router.post("/refund", isAuthenticated, warehouseRefundToWallet)
 
 
 export { router as warehouseRouter };

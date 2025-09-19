@@ -781,3 +781,138 @@ export const getInvoiceOfWarehouse = async (req, res, next)=>{
 
 
 // warehouse return and refund
+import crypto from "crypto"
+import { warehouseReturnandRefund } from "../model/warehouseReturn&RefundModel.js"
+
+export const warehouseReturnRequests = async (req, res, next) => {
+    try {
+        const sellerId = req.user._id
+        const returnRequests = await warehouseReturnandRefund.find({ sellerId }).populate('warehouseOrderId')
+        
+        res.status(200).json({
+            success: true,
+            returnRequests
+        })
+    } catch (err) {
+        console.error(err)
+        return next(new ErrorHandler(err.message, 500))
+    }
+}
+
+export const warehouseReturnRequestCheck = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const returnRequest = await warehouseReturnandRefund.findById(id).populate('warehouseOrderId sellerId')
+        
+        if (!returnRequest) {
+            return next(new ErrorHandler("Return request not found", 404))
+        }
+        
+        res.status(200).json({
+            success: true,
+            returnRequest
+        })
+    } catch (err) {
+        console.error(err)
+        return next(new ErrorHandler(err.message, 500))
+    }
+}
+
+export const createWarehouseReturnRequest = async (req, res, next) => {
+    try {
+        const sellerId = req.user._id
+        const { warehouseOrderId, returnReason } = req.body
+        
+        if (!warehouseOrderId || !returnReason) {
+            return next(new ErrorHandler("Order ID and reason are required", 400))
+        }
+        
+        const orderData = await warehouseOrder.findById(warehouseOrderId)
+        if (!orderData) {
+            return next(new ErrorHandler("Order not found", 404))
+        }
+        
+        const returnRequest = await warehouseReturnandRefund.create({
+            sellerId,
+            warehouseOrderId,
+            returnReason,
+            status: "pending"
+        })
+        
+        res.status(201).json({
+            success: true,
+            message: "Return request created successfully",
+            returnRequest
+        })
+    } catch (err) {
+        console.error(err)
+        return next(new ErrorHandler(err.message, 500))
+    }
+}
+
+export const updateWarehouseRequest = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const { status, returnStatus, refundStatus, rejectReason } = req.body
+        
+        const updateData = {}
+        if (status) updateData.status = status
+        if (returnStatus) updateData.returnStatus = returnStatus
+        if (refundStatus) updateData.refundStatus = refundStatus
+        if (rejectReason) updateData.rejectReason = rejectReason
+        
+        const returnRequest = await warehouseReturnandRefund.findByIdAndUpdate(id, updateData, { new: true })
+        
+        if (!returnRequest) {
+            return next(new ErrorHandler("Return request not found", 404))
+        }
+        
+        res.status(200).json({
+            success: true,
+            message: "Return request updated successfully",
+            returnRequest
+        })
+    } catch (err) {
+        console.error(err)
+        return next(new ErrorHandler(err.message, 500))
+    }
+}
+
+export const warehouseRefundToWallet = async (req, res, next) => {
+    try {
+        const { returnRequestId } = req.body
+        
+        if (!returnRequestId) {
+            return next(new ErrorHandler("Return request ID is required", 400))
+        }
+        
+        const returnRequest = await warehouseReturnandRefund.findById(returnRequestId).populate('sellerId warehouseOrderId')
+        if (!returnRequest) {
+            return next(new ErrorHandler("Return request not found", 404))
+        }
+        
+        if (returnRequest.status !== "approved") {
+            return next(new ErrorHandler("Return request must be approved first", 400))
+        }
+        
+        const refundAmount = returnRequest.warehouseOrderId.totalAmount
+        
+        const userData = await user.findById(returnRequest.sellerId._id)
+        userData.wallet = (userData.wallet || 0) + refundAmount
+        await userData.save()
+        
+        returnRequest.refundStatus = "refundedToWallet"
+        returnRequest.refundDetails = { amount: refundAmount, refundedAt: new Date() }
+        await returnRequest.save()
+        
+        res.status(200).json({
+            success: true,
+            message: "Refund processed successfully",
+            refundAmount,
+            newWalletBalance: userData.wallet
+        })
+    } catch (err) {
+        console.error(err)
+        return next(new ErrorHandler(err.message, 500))
+    }
+}
